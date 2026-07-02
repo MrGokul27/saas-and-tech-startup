@@ -1,0 +1,186 @@
+/* Stylesheet for the Services page of Stackly */
+
+/* Page Title Section */
+.page-title {
+  position: relative;
+  padding: 150px 0 80px;
+  background: var(--gradient-dark);
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--glass-border);
+}
+.page-title::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vw;
+  background: var(--gradient-glow);
+  filter: blur(80px);
+  pointer-events: none;
+}
+.page-title h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+.page-title .breadcrumb {
+  display: inline-flex;
+  gap: 8px;
+  list-style: none;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.page-title .breadcrumb a {
+  color: var(--accent-indigo);
+}
+.page-title .breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* Service Page Grid */
+.services-section {
+  padding: 100px 0;
+  background: var(--bg-primary);
+}
+.service-block-card {
+  padding: 40px 30px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-smooth);
+  height: 100%;
+}
+.service-block-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--glass-border-hover);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-glow);
+}
+.service-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--border-radius-sm);
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--accent-indigo);
+  margin-bottom: 24px;
+  transition: all var(--transition-fast);
+}
+.service-block-card:hover .service-icon-wrapper {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-glow);
+}
+.service-block-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 12px;
+}
+.service-block-card p {
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+.service-read-more {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--accent-indigo);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.service-read-more i {
+  transition: transform var(--transition-fast);
+}
+.service-block-card:hover .service-read-more i {
+  transform: translateX(4px);
+}
+
+/* Design Process Section */
+.design-process-section {
+  padding: 100px 0;
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+}
+.design-process-section::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: 0;
+  width: 30vw;
+  height: 30vw;
+  background: radial-gradient(
+    circle,
+    rgba(6, 182, 212, 0.06) 0%,
+    transparent 70%
+  );
+  filter: blur(60px);
+}
+.process-step-card {
+  text-align: center;
+  padding: 30px 20px;
+  position: relative;
+  height: 100%;
+}
+.process-step-number {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  border: 2px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.75rem;
+  color: var(--accent-indigo);
+  margin: 0 auto 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+  position: relative;
+  z-index: 2;
+}
+.process-step-card:hover .process-step-number {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+}
+.process-step-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+.process-step-card p {
+  font-size: 0.95rem;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+/* Connecting Lines (Desktop only) */
+@media (min-width: 992px) {
+  .process-step-card::after {
+    content: "";
+    position: absolute;
+    top: 70px;
+    left: 60%;
+    width: 80%;
+    height: 2px;
+    border-top: 2px dashed var(--glass-border);
+    z-index: 1;
+  }
+  .col-lg-4:last-child .process-step-card::after {
+    display: none;
+  }
+}

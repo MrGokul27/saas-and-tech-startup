@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing Plans - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../assets/css/common.css" />
+    <link rel="stylesheet" href="../assets/css/pricing.css" />
+  </head>
+  <body class="boxed_wrapper">
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Page Title Section -->
+    <section class="page-title">
+      <div class="container">
+        <h1>Pricing Plans</h1>
+        <ul class="breadcrumb">
+          <li><a href="../index.html">Home</a></li>
+          <li><i class="fas fa-chevron-right mx-2"></i></li>
+          <li>Pricing</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Pricing Grid Section -->
+    <section class="pricing-page-section">
+      <div class="container text-center">
+        <div class="sec-title mb-4">
+          <h2>Plans Built for Startups of All Sizes</h2>
+          <p class="mx-auto mt-3">
+            Choose a plan that fits your growth trajectory. Scale up or down as
+            your user base and data streams expand.
+          </p>
+        </div>
+
+        <!-- Billing Cycle Toggle Switch -->
+        <div class="pricing-tabs-switcher">
+          <button class="tab-btn active-btn" data-tab="#monthly-tab">
+            Monthly Billing
+          </button>
+          <button class="tab-btn" data-tab="#yearly-tab">
+            Annual (Save 20%)
+          </button>
+        </div>
+
+        <div class="tabs-content">
+          <!-- Monthly Plans -->
+          <div class="tab active-tab row g-4" id="monthly-tab">
+            <div class="col-lg-4 col-md-6 text-start">
+              <div class="pricing-table-card">
+                <div class="pricing-header">
+                  <h3>Starter</h3>
+                  <div class="plan-desc">
+                    For early stage validation and MVP builds.
+                  </div>
+                </div>
+                <div class="price-container">
+                  <span class="currency">$</span>
+                  <span class="amount">29</span>
+                  <span class="period">/mo</span>
+                </div>
+                <ul class="pricing-features-list p-0">
+                  <li>
+                    <i class="fas fa-check-circle"></i> 1 Active Workspace
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Up to 5 Team Members
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 50k API Requests / Month
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 7-Day Telemetry Logs
+                  </li>
+                  <li class="disabled-feature">
+                    <i class="fas fa-times-circle"></i> Custom Webhook Triggers
+                  </li>
+                  <li class="disabled-feature">
+                    <i class="fas fa-times-circle"></i> Dedicated Support Slack
+                  </li>
+                </ul>
+                <div class="pricing-footer-btn w-100">
+                  <a href="#" class="theme-btn-two w-100">Start Free Trial</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 text-start">
+              <div class="pricing-table-card popular-tier">
+                <div class="pricing-header">
+                  <h3>Professional</h3>
+                  <div class="plan-desc">
+                    For high-growth scaling tech startups.
+                  </div>
+                </div>
+                <div class="price-container">
+                  <span class="currency">$</span>
+                  <span class="amount">79</span>
+                  <span class="period">/mo</span>
+                </div>
+                <ul class="pricing-features-list p-0">
+                  <li>
+                    <i class="fas fa-check-circle"></i> 5 Active Workspaces
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Up to 20 Team Members
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 500k API Requests /
+                    Month
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 30-Day Telemetry Logs
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Custom Webhook Triggers
+                  </li>
+                  <li class="disabled-feature">
+                    <i class="fas fa-times-circle"></i> Dedicated Support Slack
+                  </li>
+                </ul>
+                <div class="pricing-footer-btn w-100">
+                  <a href="#" class="theme-btn w-100">Start Free Trial</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 text-start">
+              <div class="pricing-table-card">
+                <div class="pricing-header">
+                  <h3>Enterprise</h3>
+                  <div class="plan-desc">
+                    For large teams and high frequency pipelines.
+                  </div>
+                </div>
+                <div class="price-container">
+                  <span class="currency">$</span>
+                  <span class="amount">249</span>
+                  <span class="period">/mo</span>
+                </div>
+                <ul class="pricing-features-list p-0">
+                  <li>
+                    <i class="fas fa-check-circle"></i> Unlimited Workspaces
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Unlimited Team Members
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 5M API Requests / Month
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 365-Day Telemetry Logs
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Custom Webhook Triggers
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Dedicated Support Slack
+                  </li>
+                </ul>
+                <div class="pricing-footer-btn w-100">
+                  <a href="#" class="theme-btn-two w-100">Contact Sales</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Yearly Plans (20% off) -->
+          <div class="tab row g-4" id="yearly-tab">
+            <div class="col-lg-4 col-md-6 text-start">
+              <div class="pricing-table-card">
+                <div class="pricing-header">
+                  <h3>Starter</h3>
+                  <div class="plan-desc">
+                    For early stage validation and MVP builds.
+                  </div>
+                </div>
+                <div class="price-container">
+                  <span class="currency">$</span>
+                  <span class="amount">23</span>
+                  <span class="period">/mo</span>
+                </div>
+                <ul class="pricing-features-list p-0">
+                  <li>
+                    <i class="fas fa-check-circle"></i> 1 Active Workspace
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Up to 5 Team Members
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 50k API Requests / Month
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 7-Day Telemetry Logs
+                  </li>
+                  <li class="disabled-feature">
+                    <i class="fas fa-times-circle"></i> Custom Webhook Triggers
+                  </li>
+                  <li class="disabled-feature">
+                    <i class="fas fa-times-circle"></i> Dedicated Support Slack
+                  </li>
+                </ul>
+                <div class="pricing-footer-btn w-100">
+                  <a href="#" class="theme-btn-two w-100">Start Free Trial</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 text-start">
+              <div class="pricing-table-card popular-tier">
+                <div class="pricing-header">
+                  <h3>Professional</h3>
+                  <div class="plan-desc">
+                    For high-growth scaling tech startups.
+                  </div>
+                </div>
+                <div class="price-container">
+                  <span class="currency">$</span>
+                  <span class="amount">63</span>
+                  <span class="period">/mo</span>
+                </div>
+                <ul class="pricing-features-list p-0">
+                  <li>
+                    <i class="fas fa-check-circle"></i> 5 Active Workspaces
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Up to 20 Team Members
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 500k API Requests /
+                    Month
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 30-Day Telemetry Logs
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Custom Webhook Triggers
+                  </li>
+                  <li class="disabled-feature">
+                    <i class="fas fa-times-circle"></i> Dedicated Support Slack
+                  </li>
+                </ul>
+                <div class="pricing-footer-btn w-100">
+                  <a href="#" class="theme-btn w-100">Start Free Trial</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 text-start">
+              <div class="pricing-table-card">
+                <div class="pricing-header">
+                  <h3>Enterprise</h3>
+                  <div class="plan-desc">
+                    For large teams and high frequency pipelines.
+                  </div>
+                </div>
+                <div class="price-container">
+                  <span class="currency">$</span>
+                  <span class="amount">199</span>
+                  <span class="period">/mo</span>
+                </div>
+                <ul class="pricing-features-list p-0">
+                  <li>
+                    <i class="fas fa-check-circle"></i> Unlimited Workspaces
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Unlimited Team Members
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 5M API Requests / Month
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> 365-Day Telemetry Logs
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Custom Webhook Triggers
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i> Dedicated Support Slack
+                  </li>
+                </ul>
+                <div class="pricing-footer-btn w-100">
+                  <a href="#" class="theme-btn-two w-100">Contact Sales</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="sec-title text-center mb-5">
+          <h2>Frequently Asked Questions</h2>
+          <p class="mx-auto mt-3">
+            Got questions about billing, usage limits, or integration setups?
+            We've got answers.
+          </p>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="accordion faq-accordion" id="faqAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq-1"
+                    aria-expanded="true"
+                  >
+                    Can I change or cancel my plan at any time?
+                  </button>
+                </h2>
+                <div
+                  id="faq-1"
+                  class="accordion-collapse collapse show"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    Yes, you can upgrade, downgrade, or cancel your subscription
+                    directly from your billing admin console. If you cancel,
+                    your access remains active until the end of your current
+                    billing period.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq-2"
+                  >
+                    What happens if my startup exceeds its API monthly request
+                    limits?
+                  </button>
+                </h2>
+                <div
+                  id="faq-2"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    We do not block your telemetry streams. Instead, we send
+                    dashboard and email notifications, and apply a friendly
+                    overage fee per 10k requests, or help you transition to the
+                    next tier when it makes financial sense.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq-3"
+                  >
+                    Do you offer a free trial period?
+                  </button>
+                </h2>
+                <div
+                  id="faq-3"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    Yes, every new user receives a 14-day free trial of our
+                    Professional features, with no credit card required upfront.
+                    You can easily select your plan when you decide to proceed.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq-4"
+                  >
+                    Is our telemetry data secure with Stackly?
+                  </button>
+                </h2>
+                <div
+                  id="faq-4"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    Absolutely. All data points are encrypted in transit using
+                    TLS 1.3 and at rest in our databases using AES-256
+                    standards. We comply with industry compliance principles.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../assets/js/script.js"></script>
+  </body>
+</html>

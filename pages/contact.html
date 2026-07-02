@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../assets/css/common.css" />
+    <link rel="stylesheet" href="../assets/css/contact.css" />
+  </head>
+  <body class="boxed_wrapper">
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Page Title Section -->
+    <section class="page-title">
+      <div class="container">
+        <h1>Contact Us</h1>
+        <ul class="breadcrumb">
+          <li><a href="../index.html">Home</a></li>
+          <li><i class="fas fa-chevron-right mx-2"></i></li>
+          <li>Contact</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact Details Section -->
+    <section class="contact-page-section">
+      <div class="container">
+        <div class="row g-4 mb-5">
+          <div class="col-lg-4 col-md-6">
+            <div class="contact-info-card">
+              <div class="contact-icon-box">
+                <i class="fas fa-phone-volume"></i>
+              </div>
+              <h3>Phone Numbers</h3>
+              <p class="mb-1">
+                <a href="tel:+15550192834">Sales: +1 (555) 019-2834</a>
+              </p>
+              <p><a href="tel:+15550192835">Support: +1 (555) 019-2835</a></p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="contact-info-card">
+              <div class="contact-icon-box">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <h3>Email Addresses</h3>
+              <p class="mb-1">
+                <a href="mailto:sales@stackly.com">sales@stackly.com</a>
+              </p>
+              <p>
+                <a href="mailto:support@stackly.com">support@stackly.com</a>
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="contact-info-card">
+              <div class="contact-icon-box">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <h3>Office Headquarters</h3>
+              <p>25 Bedford St., West Village<br />New York City, N.Y. 10014</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="contact-form-wrapper">
+              <h2>Send Us a Message</h2>
+              <p class="subtitle">
+                Our team will get back to you within 12 business hours.
+              </p>
+              <form action="#" method="post" id="contactForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-input-group">
+                      <label for="formName">Your Name</label>
+                      <input
+                        type="text"
+                        id="formName"
+                        name="name"
+                        class="form-input-control"
+                        placeholder="John Doe"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-input-group">
+                      <label for="formEmail">Email Address</label>
+                      <input
+                        type="email"
+                        id="formEmail"
+                        name="email"
+                        class="form-input-control"
+                        placeholder="john@example.com"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-input-group">
+                      <label for="formSubject">Subject</label>
+                      <input
+                        type="text"
+                        id="formSubject"
+                        name="subject"
+                        class="form-input-control"
+                        placeholder="Partnership Opportunity"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-input-group">
+                      <label for="formMessage">Message</label>
+                      <textarea
+                        id="formMessage"
+                        name="message"
+                        class="form-input-control"
+                        placeholder="How can we help your startup scale?"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mt-4 text-center">
+                    <button type="submit" class="theme-btn">
+                      Send Message <i class="fas fa-paper-plane ms-2"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Embedded Maps Section -->
+    <section class="map-container-section">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.237885065403!2d-74.00768968459427!3d40.7303357793301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1m5!1s0x89c259935661b369%3A0xe54e60058b8772a5!2s25%20Bedford%20St%2C%20New%20York%2C%20NY%2010014%2C%20USA!5e0!3m2!1sen!2sin!4v1656792622934!5m2!1sen!2sin"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      >
+      </iframe>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../assets/js/script.js"></script>
+  </body>
+</html>

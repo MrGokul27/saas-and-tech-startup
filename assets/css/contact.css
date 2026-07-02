@@ -1,0 +1,177 @@
+/* Stylesheet for the Contact page of Stackly */
+
+/* Page Title Section */
+.page-title {
+  position: relative;
+  padding: 150px 0 80px;
+  background: var(--gradient-dark);
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--glass-border);
+}
+.page-title::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vw;
+  background: var(--gradient-glow);
+  filter: blur(80px);
+  pointer-events: none;
+}
+.page-title h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+.page-title .breadcrumb {
+  display: inline-flex;
+  gap: 8px;
+  list-style: none;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.page-title .breadcrumb a {
+  color: var(--accent-indigo);
+}
+.page-title .breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* Contact Details Page styles */
+.contact-page-section {
+  padding: 100px 0;
+  background: var(--bg-primary);
+}
+
+/* Contact Info Card */
+.contact-info-card {
+  padding: 40px 30px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-smooth);
+  height: 100%;
+  text-align: center;
+}
+.contact-info-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--glass-border-hover);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-glow);
+}
+.contact-icon-box {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  color: var(--accent-indigo);
+  margin: 0 auto 24px;
+  transition: all var(--transition-fast);
+}
+.contact-info-card:hover .contact-icon-box {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+}
+.contact-info-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+.contact-info-card p,
+.contact-info-card a {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  display: block;
+}
+.contact-info-card a:hover {
+  color: var(--accent-indigo);
+}
+
+/* Contact Form styling */
+.contact-form-wrapper {
+  padding: 60px 40px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+.contact-form-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(
+    circle,
+    rgba(6, 182, 212, 0.1) 0%,
+    transparent 70%
+  );
+  filter: blur(40px);
+}
+.contact-form-wrapper h2 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+.contact-form-wrapper .subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+.form-input-group {
+  margin-bottom: 24px;
+}
+.form-input-group label {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+.form-input-control {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
+  padding: 14px 20px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+}
+.form-input-control:focus {
+  outline: none;
+  border-color: var(--accent-indigo);
+  box-shadow: var(--shadow-glow);
+}
+textarea.form-input-control {
+  resize: vertical;
+  min-height: 150px;
+}
+
+/* Maps Iframe block */
+.map-container-section {
+  width: 100%;
+  height: 450px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--glass-border);
+}
+.map-container-section iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: grayscale(1) invert(0.9) contrast(1.2); /* matches premium dark aesthetic */
+}
