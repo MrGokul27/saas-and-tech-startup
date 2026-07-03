@@ -121,12 +121,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2000);
   }
 
-  Promise.all([
-    loadComponent("header-placeholder", "pages/components/header.html"),
-    loadComponent("footer-placeholder", "pages/components/footer.html"),
-  ]).then(() => {
+  const hasHeader = document.getElementById("header-placeholder");
+  const hasFooter = document.getElementById("footer-placeholder");
+
+  if (hasHeader || hasFooter) {
+    const promises = [];
+    if (hasHeader)
+      promises.push(
+        loadComponent("header-placeholder", "pages/components/header.html"),
+      );
+    if (hasFooter)
+      promises.push(
+        loadComponent("footer-placeholder", "pages/components/footer.html"),
+      );
+
+    Promise.all(promises).then(() => {
+      initInteractions();
+    });
+  } else {
     initInteractions();
-  });
+  }
 
   // ==========================================
   // Page Interactions Initializer
@@ -1313,6 +1327,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Exclude mobile sidebar toggle button
         if (target.id === "sidebarToggle" || target.closest("#sidebarToggle")) {
+          return;
+        }
+
+        // Exclude interactive elements that have custom JS behavior
+        const interactiveIds = [
+          "liveToggle",
+          "clearBtn",
+          "dlBtn",
+          "triggerBlockSim",
+          "triggerBuildBtn",
+          "downloadLogsBtn",
+          "restartContainerBtn",
+          "runQueryBtn",
+          "stageAllBtn",
+          "commitBtn",
+          "deliverBtn",
+          "retryInitechBtn",
+          "addClientBtn",
+          "viewGrowthBtn",
+          "viewBreakBtn",
+          "saveSettingsBtn",
+          "saveBudgetsBtn",
+          "startExpBtn",
+          "downloadPdfBtn",
+          "npsTriggerBtn",
+          "triggerBackupBtn",
+          "triggerRotationBtn",
+          "approveReqBtn",
+          "denyReqBtn",
+        ];
+        if (target.id && interactiveIds.includes(target.id)) {
           return;
         }
 
