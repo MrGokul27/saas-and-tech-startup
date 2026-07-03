@@ -1196,6 +1196,37 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    // 15. Inline Video Section Play/Pause
+    const sectionVideo = document.getElementById('sectionVideo');
+    const videoOverlay = document.getElementById('videoOverlay');
+    const videoPlayIcon = document.getElementById('videoPlayIcon');
+
+    const toggleVideo = () => {
+      if (!sectionVideo) return;
+      if (sectionVideo.paused) {
+        sectionVideo.play();
+        videoOverlay.classList.add('hidden');
+        videoPlayIcon.classList.replace('fa-play', 'fa-pause');
+      } else {
+        sectionVideo.pause();
+        videoOverlay.classList.remove('hidden');
+        videoPlayIcon.classList.replace('fa-pause', 'fa-play');
+      }
+    };
+
+    const videoPlayBtn = document.getElementById('videoPlayBtn');
+    const videoPlayBtn2 = document.getElementById('videoPlayBtn2');
+    if (videoPlayBtn) videoPlayBtn.addEventListener('click', toggleVideo);
+    if (videoPlayBtn2) videoPlayBtn2.addEventListener('click', toggleVideo);
+    if (sectionVideo) {
+      sectionVideo.addEventListener('ended', () => {
+        videoOverlay.classList.remove('hidden');
+        videoPlayIcon.classList.replace('fa-pause', 'fa-play');
+      });
+      // clicking the video itself also toggles
+      sectionVideo.addEventListener('click', toggleVideo);
+    }
+
     // 15. Ecosystem Showcase Section Tabs Switcher
     const ecoTabButtons = document.querySelectorAll(".eco-tab-btn");
     const ecoTabContents = document.querySelectorAll(".eco-tab-content");
