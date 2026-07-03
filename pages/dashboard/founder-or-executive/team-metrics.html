@@ -153,7 +153,9 @@
               <div class="dash-card">
                 <div class="dash-card-header mb-4">
                   <h5>Departmental Operating Budgets</h5>
-                  <button class="btn btn-sm btn-indigo" id="saveBudgetsBtn">
+                  <button
+                    class="btn btn-sm btn-indigo text-white border border-1"
+                  >
                     Save Allocation splits
                   </button>
                 </div>
@@ -178,7 +180,7 @@
                     max="80"
                     value="50"
                   />
-                  <div class="small text-muted mt-2">
+                  <div class="small mt-2">
                     Spend MTD: <strong>$24,500</strong> &bull; Monthly limit:
                     <span id="limitText1">$35,000</span>
                   </div>
@@ -204,7 +206,7 @@
                     max="80"
                     value="30"
                   />
-                  <div class="small text-muted mt-2">
+                  <div class="small mt-2">
                     Spend MTD: <strong>$12,000</strong> &bull; Monthly limit:
                     <span id="limitText2">$21,000</span>
                   </div>
@@ -230,7 +232,7 @@
                     max="50"
                     value="20"
                   />
-                  <div class="small text-muted mt-2">
+                  <div class="small mt-2">
                     Spend MTD: <strong>$8,000</strong> &bull; Monthly limit:
                     <span id="limitText3">$14,000</span>
                   </div>
@@ -308,9 +310,12 @@
                 </div>
                 <div class="d-grid gap-2">
                   <button
-                    class="btn btn-outline-indigo py-2"
-                    onclick="alert('Budgets report downloaded.')"
-                    style="border-radius: 12px; font-size: 0.85rem"
+                    class="btn btn-outline-indigo py-2 text-white"
+                    style="
+                      border-radius: 12px;
+                      font-size: 0.85rem;
+                      border: 1px solid #fff;
+                    "
                   >
                     <i class="fas fa-file-invoice me-2"></i>Download Operational
                     Budgets

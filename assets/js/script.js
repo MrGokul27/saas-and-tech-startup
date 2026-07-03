@@ -1285,6 +1285,42 @@ document.addEventListener("DOMContentLoaded", () => {
         statCardsGrid.innerHTML = statsHtml;
         mainDashboardContent.innerHTML = mainHtml;
       }
+
+      // Catch all clicks on links and buttons (except sidebar nav, toggle, and brand logo) and redirect to 404 page
+      document.addEventListener("click", (e) => {
+        const target = e.target.closest(
+          "a, button, .card-action, .quick-action-btn",
+        );
+        if (!target) return;
+
+        // Exclude sidebar navigation links
+        if (
+          target.classList.contains("nav-item") &&
+          target.id !== "logoutBtn"
+        ) {
+          return;
+        }
+
+        // Exclude logout button
+        if (target.id === "logoutBtn") {
+          return;
+        }
+
+        // Exclude brand logo link
+        if (target.closest(".sidebar-brand")) {
+          return;
+        }
+
+        // Exclude mobile sidebar toggle button
+        if (target.id === "sidebarToggle" || target.closest("#sidebarToggle")) {
+          return;
+        }
+
+        // Redirect all other links and buttons to the 404 page
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = pathPrefix + "404.html";
+      });
     }
 
     // 15. Inline Video Section Play/Pause

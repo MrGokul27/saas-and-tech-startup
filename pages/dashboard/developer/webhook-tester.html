@@ -178,9 +178,7 @@
                 </div>
                 <div class="row g-3">
                   <div class="col-md-8">
-                    <label class="form-label small text-muted"
-                      >Destination endpoint</label
-                    >
+                    <label class="form-label small">Destination endpoint</label>
                     <input
                       type="url"
                       id="targetUrlInput"
@@ -190,9 +188,7 @@
                     />
                   </div>
                   <div class="col-md-4">
-                    <label class="form-label small text-muted"
-                      >Event Type</label
-                    >
+                    <label class="form-label small">Event Type</label>
                     <select
                       id="eventTypeSelect"
                       class="form-select bg-dark border-secondary text-light"
@@ -206,9 +202,7 @@
                     </select>
                   </div>
                   <div class="col-12">
-                    <label class="form-label small text-muted"
-                      >Event Payload (JSON)</label
-                    >
+                    <label class="form-label small">Event Payload (JSON)</label>
                     <textarea class="json-editor" id="jsonTextArea"></textarea>
                   </div>
                   <div class="col-12 text-end">
@@ -217,8 +211,10 @@
                       id="deliverBtn"
                       style="
                         border-radius: 8px;
+                        border: #fff  1px solid;
                         font-size: 0.85rem;
                         font-weight: 500;
+                        color: #fff;
                       "
                     >
                       <i class="fas fa-paper-plane me-1"></i>Deliver Webhook

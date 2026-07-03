@@ -146,7 +146,7 @@
               class="btn btn-indigo px-4 py-2"
               data-bs-toggle="modal"
               data-bs-target="#addTicketModal"
-              style="border-radius: 12px; font-weight: 500"
+              style="border-radius: 12px; font-weight: 500; color: #fff"
             >
               <i class="fas fa-plus me-2"></i>Add Roadmap Ticket
             </button>
@@ -218,9 +218,7 @@
                     class="d-flex justify-content-between align-items-center mb-2"
                   >
                     <span class="badge bg-danger-subtle text-danger">High</span>
-                    <span class="text-muted" style="font-size: 0.7rem"
-                      >Q3-C</span
-                    >
+                    <span class="" style="font-size: 0.7rem">Q3-C</span>
                   </div>
                   <div class="td-primary fw-600 mb-1">
                     SSO Authentication Login
@@ -237,9 +235,7 @@
                     <span class="badge bg-secondary-subtle text-light"
                       >Low</span
                     >
-                    <span class="text-muted" style="font-size: 0.7rem"
-                      >Q4-A</span
-                    >
+                    <span class="" style="font-size: 0.7rem">Q4-A</span>
                   </div>
                   <div class="td-primary fw-600 mb-1">
                     Webhook Payload Editor
@@ -255,9 +251,7 @@
                     <span class="badge bg-warning-subtle text-warning"
                       >Medium</span
                     >
-                    <span class="text-muted" style="font-size: 0.7rem"
-                      >Q4-A</span
-                    >
+                    <span class="" style="font-size: 0.7rem">Q4-A</span>
                   </div>
                   <div class="td-primary fw-600 mb-1">
                     Dark Mode Toggle Update
@@ -283,9 +277,7 @@
                     class="d-flex justify-content-between align-items-center mb-2"
                   >
                     <span class="badge bg-danger-subtle text-danger">High</span>
-                    <span class="text-muted" style="font-size: 0.7rem"
-                      >Q3-C</span
-                    >
+                    <span class="" style="font-size: 0.7rem">Q3-C</span>
                   </div>
                   <div class="td-primary fw-600 mb-1">
                     A/B Testing Experiments
@@ -301,9 +293,7 @@
                     <span class="badge bg-warning-subtle text-warning"
                       >Medium</span
                     >
-                    <span class="text-muted" style="font-size: 0.7rem"
-                      >Q3-C</span
-                    >
+                    <span class="" style="font-size: 0.7rem">Q3-C</span>
                   </div>
                   <div class="td-primary fw-600 mb-1">
                     Audit Logs CSV Export
@@ -332,9 +322,7 @@
                     <span class="badge bg-warning-subtle text-warning"
                       >Medium</span
                     >
-                    <span class="text-muted" style="font-size: 0.7rem"
-                      >Q3-B</span
-                    >
+                    <span class="" style="font-size: 0.7rem">Q3-B</span>
                   </div>
                   <div class="td-primary fw-600 mb-1">
                     Slack Integrations Webhook
@@ -351,9 +339,7 @@
                     <span class="badge bg-secondary-subtle text-light"
                       >Low</span
                     >
-                    <span class="text-muted" style="font-size: 0.7rem"
-                      >Q3-B</span
-                    >
+                    <span class="" style="font-size: 0.7rem">Q3-B</span>
                   </div>
                   <div class="td-primary fw-600 mb-1">NPS Survey Scheduler</div>
                   <p class="mb-0 small text-secondary">
@@ -380,9 +366,7 @@
                     <span class="badge bg-success-subtle text-success"
                       >Shipped</span
                     >
-                    <span class="text-muted" style="font-size: 0.7rem"
-                      >Q3-A</span
-                    >
+                    <span class="" style="font-size: 0.7rem">Q3-A</span>
                   </div>
                   <div
                     class="td-primary fw-600 mb-1 text-decoration-line-through"
@@ -424,7 +408,7 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <label class="form-label small text-muted">Feature Name</label>
+              <label class="form-label small">Feature Name</label>
               <input
                 type="text"
                 id="featNameInput"
@@ -433,7 +417,7 @@
               />
             </div>
             <div class="mb-3">
-              <label class="form-label small text-muted">Description</label>
+              <label class="form-label small">Description</label>
               <textarea
                 id="featDescInput"
                 class="form-control bg-dark border-secondary text-light"
@@ -443,7 +427,7 @@
             </div>
             <div class="row g-2">
               <div class="col-6">
-                <label class="form-label small text-muted">Priority</label>
+                <label class="form-label small">Priority</label>
                 <select
                   id="featPrioritySelect"
                   class="form-select bg-dark border-secondary text-light"
@@ -454,9 +438,7 @@
                 </select>
               </div>
               <div class="col-6">
-                <label class="form-label small text-muted"
-                  >Target Quarter</label
-                >
+                <label class="form-label small">Target Quarter</label>
                 <select
                   id="featQtrSelect"
                   class="form-select bg-dark border-secondary text-light"
@@ -533,7 +515,7 @@
           card.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="badge ${badgeClass}">${priority}</span>
-              <span class="text-muted" style="font-size: 0.7rem;">${qtr}</span>
+              <span class="" style="font-size: 0.7rem;">${qtr}</span>
             </div>
             <div class="td-primary fw-600 mb-1">${name}</div>
             <p class="mb-0 small text-secondary">${desc}</p>

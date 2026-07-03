@@ -103,9 +103,7 @@
                 </div>
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <label class="form-label small text-muted"
-                      >Company Name</label
-                    >
+                    <label class="form-label small">Company Name</label>
                     <input
                       type="text"
                       id="companyNameInput"
@@ -115,9 +113,7 @@
                     />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label small text-muted"
-                      >Workspace Domain</label
-                    >
+                    <label class="form-label small">Workspace Domain</label>
                     <input
                       type="text"
                       id="domainInput"
@@ -127,7 +123,7 @@
                     />
                   </div>
                   <div class="col-12">
-                    <label class="form-label small text-muted"
+                    <label class="form-label small"
                       >Primary Administrator Email</label
                     >
                     <input
@@ -193,8 +189,10 @@
                       id="saveSettingsBtn"
                       style="
                         border-radius: 8px;
+                        border: 1px solid #fff;
                         font-size: 0.85rem;
                         font-weight: 500;
+                        color: #fff;
                       "
                     >
                       Save Workspace Settings
@@ -225,13 +223,10 @@
                       >Connected</span
                     >
                   </div>
-                  <div class="small text-muted mb-2">
+                  <div class="small mb-2">
                     Dispatches notifications to #announcements.
                   </div>
-                  <button
-                    class="btn btn-sm btn-outline-danger"
-                    id="slackToggleBtn"
-                  >
+                  <button class="btn btn-sm btn-outline-danger">
                     Disconnect
                   </button>
                 </div>
@@ -244,19 +239,12 @@
                     <span class="td-primary fw-600"
                       ><i class="fab fa-github text-light me-2"></i>GitHub</span
                     >
-                    <span
-                      class="badge bg-success-subtle text-success"
-                      id="githubBadge"
+                    <span class="badge bg-success-subtle text-success"
                       >Connected</span
                     >
                   </div>
-                  <div class="small text-muted mb-2">
-                    Syncs CI/CD builds repositories.
-                  </div>
-                  <button
-                    class="btn btn-sm btn-outline-danger"
-                    id="githubToggleBtn"
-                  >
+                  <div class="small mb-2">Syncs CI/CD builds repositories.</div>
+                  <button class="btn btn-sm btn-outline-danger">
                     Disconnect
                   </button>
                 </div>
@@ -270,19 +258,14 @@
                       ><i class="fab fa-stripe text-indigo me-2"></i
                       >Stripe</span
                     >
-                    <span
-                      class="badge bg-success-subtle text-success"
-                      id="stripeBadge"
+                    <span class="badge bg-success-subtle text-success"
                       >Connected</span
                     >
                   </div>
-                  <div class="small text-muted mb-2">
+                  <div class="small mb-2">
                     Processes subscription billing invoices.
                   </div>
-                  <button
-                    class="btn btn-sm btn-outline-danger"
-                    id="stripeToggleBtn"
-                  >
+                  <button class="btn btn-sm btn-outline-danger">
                     Disconnect
                   </button>
                 </div>

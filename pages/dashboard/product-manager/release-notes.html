@@ -145,9 +145,7 @@
                 </div>
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <label class="form-label small text-muted"
-                      >Version Tag</label
-                    >
+                    <label class="form-label small">Version Tag</label>
                     <input
                       type="text"
                       id="verTagInput"
@@ -158,7 +156,7 @@
                     />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label small text-muted">Type</label>
+                    <label class="form-label small">Type</label>
                     <select
                       id="verTypeSelect"
                       class="form-select bg-dark border-secondary text-light"
@@ -170,7 +168,7 @@
                     </select>
                   </div>
                   <div class="col-12">
-                    <label class="form-label small text-muted"
+                    <label class="form-label small"
                       >Changelog Bullet Items</label
                     >
                     <div class="input-group mb-2">
@@ -185,7 +183,7 @@
                         class="btn btn-indigo"
                         type="button"
                         id="addBulletBtn"
-                        style="border-radius: 0 8px 8px 0"
+                        style="border-radius: 0 8px 8px 0; color: #fff"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -206,6 +204,7 @@
                         border-radius: 8px;
                         font-size: 0.85rem;
                         font-weight: 500;
+                        color: #fff;
                       "
                     >
                       <i class="fas fa-globe me-1"></i>Publish Changelog &amp;
@@ -235,7 +234,7 @@
                           >Minor Update</span
                         >
                       </div>
-                      <span class="small text-muted">Published Today</span>
+                      <span class="small">Published Today</span>
                     </div>
                     <ul class="text-secondary small mb-0 ps-3">
                       <li>
@@ -257,7 +256,7 @@
                           >Major Release</span
                         >
                       </div>
-                      <span class="small text-muted">2 days ago</span>
+                      <span class="small">2 days ago</span>
                     </div>
                     <ul class="text-secondary small mb-0 ps-3">
                       <li>
@@ -443,7 +442,7 @@
                   <h6 class="mb-0 td-primary fs-5">Version ${version}</h6>
                   <span class="badge ${typeBadgeClass}">${verType}</span>
                 </div>
-                <span class="small text-muted">Published Just now</span>
+                <span class="small ">Published Just now</span>
               </div>
               <ul class="text-secondary small mb-0 ps-3">
                 ${bulletsArray.map((b) => `<li>${b}</li>`).join("")}
