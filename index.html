@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stackly - SaaS & Tech Startup Landing Page</title>
+    <link
+      rel="icon"
+      href="./assets/images/logoStackly.webp"
+      type="image/webp"
+    />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -819,9 +824,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 pricing-column">
                   <div class="pricing-block-one">
                     <div class="pricing-table">
-                      <figure class="image">
-                        <img src="images/icons/price-icon-1.png" alt="" />
-                      </figure>
+                      <figure class="image"></figure>
                       <div class="table-header">
                         <h3 class="title">Basic</h3>
                         <h2 class="price">$9.00<span>/Mo</span></h2>
@@ -843,9 +846,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 pricing-column">
                   <div class="pricing-block-one">
                     <div class="pricing-table">
-                      <figure class="image">
-                        <img src="images/icons/price-icon-2.png" alt="" />
-                      </figure>
+                      <figure class="image"></figure>
                       <div class="table-header">
                         <h3 class="title">Premium</h3>
                         <h2 class="price">$29.00<span>/Mo</span></h2>
@@ -868,9 +869,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 pricing-column">
                   <div class="pricing-block-one">
                     <div class="pricing-table">
-                      <figure class="image">
-                        <img src="images/icons/price-icon-3.png" alt="" />
-                      </figure>
+                      <figure class="image"></figure>
                       <div class="table-header">
                         <h3 class="title">PROFESSIONAL</h3>
                         <h2 class="price">$79.00<span>/Mo</span></h2>
@@ -897,9 +896,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 pricing-column">
                   <div class="pricing-block-one">
                     <div class="pricing-table">
-                      <figure class="image">
-                        <img src="images/icons/price-icon-1.png" alt="" />
-                      </figure>
+                      <figure class="image"></figure>
                       <div class="table-header">
                         <h3 class="title">Basic</h3>
                         <h2 class="price">$79.00<span>/Yr</span></h2>
@@ -921,9 +918,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 pricing-column">
                   <div class="pricing-block-one">
                     <div class="pricing-table">
-                      <figure class="image">
-                        <img src="images/icons/price-icon-2.png" alt="" />
-                      </figure>
+                      <figure class="image"></figure>
                       <div class="table-header">
                         <h3 class="title">Premium</h3>
                         <h2 class="price">$249.00<span>/Yr</span></h2>
@@ -946,9 +941,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 pricing-column">
                   <div class="pricing-block-one">
                     <div class="pricing-table">
-                      <figure class="image">
-                        <img src="images/icons/price-icon-3.png" alt="" />
-                      </figure>
+                      <figure class="image"></figure>
                       <div class="table-header">
                         <h3 class="title">PROFESSIONAL</h3>
                         <h2 class="price">$699.00<span>/Yr</span></h2>
@@ -1560,13 +1553,19 @@
                   Get monthly developer tutorials, server architecture updates,
                   and product telemetry guides directly in your inbox.
                 </div>
-                <form action="pages/404.html" method="get" class="subscribe-form">
+                <form
+                  action="pages/404.html"
+                  method="get"
+                  class="subscribe-form"
+                  autocomplete="on"
+                >
                   <div class="form-group">
                     <input
                       type="email"
                       name="email"
                       placeholder="Enter Your Email"
-                      required=""
+                      autocomplete="email"
+                      required
                     />
                     <button type="submit" class="theme-btn-two">
                       Subscribe Now

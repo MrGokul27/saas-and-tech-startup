@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us - Stackly SaaS & Tech Startup</title>
+    <link
+      rel="icon"
+      href="../assets/images/logoStackly.webp"
+      type="image/webp"
+    />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -89,7 +94,12 @@
               <p class="subtitle">
                 Our team will get back to you within 12 business hours.
               </p>
-              <form action="404.html" method="get" id="contactForm">
+              <form
+                action="404.html"
+                method="get"
+                id="contactForm"
+                autocomplete="on"
+              >
                 <div class="row g-4">
                   <div class="col-md-6">
                     <div class="form-floating input-icon-group">
@@ -99,12 +109,15 @@
                         name="name"
                         class="form-control form-input-control"
                         placeholder="John Doe"
+                        autocomplete="name"
+                        maxlength="16"
                         required
                       />
                       <label for="formName">Your Name</label>
                       <i class="fas fa-user input-icon"></i>
                     </div>
                   </div>
+
                   <div class="col-md-6">
                     <div class="form-floating input-icon-group">
                       <input
@@ -113,12 +126,14 @@
                         name="email"
                         class="form-control form-input-control"
                         placeholder="john@example.com"
+                        autocomplete="email"
                         required
                       />
                       <label for="formEmail">Email Address</label>
                       <i class="fas fa-envelope input-icon"></i>
                     </div>
                   </div>
+
                   <div class="col-md-12">
                     <div class="form-floating input-icon-group">
                       <input
@@ -127,12 +142,14 @@
                         name="subject"
                         class="form-control form-input-control"
                         placeholder="Partnership Opportunity"
+                        autocomplete="off"
                         required
                       />
                       <label for="formSubject">Subject</label>
                       <i class="fas fa-pen input-icon"></i>
                     </div>
                   </div>
+
                   <div class="col-md-12">
                     <div class="form-floating input-icon-group">
                       <textarea
@@ -140,6 +157,7 @@
                         name="message"
                         class="form-control form-input-control form-textarea"
                         placeholder="How can we help your startup scale?"
+                        autocomplete="off"
                         style="height: 160px"
                         required
                       ></textarea>
@@ -149,6 +167,7 @@
                       ></i>
                     </div>
                   </div>
+
                   <div class="col-md-12 mt-2">
                     <button type="submit" class="submit-theme-btn">
                       <span>Send Message</span>
@@ -355,5 +374,39 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Main Custom Script -->
     <script src="../assets/js/script.js"></script>
+
+    <script>
+      const contactNameInput = document.getElementById("formName");
+
+      if (contactNameInput) {
+        // Prevent typing numbers and special characters
+        contactNameInput.addEventListener("input", function () {
+          this.value = this.value.replace(/[^A-Za-z\s]/g, "");
+        });
+
+        // Prevent invalid pasted characters
+        contactNameInput.addEventListener("paste", function (e) {
+          e.preventDefault();
+
+          const pastedText = (e.clipboardData || window.clipboardData).getData(
+            "text",
+          );
+          const cleanedText = pastedText.replace(/[^A-Za-z\s]/g, "");
+
+          const start = this.selectionStart;
+          const end = this.selectionEnd;
+
+          this.value =
+            this.value.substring(0, start) +
+            cleanedText +
+            this.value.substring(end);
+
+          this.setSelectionRange(
+            start + cleanedText.length,
+            start + cleanedText.length,
+          );
+        });
+      }
+    </script>
   </body>
 </html>

@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Latest News - Stackly SaaS & Tech Startup</title>
+    <link
+      rel="icon"
+      href="../assets/images/logoStackly.webp"
+      type="image/webp"
+    />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -248,10 +253,25 @@
               <!-- Search Widget -->
               <div class="sidebar-widget">
                 <h4 class="sidebar-widget-title">Search</h4>
-                <div class="search-widget-form">
-                  <input type="text" placeholder="Search insights..." />
-                  <button type="submit"><i class="fas fa-search"></i></button>
-                </div>
+                <form
+                  class="search-widget-form"
+                  action="blog.html"
+                  method="get"
+                  role="search"
+                >
+                  <input
+                    type="search"
+                    id="blog-search"
+                    name="q"
+                    placeholder="Search insights..."
+                    autocomplete="off"
+                    aria-label="Search blog posts"
+                  />
+
+                  <button type="submit" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </form>
               </div>
 
               <!-- Categories Widget -->

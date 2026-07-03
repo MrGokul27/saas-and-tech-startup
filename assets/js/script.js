@@ -96,9 +96,12 @@ document.addEventListener("DOMContentLoaded", () => {
           const tempWrapper = document.createElement("div");
           tempWrapper.innerHTML = adjustedData;
 
-          const componentNode = tempWrapper.firstElementChild;
-          if (componentNode) {
-            placeholder.replaceWith(componentNode);
+          const parent = placeholder.parentElement;
+          if (parent) {
+            while (tempWrapper.firstChild) {
+              parent.insertBefore(tempWrapper.firstChild, placeholder);
+            }
+            placeholder.remove();
           } else {
             placeholder.outerHTML = adjustedData;
           }
@@ -159,11 +162,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Mobile Navigation Menu Drawer
     const mobileMenu = document.querySelector(".mobile-menu");
-    const mobileToggler = document.querySelector(".mobile-nav-toggler");
+    const mobileTogglers = document.querySelectorAll(".mobile-nav-toggler");
     const closeBtn = document.querySelector(".mobile-menu .close-btn");
     const menuBackdrop = document.querySelector(".mobile-menu .menu-backdrop");
 
-    if (mobileMenu && mobileToggler) {
+    if (mobileMenu && mobileTogglers.length > 0) {
       const openMobileMenu = () => {
         mobileMenu.classList.add("open");
         document.body.style.overflow = "hidden";
@@ -174,7 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.style.overflow = "";
       };
 
-      mobileToggler.addEventListener("click", openMobileMenu);
+      mobileTogglers.forEach((toggler) => {
+        toggler.addEventListener("click", openMobileMenu);
+      });
       if (closeBtn) closeBtn.addEventListener("click", closeMobileMenu);
       if (menuBackdrop) menuBackdrop.addEventListener("click", closeMobileMenu);
 
@@ -433,7 +438,10 @@ document.addEventListener("DOMContentLoaded", () => {
               submitBtn.innerHTML = originalText;
               submitBtn.style.background = "";
               submitBtn.style.boxShadow = "";
-            }, 3000);
+              // Redirect to form action (404 page)
+              window.location.href =
+                form.getAttribute("action") || "pages/404.html";
+            }, 1000);
           }, 1500);
         }
       });
@@ -460,10 +468,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         navLinks.forEach((link) => {
-          const parentLi = link.parentElement;
-          parentLi.classList.remove("current");
-          if (link.getAttribute("href") === `#${currentSectionId}`) {
-            parentLi.classList.add("current");
+          const href = link.getAttribute("href");
+          if (href && (href.startsWith("#") || href.includes("#"))) {
+            const parentLi = link.parentElement;
+            parentLi.classList.remove("current");
+            if (
+              href === `#${currentSectionId}` ||
+              href.endsWith(`#${currentSectionId}`)
+            ) {
+              parentLi.classList.add("current");
+            }
           }
         });
       });
@@ -473,10 +487,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById("registerForm");
     if (registerForm) {
       const password = document.getElementById("registerPassword");
-      const confirmPassword = document.getElementById("registerConfirmPassword");
+      const confirmPassword = document.getElementById(
+        "registerConfirmPassword",
+      );
 
       registerForm.addEventListener("submit", (e) => {
-        if (password && confirmPassword && password.value !== confirmPassword.value) {
+        if (
+          password &&
+          confirmPassword &&
+          password.value !== confirmPassword.value
+        ) {
           e.preventDefault();
           e.stopPropagation();
 
@@ -484,23 +504,29 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!errDiv) {
             errDiv = document.createElement("div");
             errDiv.className = "password-match-error text-danger mt-2 small";
-            errDiv.innerHTML = '<i class="fas fa-exclamation-circle me-1"></i> Passwords do not match!';
+            errDiv.innerHTML =
+              '<i class="fas fa-exclamation-circle me-1"></i> Passwords do not match!';
             confirmPassword.parentElement.appendChild(errDiv);
           }
           confirmPassword.classList.add("is-invalid");
         } else {
           // Passwords match! Let's save the data to localStorage and redirect to login
           e.preventDefault();
-          const username = document.getElementById("registerUsername").value.trim();
+          const username = document
+            .getElementById("registerUsername")
+            .value.trim();
           const email = document.getElementById("registerEmail").value.trim();
           const role = document.getElementById("registerRole").value;
-          
-          localStorage.setItem("registered_user_" + email.toLowerCase(), JSON.stringify({
-            username: username,
-            role: role,
-            email: email
-          }));
-          
+
+          localStorage.setItem(
+            "registered_user_" + email.toLowerCase(),
+            JSON.stringify({
+              username: username,
+              role: role,
+              email: email,
+            }),
+          );
+
           window.location.href = "login.html";
         }
       });
@@ -524,26 +550,31 @@ document.addEventListener("DOMContentLoaded", () => {
         if (emailInput && roleSelect) {
           const email = emailInput.value.trim();
           const role = roleSelect.value;
-          
+
           let username = email.split("@")[0];
           username = username.charAt(0).toUpperCase() + username.slice(1);
-          
-          const registeredStr = localStorage.getItem("registered_user_" + email.toLowerCase());
+
+          const registeredStr = localStorage.getItem(
+            "registered_user_" + email.toLowerCase(),
+          );
           if (registeredStr) {
             try {
               const regUser = JSON.parse(registeredStr);
               username = regUser.username || username;
-            } catch(err) {
+            } catch (err) {
               console.error("Failed parsing registered user", err);
             }
           }
-          
-          sessionStorage.setItem("user_session", JSON.stringify({
-            username: username,
-            role: role,
-            email: email
-          }));
-          
+
+          sessionStorage.setItem(
+            "user_session",
+            JSON.stringify({
+              username: username,
+              role: role,
+              email: email,
+            }),
+          );
+
           window.location.href = "dashboard.html";
         }
       });
@@ -597,13 +628,13 @@ document.addEventListener("DOMContentLoaded", () => {
       let user = {
         username: "Alex Rivera",
         role: "developer",
-        email: "alex.rivera@stackly.com"
+        email: "alex.rivera@stackly.com",
       };
 
       if (sessionStr) {
         try {
           user = JSON.parse(sessionStr);
-        } catch(err) {
+        } catch (err) {
           console.error("Session parse error", err);
         }
       }
@@ -616,14 +647,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const topbarPillName = document.getElementById("topbarPillName");
 
       const getInitials = (name) => {
-        return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+        if (!name) return "AR";
+        return name
+          .split(" ")
+          .map((n) => n[0])
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
       };
 
       const initials = getInitials(user.username);
 
       if (sidebarUserName) sidebarUserName.textContent = user.username;
       if (sidebarAvatar) sidebarAvatar.textContent = initials;
-      if (topbarGreetingName) topbarGreetingName.innerHTML = `<span>${user.username}</span>`;
+      if (topbarGreetingName)
+        topbarGreetingName.innerHTML = `<span>${user.username}</span>`;
       if (topbarMiniAvatar) topbarMiniAvatar.textContent = initials;
       if (topbarPillName) topbarPillName.textContent = user.username;
 
@@ -634,7 +672,7 @@ document.addEventListener("DOMContentLoaded", () => {
           developer: "Developer",
           manager: "Product Manager",
           admin: "Systems Admin",
-          executive: "Founder / CEO"
+          executive: "Founder / CEO",
         };
         sidebarUserRole.textContent = roleMapping[user.role] || user.role;
       }
@@ -699,7 +737,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const statCardsGrid = document.getElementById("statCardsGrid");
-      const mainDashboardContent = document.getElementById("mainDashboardContent");
+      const mainDashboardContent = document.getElementById(
+        "mainDashboardContent",
+      );
 
       if (statCardsGrid && mainDashboardContent) {
         let statsHtml = "";
@@ -1205,34 +1245,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 15. Inline Video Section Play/Pause
-    const sectionVideo = document.getElementById('sectionVideo');
-    const videoOverlay = document.getElementById('videoOverlay');
-    const videoPlayIcon = document.getElementById('videoPlayIcon');
+    const sectionVideo = document.getElementById("sectionVideo");
+    const videoOverlay = document.getElementById("videoOverlay");
+    const videoPlayIcon = document.getElementById("videoPlayIcon");
 
     const toggleVideo = () => {
       if (!sectionVideo) return;
       if (sectionVideo.paused) {
         sectionVideo.play();
-        videoOverlay.classList.add('hidden');
-        videoPlayIcon.classList.replace('fa-play', 'fa-pause');
+        if (videoOverlay) videoOverlay.classList.add("hidden");
+        if (videoPlayIcon)
+          videoPlayIcon.classList.replace("fa-play", "fa-pause");
       } else {
         sectionVideo.pause();
-        videoOverlay.classList.remove('hidden');
-        videoPlayIcon.classList.replace('fa-pause', 'fa-play');
+        if (videoOverlay) videoOverlay.classList.remove("hidden");
+        if (videoPlayIcon)
+          videoPlayIcon.classList.replace("fa-pause", "fa-play");
       }
     };
 
-    const videoPlayBtn = document.getElementById('videoPlayBtn');
-    const videoPlayBtn2 = document.getElementById('videoPlayBtn2');
-    if (videoPlayBtn) videoPlayBtn.addEventListener('click', toggleVideo);
-    if (videoPlayBtn2) videoPlayBtn2.addEventListener('click', toggleVideo);
+    const videoPlayBtn = document.getElementById("videoPlayBtn");
+    const videoPlayBtn2 = document.getElementById("videoPlayBtn2");
+    if (videoPlayBtn) videoPlayBtn.addEventListener("click", toggleVideo);
+    if (videoPlayBtn2) videoPlayBtn2.addEventListener("click", toggleVideo);
     if (sectionVideo) {
-      sectionVideo.addEventListener('ended', () => {
-        videoOverlay.classList.remove('hidden');
-        videoPlayIcon.classList.replace('fa-pause', 'fa-play');
+      sectionVideo.addEventListener("ended", () => {
+        if (videoOverlay) videoOverlay.classList.remove("hidden");
+        if (videoPlayIcon)
+          videoPlayIcon.classList.replace("fa-pause", "fa-play");
       });
       // clicking the video itself also toggles
-      sectionVideo.addEventListener('click', toggleVideo);
+      sectionVideo.addEventListener("click", toggleVideo);
     }
 
     // 15. Ecosystem Showcase Section Tabs Switcher
