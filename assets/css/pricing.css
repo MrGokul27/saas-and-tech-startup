@@ -3,11 +3,16 @@
 /* Page Title Section */
 .page-title {
   position: relative;
-  padding: 150px 0 80px;
-  background: var(--gradient-dark);
+  padding: 160px 0 90px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 13, 22, 0.8) 0%,
+      rgba(9, 13, 22, 0.95) 100%
+    ),
+    url("../images/pricing-banner-image.webp") no-repeat center / cover;
   text-align: center;
   overflow: hidden;
-  border-bottom: 1px solid var(--glass-border);
 }
 .page-title::before {
   content: "";
