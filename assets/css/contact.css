@@ -10,7 +10,7 @@
       rgba(9, 13, 22, 0.8) 0%,
       rgba(9, 13, 22, 0.95) 100%
     ),
-    url("../images/contact-banner-image.webp") no-repeat center / cover;
+    url("../images/contact-banner-image.webp") no-repeat top / cover;
   text-align: center;
   overflow: hidden;
 }
@@ -105,29 +105,23 @@
   color: var(--accent-indigo);
 }
 
-/* Contact Form styling */
+/* ==========================================
+   Refined Premium Form UI
+   ========================================== */
 .contact-form-wrapper {
   padding: 60px 40px;
-  background: var(--bg-secondary);
+  background: linear-gradient(
+    145deg,
+    rgba(22, 28, 45, 0.7) 0%,
+    rgba(9, 13, 22, 0.95) 100%
+  );
   border: 1px solid var(--glass-border);
   border-radius: var(--border-radius-lg);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
-.contact-form-wrapper::before {
-  content: "";
-  position: absolute;
-  top: -10%;
-  right: -10%;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(
-    circle,
-    rgba(6, 182, 212, 0.1) 0%,
-    transparent 70%
-  );
-  filter: blur(40px);
-}
+
 .contact-form-wrapper h2 {
   font-size: 2rem;
   margin-bottom: 8px;
@@ -136,47 +130,308 @@
   color: var(--text-secondary);
   margin-bottom: 40px;
 }
-.form-input-group {
-  margin-bottom: 24px;
+
+/* Icon Setup inside Inputs */
+.input-icon-group {
+  position: relative;
 }
-.form-input-group label {
-  display: block;
-  font-family: var(--font-heading);
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
+.input-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(165, 180, 252, 0.4); /* subtle indigo tint */
+  z-index: 5;
+  pointer-events: none;
+  transition: color var(--transition-fast);
 }
-.form-input-control {
-  width: 100%;
-  background: var(--bg-primary);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius-sm);
-  padding: 14px 20px;
-  color: #ffffff;
-  font-size: 0.95rem;
-  transition: all var(--transition-fast);
-}
-.form-input-control:focus {
-  outline: none;
-  border-color: var(--accent-indigo);
-  box-shadow: var(--shadow-glow);
-}
-textarea.form-input-control {
-  resize: vertical;
-  min-height: 150px;
+.input-icon.textarea-icon {
+  top: 24px;
+  transform: none;
 }
 
-/* Maps Iframe block */
-.map-container-section {
+/* Floating Form Controls Overrides */
+.form-floating > .form-input-control {
+  padding-left: 52px !important;
+  height: 60px;
+  background-color: rgba(9, 13, 22, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ffffff !important;
+  border-radius: 12px;
+}
+textarea.form-floating > .form-input-control {
+  padding-top: 24px !important;
+  height: 150px !important;
+}
+.form-floating > label {
+  padding-left: 52px !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Interaction States */
+.form-input-control:focus {
+  background-color: rgba(9, 13, 22, 0.9) !important;
+  border-color: var(--accent-indigo) !important;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.2) !important;
+}
+.form-input-control:focus ~ .input-icon {
+  color: var(--accent-cyan);
+}
+
+/* Active Floating Label Transitions */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-textarea:focus ~ label {
+  color: var(--accent-cyan) !important;
+  transform: scale(0.85) translateY(-10px) translateX(0px);
+}
+
+/* Premium Gradient Submit Button */
+.submit-theme-btn {
   width: 100%;
-  height: 450px;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--glass-border);
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%);
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all var(--transition-smooth);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+.submit-theme-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--accent-cyan) 0%,
+    var(--accent-indigo) 100%
+  );
+  opacity: 0;
+  z-index: -1;
+  transition: opacity var(--transition-smooth);
+}
+.submit-theme-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+}
+.submit-theme-btn:hover::before {
+  opacity: 1;
+}
+
+/* ==========================================
+   Polished Map Section Styling
+   ========================================== */
+.map-container-section {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  margin-top: 40px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.map-overlay-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--bg-primary) 0%,
+    transparent 15%,
+    transparent 85%,
+    var(--bg-primary) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
 }
 .map-container-section iframe {
   width: 100%;
   height: 100%;
-  border: none;
-  filter: grayscale(1) invert(0.9) contrast(1.2); /* matches premium dark aesthetic */
+  border: 0;
+  position: relative;
+  z-index: 1;
+  filter: grayscale(1) invert(0.92) contrast(1.1) brightness(0.85);
+}
+
+/* ==========================================
+   Support Departments Section
+   ========================================== */
+.contact-departments-section {
+  padding: 100px 0;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.department-card {
+  border-radius: var(--border-radius-md);
+  padding: 40px 30px;
+  height: 100%;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.department-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow:
+    var(--shadow-glow),
+    0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.dept-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--accent-indigo);
+  margin-bottom: 24px;
+  transition: all var(--transition-fast);
+}
+
+.department-card:hover .dept-icon {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+.department-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.department-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.dept-link {
+  font-weight: 600;
+  color: var(--accent-cyan);
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  transition: all var(--transition-fast);
+}
+
+.dept-link:hover {
+  color: #ffffff;
+}
+
+/* ==========================================
+   Global Database Nodes Section
+   ========================================== */
+.contact-infrastructure-section {
+  padding: 100px 0;
+  background-color: var(--bg-primary);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.infra-image-box {
+  position: relative;
+  transition: all var(--transition-smooth);
+}
+
+.infra-image-box:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-glow);
+}
+
+/* ==========================================
+   Technical Help Center Section
+   ========================================== */
+.contact-help-section {
+  padding: 100px 0;
+  background-color: var(--bg-secondary);
+}
+
+.help-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.help-link-card {
+  background: rgba(22, 28, 45, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all var(--transition-smooth);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.help-link-card i {
+  font-size: 1.75rem;
+  color: var(--accent-indigo);
+  transition: transform var(--transition-smooth);
+}
+
+.help-link-card h5 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #ffffff;
+}
+
+.help-link-card p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.help-link-card:hover {
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: var(--shadow-cyan-glow);
+  background: rgba(30, 41, 59, 0.4);
+  transform: translateY(-4px);
+}
+
+.help-link-card:hover i {
+  transform: scale(1.1);
+  color: var(--accent-cyan);
+}
+
+.help-image-box {
+  position: relative;
+  transition: all var(--transition-smooth);
+}
+
+.help-image-box:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-glow);
+}
+
+@media (max-width: 767px) {
+  .help-links-grid {
+    grid-template-columns: 1fr;
+  }
 }

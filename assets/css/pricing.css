@@ -234,3 +234,127 @@
   font-size: 0.95rem;
   line-height: 1.6;
 }
+
+/* ==========================================
+   Compare Plan Features Section
+   ========================================== */
+.pricing-comparison-section {
+  padding: 100px 0;
+  background-color: var(--bg-primary);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.comparison-table {
+  border-collapse: collapse;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(22, 28, 45, 0.2);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.comparison-table th {
+  background: rgba(255, 255, 255, 0.02);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 1.05rem;
+}
+
+.comparison-table td {
+  color: var(--text-secondary);
+}
+
+.comparison-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+  color: #ffffff;
+}
+
+.comparison-table td.feature-name {
+  text-align: left;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ==========================================
+   Pricing Add-ons Section
+   ========================================== */
+.pricing-addons-section {
+  padding: 100px 0;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.addon-card {
+  background: rgba(22, 28, 45, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: 40px 30px;
+  height: 100%;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.addon-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow:
+    var(--shadow-glow),
+    0 15px 35px rgba(0, 0, 0, 0.3);
+  background: rgba(30, 41, 59, 0.6);
+}
+
+.addon-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: var(--accent-indigo);
+  margin-bottom: 24px;
+  transition: all var(--transition-fast);
+}
+
+.addon-card:hover .addon-icon {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+.addon-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.addon-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.addon-price {
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

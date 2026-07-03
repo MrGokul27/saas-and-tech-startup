@@ -383,7 +383,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 8. Scroll-to-top Smooth Scrolling
-    const scrollTopBtn = document.querySelector(".scroll-top");
+    let scrollTopBtn = document.querySelector(".scroll-top");
+    if (!scrollTopBtn) {
+      scrollTopBtn = document.createElement("button");
+      scrollTopBtn.className = "scroll-top";
+      scrollTopBtn.setAttribute("aria-label", "Scroll to top");
+      scrollTopBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+      document.body.appendChild(scrollTopBtn);
+    }
+
     if (scrollTopBtn) {
       window.addEventListener("scroll", () => {
         if (window.scrollY > 300) {

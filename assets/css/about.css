@@ -219,3 +219,201 @@
     padding-left: 20px;
   }
 }
+
+/* ==========================================
+   Core Values Section
+   ========================================== */
+.about-values-section {
+  padding: 100px 0;
+  background-color: var(--bg-secondary);
+}
+.value-card {
+  background: rgba(22, 28, 45, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: 40px 30px;
+  height: 100%;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+}
+.value-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow:
+    var(--shadow-glow),
+    0 15px 35px rgba(0, 0, 0, 0.3);
+  background: rgba(30, 41, 59, 0.6);
+}
+.value-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--accent-indigo);
+  margin-bottom: 24px;
+  transition: all var(--transition-fast);
+}
+.value-card:hover .value-icon {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-color: transparent;
+  transform: rotate(360deg);
+}
+.value-card h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.value-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==========================================
+   Global Reach & Network Section
+   ========================================== */
+.about-reach-section {
+  padding: 100px 0;
+  background-color: var(--bg-primary);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.reach-image-box {
+  position: relative;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.reach-img {
+  width: 100%;
+  height: auto;
+  transition: transform var(--transition-slow);
+}
+.reach-image-box:hover .reach-img {
+  transform: scale(1.04);
+}
+.reach-card-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(9, 13, 22, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-indigo);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: var(--shadow-sm);
+}
+.reach-stats-list .stat-bullet {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}
+.reach-stats-list li:hover .stat-bullet {
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+  border-color: transparent;
+}
+.reach-stats-list h5 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.reach-stats-list p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================
+   Company Culture Section
+   ========================================== */
+.about-culture-section {
+  padding: 100px 0;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.culture-image-box {
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), var(--shadow-cyan-glow);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.culture-img {
+  width: 100%;
+  height: auto;
+  transition: transform var(--transition-slow);
+}
+.culture-image-box:hover .culture-img {
+  transform: scale(1.04);
+}
+
+/* ==========================================
+   Backers & Board Grid Section
+   ========================================== */
+.about-backers-section {
+  padding: 100px 0;
+  background-color: var(--bg-primary);
+}
+.backers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+.backer-logo-card {
+  background: rgba(22, 28, 45, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: 35px 20px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: all var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+.backer-logo-card:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: var(--shadow-glow);
+  background: rgba(30, 41, 59, 0.5);
+  color: #ffffff;
+  transform: translateY(-4px);
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 991px) {
+  .backers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 575px) {
+  .backers-grid {
+    grid-template-columns: 1fr;
+  }
+}
