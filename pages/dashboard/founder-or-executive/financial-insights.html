@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financial Insights - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-executive"
+              id="sidebarUserRole"
+              >Founder / CEO</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Financial Insights</h2>
+            <p>
+              Monitor Monthly Recurring Revenue (MRR) allocations, monthly burn
+              rates, and capital runway metrics.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-value" id="mrrVal">$42,500</div>
+                <div class="stat-label">Monthly Recurring Revenue</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 14%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-fire-flame-curved"></i>
+                </div>
+                <div class="stat-value">$18,500</div>
+                <div class="stat-label">Monthly Burn Rate</div>
+                <div class="stat-change down">
+                  <i class="fas fa-arrow-down"></i> 8%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-chart-pie"></i>
+                </div>
+                <div class="stat-value">4.2x</div>
+                <div class="stat-label">LTV / CAC Ratio</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-value" id="runwayVal">17.8 months</div>
+                <div class="stat-label">Runway Expectancy</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Financial graphs -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card">
+                <div class="dash-card-header flex-wrap gap-2">
+                  <h5>MRR Scaling Timeline</h5>
+                  <!-- Segment Toggles -->
+                  <div
+                    class="btn-group border border-secondary"
+                    style="
+                      border-radius: 12px;
+                      overflow: hidden;
+                      background: var(--bg-secondary);
+                    "
+                  >
+                    <button
+                      class="btn btn-sm btn-indigo px-3 active"
+                      id="viewGrowthBtn"
+                    >
+                      Growth Rate
+                    </button>
+                    <button
+                      class="btn btn-sm btn-dark px-3 text-secondary"
+                      id="viewBreakBtn"
+                    >
+                      Plan Breakdown
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Growth Graph -->
+                <div class="bar-chart mt-4" id="growthGraph">
+                  <div class="bar-group">
+                    <div class="bar" style="height: 50%"></div>
+                    <span class="bar-label">Dec</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 55%"></div>
+                    <span class="bar-label">Jan</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 62%"></div>
+                    <span class="bar-label">Feb</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 70%"></div>
+                    <span class="bar-label">Mar</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 78%"></div>
+                    <span class="bar-label">Apr</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 85%"></div>
+                    <span class="bar-label">May</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 95%"></div>
+                    <span class="bar-label">Jun</span>
+                  </div>
+                </div>
+
+                <!-- Breakdown Graph -->
+                <div class="bar-chart mt-4 d-none" id="breakdownGraph">
+                  <div class="bar-group">
+                    <div
+                      class="bar"
+                      style="height: 58%; background: var(--gradient-primary)"
+                    ></div>
+                    <span class="bar-label">Enterprise (57.6%)</span>
+                  </div>
+                  <div class="bar-group">
+                    <div
+                      class="bar"
+                      style="height: 28%; background: var(--gradient-secondary)"
+                    ></div>
+                    <span class="bar-label">Scale (28.2%)</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 14%"></div>
+                    <span class="bar-label">Growth (14.2%)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Capital runway gauge -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Capital runway</h5>
+                </div>
+                <div class="donut-wrap justify-content-center py-3">
+                  <div
+                    class="donut-chart"
+                    style="
+                      background: conic-gradient(
+                        var(--accent-indigo) 74.2%,
+                        var(--glass-border) 74.2%
+                      );
+                    "
+                  >
+                    <div
+                      class="donut-center"
+                      style="
+                        width: 86px;
+                        height: 86px;
+                        border-radius: 50%;
+                        background: var(--bg-secondary);
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                      "
+                    >
+                      <span class="donut-pct">17.8m</span>
+                      <span class="donut-sub">Runway left</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="progress-item mt-2">
+                  <div class="progress-meta">
+                    <span class="prog-label">Net Cash Reserve ($330K)</span>
+                    <span class="prog-val">74.2%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill" style="width: 74.2%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Treasury Actions</h5>
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="
+                      alert(
+                        'Financial ledger export completed. (Mock Download)',
+                      )
+                    "
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-file-invoice-dollar me-2"></i>Export
+                    Financial Ledger (.xlsx)
+                  </button>
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="alert('Runway simulator tool opened.')"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-calculator me-2"></i>Trigger Runway Stress
+                    Test
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const viewGrowthBtn = document.getElementById("viewGrowthBtn");
+        const viewBreakBtn = document.getElementById("viewBreakBtn");
+        const growthGraph = document.getElementById("growthGraph");
+        const breakdownGraph = document.getElementById("breakdownGraph");
+
+        viewGrowthBtn.addEventListener("click", () => {
+          viewGrowthBtn.className = "btn btn-sm btn-indigo px-3 active";
+          viewBreakBtn.className = "btn btn-sm btn-dark px-3 text-secondary";
+          growthGraph.classList.remove("d-none");
+          breakdownGraph.classList.add("d-none");
+        });
+
+        viewBreakBtn.addEventListener("click", () => {
+          viewBreakBtn.className = "btn btn-sm btn-indigo px-3 active";
+          viewGrowthBtn.className = "btn btn-sm btn-dark px-3 text-secondary";
+          breakdownGraph.classList.remove("d-none");
+          growthGraph.classList.add("d-none");
+        });
+      });
+    </script>
+  </body>
+</html>

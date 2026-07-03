@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Billing Audits - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-executive"
+              id="sidebarUserRole"
+              >Founder / CEO</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Revenue &amp; Billing Audits</h2>
+            <p>
+              Review customer invoicing logs, manage payment processing
+              gateways, and resolve failed subscription fees.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <div class="stat-value">$42,500</div>
+                <div class="stat-label">Invoiced revenue (MTD)</div>
+                <div class="stat-change up">100% Billed</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-red">
+                  <i class="fas fa-credit-card-alt"></i>
+                </div>
+                <div class="stat-value" id="failedCountVal">1 failed</div>
+                <div class="stat-label">Failed Card Charges</div>
+                <div class="stat-change down" id="failedStatusText">
+                  <i class="fas fa-triangle-exclamation"></i> Action Required
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-sack-dollar"></i>
+                </div>
+                <div class="stat-value">$1,280</div>
+                <div class="stat-label">Stripe Processing Fees</div>
+                <div class="stat-change up">3.0% average</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-box-heart"></i>
+                </div>
+                <div class="stat-value">482</div>
+                <div class="stat-label">Subscribed Workspaces</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 14
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invoices table -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card" style="min-height: 460px">
+                <div class="dash-card-header flex-wrap gap-3">
+                  <h5>Customer Billing Ledger</h5>
+                  <div class="d-flex align-items-center gap-2">
+                    <input
+                      type="text"
+                      id="invSearch"
+                      class="form-control form-control-sm bg-dark border-secondary text-light"
+                      placeholder="Search Company..."
+                      style="
+                        width: 170px;
+                        font-size: 0.8rem;
+                        border-radius: 8px;
+                      "
+                    />
+                    <select
+                      id="invStatus"
+                      class="form-select form-select-sm bg-dark border-secondary text-light"
+                      style="
+                        width: 110px;
+                        font-size: 0.8rem;
+                        border-radius: 8px;
+                      "
+                    >
+                      <option value="ALL">All Status</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Failed">Failed</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Invoice ID</th>
+                        <th>Company Name</th>
+                        <th>Billing Plan</th>
+                        <th>Invoice Amount</th>
+                        <th>Status</th>
+                        <th align="right">Retry</th>
+                      </tr>
+                    </thead>
+                    <tbody id="invoicesBody">
+                      <tr id="inv-acme">
+                        <td><span class="text-indigo">INV-2026-088</span></td>
+                        <td><span class="td-primary">Acme Corp</span></td>
+                        <td>Enterprise</td>
+                        <td>$2,450.00</td>
+                        <td>
+                          <span
+                            class="status-pill status-active"
+                            id="status-acme"
+                            >Paid</span
+                          >
+                        </td>
+                        <td align="right">-</td>
+                      </tr>
+                      <tr id="inv-hooli">
+                        <td><span class="text-indigo">INV-2026-089</span></td>
+                        <td><span class="td-primary">Hooli Systems</span></td>
+                        <td>Enterprise</td>
+                        <td>$1,200.00</td>
+                        <td>
+                          <span
+                            class="status-pill status-active"
+                            id="status-hooli"
+                            >Paid</span
+                          >
+                        </td>
+                        <td align="right">-</td>
+                      </tr>
+                      <tr id="inv-initech">
+                        <td><span class="text-indigo">INV-2026-090</span></td>
+                        <td>
+                          <span class="td-primary">Initech Software</span>
+                        </td>
+                        <td>Growth</td>
+                        <td>$800.00</td>
+                        <td>
+                          <span
+                            class="status-pill status-critical"
+                            id="status-initech"
+                            >Failed</span
+                          >
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-indigo"
+                            id="retryInitechBtn"
+                          >
+                            <i class="fas fa-arrows-rotate"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stripe stats -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Stripe Gateway Status</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <tbody>
+                      <tr>
+                        <td>Stripe API Key</td>
+                        <td>
+                          <span class="td-primary font-monospace"
+                            >live_sk_51O9...</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Webhooks pipe</td>
+                        <td>
+                          <span class="status-pill status-active">Online</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Card decline SLA</td>
+                        <td>
+                          <span class="td-primary text-success"
+                            >0.21% (Excellent)</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Invoicing schedule -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Auditing logs</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-receipt"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title">
+                        August Invoice audit files ready
+                      </div>
+                      <div class="act-time">Compiled &bull; 4h ago</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const retryInitechBtn = document.getElementById("retryInitechBtn");
+        const statusInitech = document.getElementById("status-initech");
+        const failedCountVal = document.getElementById("failedCountVal");
+        const failedStatusText = document.getElementById("failedStatusText");
+        const invSearch = document.getElementById("invSearch");
+        const invStatus = document.getElementById("invStatus");
+        const invoicesBody = document.getElementById("invoicesBody");
+
+        retryInitechBtn.addEventListener("click", () => {
+          retryInitechBtn.disabled = true;
+          retryInitechBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+          statusInitech.textContent = "Processing";
+          statusInitech.className = "status-pill status-review";
+
+          setTimeout(() => {
+            statusInitech.textContent = "Paid";
+            statusInitech.className = "status-pill status-active";
+
+            failedCountVal.textContent = "0 failed";
+            failedStatusText.textContent = "Stable";
+            failedStatusText.className = "stat-change up";
+            failedStatusText.innerHTML =
+              '<i class="fas fa-circle-check"></i> System Clean';
+
+            retryInitechBtn.parentElement.innerHTML = "-";
+            alert(
+              "Stripe transaction retry successful! Invoice INV-2026-090 marked as Paid.",
+            );
+          }, 2000);
+        });
+
+        const applyFilters = () => {
+          const searchVal = invSearch.value.trim().toLowerCase();
+          const statusVal = invStatus.value;
+
+          Array.from(invoicesBody.children).forEach((row) => {
+            const company = row.cells[1].textContent.toLowerCase();
+            const status = row.cells[4].textContent;
+
+            const matchesSearch = company.includes(searchVal);
+            const matchesStatus = statusVal === "ALL" || status === statusVal;
+
+            if (matchesSearch && matchesStatus) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        };
+
+        invSearch.addEventListener("input", applyFilters);
+        invStatus.addEventListener("change", applyFilters);
+      });
+    </script>
+  </body>
+</html>

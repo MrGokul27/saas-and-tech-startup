@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analytics Funnels - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .funnel-stage {
+        padding: 16px 20px;
+        background: rgba(15, 20, 34, 0.4);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        margin-bottom: 16px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      .funnel-stage-fill {
+        position: absolute;
+        inset: 0;
+        right: auto;
+        background: var(--gradient-secondary);
+        opacity: 0.15;
+        z-index: 1;
+        transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .funnel-stage-fill.purple {
+        background: var(--gradient-primary);
+      }
+      .funnel-stage-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .funnel-dropoff-arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -8px;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+      }
+      .funnel-dropoff-arrow i {
+        font-size: 1.2rem;
+        margin-top: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-manager" id="sidebarUserRole"
+              >Product Manager</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div
+            class="dash-page-header flex-wrap d-flex justify-content-between align-items-center gap-3"
+          >
+            <div>
+              <h2>Conversion Funnels</h2>
+              <p>
+                Investigate user conversion progression stages, drop-off
+                leakages, and goal milestones.
+              </p>
+            </div>
+            <!-- Segment Filter Toggle -->
+            <div
+              class="btn-group border border-secondary"
+              style="
+                border-radius: 12px;
+                overflow: hidden;
+                background: var(--bg-secondary);
+              "
+            >
+              <button class="btn btn-sm btn-indigo px-3 active" id="segAllBtn">
+                All Traffic
+              </button>
+              <button
+                class="btn btn-sm btn-dark px-3 text-secondary"
+                id="segOrgBtn"
+              >
+                Organic
+              </button>
+              <button
+                class="btn btn-sm btn-dark px-3 text-secondary"
+                id="segPaidBtn"
+              >
+                Paid Ads
+              </button>
+              <button
+                class="btn btn-sm btn-dark px-3 text-secondary"
+                id="segMobBtn"
+              >
+                Mobile
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-value" id="statVist">45,200</div>
+                <div class="stat-label">Landing Visitors</div>
+                <div class="stat-change up">100%</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="stat-value" id="statReg">34.5%</div>
+                <div class="stat-label">Registration Rate</div>
+                <div class="stat-change up" id="regVolume">15,594 accounts</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-hand-holding-hand"></i>
+                </div>
+                <div class="stat-value" id="statOnb">68.2%</div>
+                <div class="stat-label">Onboarding Completion</div>
+                <div class="stat-change up" id="onbVolume">10,635 users</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-cart-shopping"></i>
+                </div>
+                <div class="stat-value" id="statUpgr">8.5%</div>
+                <div class="stat-label">Checkout Upgrade</div>
+                <div class="stat-change up" id="upgrVolume">904 upgrades</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Funnel Flow Chart -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card">
+                <div class="dash-card-header mb-4">
+                  <h5>
+                    Visual Drop-off Funnel:
+                    <span id="currentSegName" class="text-indigo"
+                      >All Traffic</span
+                    >
+                  </h5>
+                </div>
+
+                <div class="funnel-container">
+                  <!-- Stage 1 -->
+                  <div class="funnel-stage">
+                    <div class="funnel-stage-fill" style="width: 100%"></div>
+                    <div class="funnel-stage-content">
+                      <div>
+                        <span class="badge bg-indigo-subtle text-indigo me-2"
+                          >Stage 1</span
+                        >
+                        <span class="td-primary fw-600"
+                          >Landing Page Visits</span
+                        >
+                      </div>
+                      <div class="text-end">
+                        <span class="td-primary fw-700" id="funVistCount"
+                          >45,200</span
+                        >
+                        <div class="small text-muted">100% of baseline</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="funnel-dropoff-arrow">
+                    <span id="dropRegPct">65.5% Drop-off</span>
+                    <i class="fas fa-arrow-down-long"></i>
+                  </div>
+
+                  <!-- Stage 2 -->
+                  <div class="funnel-stage">
+                    <div
+                      class="funnel-stage-fill purple"
+                      id="fillStage2"
+                      style="width: 34.5%"
+                    ></div>
+                    <div class="funnel-stage-content">
+                      <div>
+                        <span class="badge bg-purple-subtle text-purple me-2"
+                          >Stage 2</span
+                        >
+                        <span class="td-primary fw-600">Register Account</span>
+                      </div>
+                      <div class="text-end">
+                        <span class="td-primary fw-700" id="funRegCount"
+                          >15,594</span
+                        >
+                        <div class="small text-muted" id="funRegPct">
+                          34.5% conversion
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="funnel-dropoff-arrow">
+                    <span id="dropOnbPct">31.8% Drop-off</span>
+                    <i class="fas fa-arrow-down-long"></i>
+                  </div>
+
+                  <!-- Stage 3 -->
+                  <div class="funnel-stage">
+                    <div
+                      class="funnel-stage-fill"
+                      id="fillStage3"
+                      style="width: 23.5%"
+                    ></div>
+                    <div class="funnel-stage-content">
+                      <div>
+                        <span class="badge bg-cyan-subtle text-cyan me-2"
+                          >Stage 3</span
+                        >
+                        <span class="td-primary fw-600"
+                          >Complete Onboarding</span
+                        >
+                      </div>
+                      <div class="text-end">
+                        <span class="td-primary fw-700" id="funOnbCount"
+                          >10,635</span
+                        >
+                        <div class="small text-muted" id="funOnbPct">
+                          68.2% stage / 23.5% cumulative
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="funnel-dropoff-arrow">
+                    <span id="dropUpgrPct">91.5% Drop-off</span>
+                    <i class="fas fa-arrow-down-long"></i>
+                  </div>
+
+                  <!-- Stage 4 -->
+                  <div class="funnel-stage">
+                    <div
+                      class="funnel-stage-fill purple"
+                      id="fillStage4"
+                      style="width: 2%"
+                    ></div>
+                    <div class="funnel-stage-content">
+                      <div>
+                        <span class="badge bg-pink-subtle text-pink me-2"
+                          >Stage 4</span
+                        >
+                        <span class="td-primary fw-600"
+                          >Upgrade Subscription</span
+                        >
+                      </div>
+                      <div class="text-end">
+                        <span class="td-primary fw-700" id="funUpgrCount"
+                          >904</span
+                        >
+                        <div class="small text-muted" id="funUpgrPct">
+                          8.5% stage / 2.0% cumulative
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Funnel Leaks advice -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Funnel Leaks Audit</h5>
+                </div>
+                <div
+                  class="alert alert-warning bg-warning-subtle text-warning border-warning mt-2 small"
+                  style="border-radius: 8px"
+                >
+                  <i class="fas fa-triangle-exclamation me-1"></i> Critical
+                  drop-off detected between <strong>Stage 3</strong> and
+                  <strong>Stage 4</strong>.
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-pink">
+                      <i class="fas fa-circle-info"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">Billing Wall Friction</div>
+                      <div class="act-time">
+                        91.5% of users exit the funnel at the pricing page.
+                        Recommend adding a "14-day free trial" credit-cardless
+                        sandbox trigger.
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-amber">
+                      <i class="fas fa-circle-info"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">Registration Barrier</div>
+                      <div class="act-time">
+                        Organic traffic has a higher registration drop-off
+                        (68%). Shortening registration inputs from 5 fields to 3
+                        could recover 12% in signup volumes.
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Conversion Optimization</h5>
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="
+                      alert(
+                        'Starting A/B test setup for Landing Page variants.',
+                      )
+                    "
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-flask me-2"></i>A/B Test Pricing Layout
+                  </button>
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="alert('Funnel Goal setup opened.')"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-bullseye me-2"></i>Configure Conversion
+                    Goals
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const segAllBtn = document.getElementById("segAllBtn");
+        const segOrgBtn = document.getElementById("segOrgBtn");
+        const segPaidBtn = document.getElementById("segPaidBtn");
+        const segMobBtn = document.getElementById("segMobBtn");
+
+        const statVist = document.getElementById("statVist");
+        const statReg = document.getElementById("statReg");
+        const statOnb = document.getElementById("statOnb");
+        const statUpgr = document.getElementById("statUpgr");
+
+        const regVolume = document.getElementById("regVolume");
+        const onbVolume = document.getElementById("onbVolume");
+        const upgrVolume = document.getElementById("upgrVolume");
+
+        const currentSegName = document.getElementById("currentSegName");
+        const funVistCount = document.getElementById("funVistCount");
+        const funRegCount = document.getElementById("funRegCount");
+        const funOnbCount = document.getElementById("funOnbCount");
+        const funUpgrCount = document.getElementById("funUpgrCount");
+
+        const funRegPct = document.getElementById("funRegPct");
+        const funOnbPct = document.getElementById("funOnbPct");
+        const funUpgrPct = document.getElementById("funUpgrPct");
+
+        const dropRegPct = document.getElementById("dropRegPct");
+        const dropOnbPct = document.getElementById("dropOnbPct");
+        const dropUpgrPct = document.getElementById("dropUpgrPct");
+
+        const fillStage2 = document.getElementById("fillStage2");
+        const fillStage3 = document.getElementById("fillStage3");
+        const fillStage4 = document.getElementById("fillStage4");
+
+        const segments = {
+          all: {
+            name: "All Traffic",
+            vist: 45200,
+            regPct: 34.5,
+            onbPct: 68.2,
+            upgrPct: 8.5,
+          },
+          organic: {
+            name: "Organic Search",
+            vist: 24100,
+            regPct: 29.8,
+            onbPct: 75.4,
+            upgrPct: 6.2,
+          },
+          paid: {
+            name: "Paid Advertisements",
+            vist: 14800,
+            regPct: 42.1,
+            onbPct: 56.8,
+            upgrPct: 12.4,
+          },
+          mobile: {
+            name: "Mobile Devices",
+            vist: 6300,
+            regPct: 31.2,
+            onbPct: 62.5,
+            upgrPct: 5.8,
+          },
+        };
+
+        const updateFunnel = (key) => {
+          const data = segments[key];
+          currentSegName.textContent = data.name;
+
+          // Calculations
+          const vCount = data.vist;
+          const rCount = Math.round(vCount * (data.regPct / 100));
+          const oCount = Math.round(rCount * (data.onbPct / 100));
+          const uCount = Math.round(oCount * (data.upgrPct / 100));
+
+          const cumulativeOnb = ((oCount / vCount) * 100).toFixed(1);
+          const cumulativeUpgr = ((uCount / vCount) * 100).toFixed(1);
+
+          // Update stats grid
+          statVist.textContent = vCount.toLocaleString();
+          statReg.textContent = data.regPct + "%";
+          statOnb.textContent = data.onbPct + "%";
+          statUpgr.textContent = data.upgrPct + "%";
+
+          regVolume.textContent = `${rCount.toLocaleString()} accounts`;
+          onbVolume.textContent = `${oCount.toLocaleString()} users`;
+          upgrVolume.textContent = `${uCount.toLocaleString()} upgrades`;
+
+          // Update Funnel numbers
+          funVistCount.textContent = vCount.toLocaleString();
+          funRegCount.textContent = rCount.toLocaleString();
+          funOnbCount.textContent = oCount.toLocaleString();
+          funUpgrCount.textContent = uCount.toLocaleString();
+
+          funRegPct.textContent = `${data.regPct}% conversion`;
+          funOnbPct.textContent = `${data.onbPct}% stage / ${cumulativeOnb}% cumulative`;
+          funUpgrPct.textContent = `${data.upgrPct}% stage / ${cumulativeUpgr}% cumulative`;
+
+          // Update Drop-offs
+          dropRegPct.textContent = `${(100 - data.regPct).toFixed(1)}% Drop-off`;
+          dropOnbPct.textContent = `${(100 - data.onbPct).toFixed(1)}% Drop-off`;
+          dropUpgrPct.textContent = `${(100 - data.upgrPct).toFixed(1)}% Drop-off`;
+
+          // Update Visual stage bar widths
+          fillStage2.style.width = `${data.regPct}%`;
+          fillStage3.style.width = `${cumulativeOnb}%`;
+          fillStage4.style.width = `${cumulativeUpgr}%`;
+        };
+
+        const setupBtn = (btn, key) => {
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".btn-group button").forEach((b) => {
+              b.classList.remove("btn-indigo", "active");
+              b.classList.add("btn-dark", "text-secondary");
+            });
+            btn.classList.remove("btn-dark", "text-secondary");
+            btn.classList.add("btn-indigo", "active");
+            updateFunnel(key);
+          });
+        };
+
+        setupBtn(segAllBtn, "all");
+        setupBtn(segOrgBtn, "organic");
+        setupBtn(segPaidBtn, "paid");
+        setupBtn(segMobBtn, "mobile");
+      });
+    </script>
+  </body>
+</html>

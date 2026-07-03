@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Console Telemetry - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .terminal-window {
+        background: #050811;
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 16px;
+        font-family: "Fira Code", monospace;
+        font-size: 0.85rem;
+        color: #a5b4fc;
+        height: 400px;
+        overflow-y: auto;
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+      }
+      .terminal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+      .terminal-dots {
+        display: flex;
+        gap: 6px;
+      }
+      .terminal-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .dot-red {
+        background: #ef4444;
+      }
+      .dot-yellow {
+        background: #eab308;
+      }
+      .dot-green {
+        background: #22c55e;
+      }
+      .term-input-line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .term-prompt {
+        color: #818cf8;
+        font-weight: 600;
+      }
+      .term-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        flex: 1;
+        font-family: "Fira Code", monospace;
+        font-size: 0.85rem;
+      }
+      .term-log {
+        margin-bottom: 4px;
+        white-space: pre-wrap;
+      }
+      .term-log.info {
+        color: #818cf8;
+      }
+      .term-log.success {
+        color: #34d399;
+      }
+      .term-log.warning {
+        color: #fbbf24;
+      }
+      .term-log.error {
+        color: #f87171;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-developer"
+              id="sidebarUserRole"
+              >Developer</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Console Telemetry</h2>
+            <p>
+              Visual environment diagnostics, stdio outputs, and container
+              resource usage.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-microchip"></i>
+                </div>
+                <div class="stat-value" id="cpuVal">42.4%</div>
+                <div class="stat-label">CPU Usage</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 2.1%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-memory"></i>
+                </div>
+                <div class="stat-value" id="ramVal">1.62 GB</div>
+                <div class="stat-label">Memory Allocated</div>
+                <div class="stat-change down">
+                  <i class="fas fa-arrow-down"></i> 0.05 GB
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-purple">
+                  <i class="fas fa-circle-nodes"></i>
+                </div>
+                <div class="stat-value" id="wsCount">1,482</div>
+                <div class="stat-label">WS Telemetry Pipes</div>
+                <div class="stat-change up">Active</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-circle-check"></i>
+                </div>
+                <div class="stat-value">14d 6h</div>
+                <div class="stat-label">Container Uptime</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Layout -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card mb-4">
+                <div class="terminal-header">
+                  <div class="terminal-dots">
+                    <span class="terminal-dot dot-red"></span>
+                    <span class="terminal-dot dot-yellow"></span>
+                    <span class="terminal-dot dot-green"></span>
+                  </div>
+                  <span>sh - developer@stackly-node-01: ~</span>
+                  <span>Interactive CLI</span>
+                </div>
+                <div class="terminal-window" id="termWindow">
+                  <div class="term-log info">
+                    [SYSTEM] Starting telemetry session on stackly-node-01...
+                  </div>
+                  <div class="term-log info">
+                    [SYSTEM] Web socket connection established. Receiving stdio
+                    streams.
+                  </div>
+                  <div class="term-log success">
+                    [DB] Connection pool initialized. 15 active nodes connected.
+                  </div>
+                  <div class="term-log success">
+                    [BUILD] Deploy v2.4.1 completed successfully.
+                  </div>
+                  <div class="term-log info">
+                    [CRON] Daily backups successfully stored in AWS S3 bucket.
+                  </div>
+                  <div class="term-log warning">
+                    [WARN] Redis cache eviction frequency spiked (12
+                    evictions/sec).
+                  </div>
+                  <div class="term-log info">
+                    [DAEMON] Worker-thread-04 polling webhook task queue...
+                  </div>
+                  <div id="termLogsContainer"></div>
+
+                  <div class="term-input-line">
+                    <span class="term-prompt">stackly-node-01:~$</span>
+                    <input
+                      type="text"
+                      class="term-input"
+                      id="termInput"
+                      placeholder="Type command (e.g. 'help', 'status', 'metrics', 'clear')..."
+                      autocomplete="off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Container Resource Load</h5>
+                </div>
+
+                <div class="progress-item mt-3">
+                  <div class="progress-meta">
+                    <span class="prog-label">CPU (Core 1)</span>
+                    <span class="prog-val" id="core1Val">48%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div
+                      class="prog-fill"
+                      id="core1Bar"
+                      style="width: 48%"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">CPU (Core 2)</span>
+                    <span class="prog-val" id="core2Val">36%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div
+                      class="prog-fill"
+                      id="core2Bar"
+                      style="width: 36%"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">RAM Usage (4.00GB Max)</span>
+                    <span class="prog-val">40.5%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill cyan" style="width: 40.5%"></div>
+                  </div>
+                </div>
+
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">Storage Capacity (250GB)</span>
+                    <span class="prog-val">68.2%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill amber" style="width: 68.2%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Diagnostics Actions</h5>
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    id="downloadLogsBtn"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-download me-2"></i>Download Stdout Logs
+                    (.log)
+                  </button>
+                  <button
+                    class="btn btn-outline-danger py-2"
+                    id="restartContainerBtn"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-arrows-rotate me-2"></i>Trigger Hard
+                    Container Reboot
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const logsContainer = document.getElementById("termLogsContainer");
+        const termInput = document.getElementById("termInput");
+        const termWindow = document.getElementById("termWindow");
+        const cpuVal = document.getElementById("cpuVal");
+        const ramVal = document.getElementById("ramVal");
+        const wsCount = document.getElementById("wsCount");
+        const core1Val = document.getElementById("core1Val");
+        const core2Val = document.getElementById("core2Val");
+        const core1Bar = document.getElementById("core1Bar");
+        const core2Bar = document.getElementById("core2Bar");
+        const downloadLogsBtn = document.getElementById("downloadLogsBtn");
+        const restartContainerBtn = document.getElementById(
+          "restartContainerBtn",
+        );
+
+        // Autoscroll terminal
+        const scrollTerm = () => {
+          termWindow.scrollTop = termWindow.scrollHeight;
+        };
+
+        // Live stats update simulator
+        setInterval(() => {
+          const randCpu = (Math.random() * 40 + 20).toFixed(1);
+          const randRam = (1.5 + Math.random() * 0.3).toFixed(2);
+          const randWs = Math.floor(1470 + Math.random() * 25);
+
+          cpuVal.textContent = randCpu + "%";
+          ramVal.textContent = randRam + " GB";
+          wsCount.textContent = randWs.toLocaleString();
+
+          const c1 = Math.floor(Math.random() * 50 + 20);
+          const c2 = Math.floor(Math.random() * 40 + 15);
+
+          core1Val.textContent = c1 + "%";
+          core2Val.textContent = c2 + "%";
+          core1Bar.style.width = c1 + "%";
+          core2Bar.style.width = c2 + "%";
+        }, 3000);
+
+        // Simulated stdout logs generator
+        const dummyLogs = [
+          { type: "info", text: "[DAEMON] Running metric collector sync..." },
+          {
+            type: "success",
+            text: "[DB] Query executed: SELECT * FROM tenants WHERE active = true (1.2ms)",
+          },
+          {
+            type: "info",
+            text: "[HTTP] POST /api/v1/auth/session 200 OK - 8ms",
+          },
+          {
+            type: "info",
+            text: "[HTTP] GET /assets/css/dashboard.css 304 NotModified - 2ms",
+          },
+          {
+            type: "warning",
+            text: "[WARN] Outgoing email delivery queue holds 15 items.",
+          },
+          {
+            type: "error",
+            text: "[ERR] stripe_webhook_sync: Signature verification failed (IP: 54.2.19.8)",
+          },
+          {
+            type: "info",
+            text: "[DAEMON] Garbage collection cycle completed: freed 128MB.",
+          },
+        ];
+
+        setInterval(() => {
+          const log = dummyLogs[Math.floor(Math.random() * dummyLogs.length)];
+          const div = document.createElement("div");
+          div.className = `term-log ${log.type}`;
+          div.textContent = log.text;
+          logsContainer.appendChild(div);
+          scrollTerm();
+        }, 4000);
+
+        // Interactive command parser
+        termInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            const inputVal = termInput.value.trim();
+            if (inputVal === "") return;
+
+            // Output command echo
+            const echoDiv = document.createElement("div");
+            echoDiv.innerHTML = `<span class="term-prompt">stackly-node-01:~$</span> <span class="text-light">${inputVal}</span>`;
+            logsContainer.appendChild(echoDiv);
+
+            const responseDiv = document.createElement("div");
+            responseDiv.className = "term-log info";
+
+            const cmd = inputVal.toLowerCase();
+            if (cmd === "help") {
+              responseDiv.innerHTML = `Available commands:<br>
+  - <span class="text-warning">help</span>: Show this menu<br>
+  - <span class="text-warning">status</span>: View health summary of node containers<br>
+  - <span class="text-warning">metrics</span>: View CPU/RAM allocations<br>
+  - <span class="text-warning">ping</span>: Check connectivity to primary DB cluster<br>
+  - <span class="text-warning">clear</span>: Clear terminal console`;
+            } else if (cmd === "status") {
+              responseDiv.innerHTML = `Container status: <span class="text-success">HEALTHY</span><br>
+  IP: 192.168.1.10<br>
+  Uptime: 14 days, 6 hours, 22 minutes<br>
+  Process ID: 8274 (node)<br>
+  Threads: 4 active clusters`;
+            } else if (cmd === "metrics") {
+              responseDiv.innerHTML = `CPU Usage: ${cpuVal.textContent}<br>
+  Allocated Memory: ${ramVal.textContent}<br>
+  Active Websockets: ${wsCount.textContent}<br>
+  Disk space: 68.2% (170.5 GB used / 250 GB total)`;
+            } else if (cmd === "ping") {
+              responseDiv.innerHTML = `PING db-main-cluster.stackly.internal (10.0.0.4) 56(84) bytes of data.<br>
+  64 bytes from 10.0.0.4: icmp_seq=1 ttl=64 time=1.04 ms<br>
+  64 bytes from 10.0.0.4: icmp_seq=2 ttl=64 time=0.98 ms<br>
+  --- db-main-cluster ping statistics ---<br>
+  2 packets transmitted, 2 received, 0% packet loss, time 1001ms<br>
+  rtt min/avg/max/mdev = 0.982/1.011/1.040/0.029 ms`;
+            } else if (cmd === "clear") {
+              logsContainer.innerHTML = "";
+              termInput.value = "";
+              return;
+            } else {
+              responseDiv.className = "term-log error";
+              responseDiv.textContent = `sh: command not found: ${inputVal}. Type 'help' for available commands.`;
+            }
+
+            logsContainer.appendChild(responseDiv);
+            termInput.value = "";
+            scrollTerm();
+          }
+        });
+
+        downloadLogsBtn.addEventListener("click", () => {
+          alert(
+            "Log file 'stackly-node-01.log' generated and download initiated. (Mock download)",
+          );
+        });
+
+        restartContainerBtn.addEventListener("click", () => {
+          if (
+            confirm(
+              "Are you sure you want to reboot the stackly-node-01 container? This will disconnect active WS connections.",
+            )
+          ) {
+            logsContainer.innerHTML = `<div class="term-log error">[SYSTEM] Hard reboot signal received from admin dashboard...</div>
+<div class="term-log error">[SYSTEM] Disconnecting network pipes...</div>
+<div class="term-log warning">[SYSTEM] Shutting down container process ID 8274...</div>
+<div class="term-log info">[SYSTEM] Initializing container boot sequence...</div>
+<div class="term-log success">[SYSTEM] stackly-node-01 rebooted successfully. Connection restored.</div>`;
+            scrollTerm();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

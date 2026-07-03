@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build Monitor - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .pipeline-viz {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 12px;
+        background: rgba(15, 20, 34, 0.4);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow-x: auto;
+      }
+      .pipeline-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-align: center;
+        min-width: 90px;
+        position: relative;
+        z-index: 2;
+      }
+      .step-icon-circle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--glass-border);
+        color: var(--text-muted);
+        transition: all 0.3s ease;
+      }
+      .pipeline-step.success .step-icon-circle {
+        background: rgba(34, 197, 94, 0.15);
+        border-color: #22c55e;
+        color: #4ade80;
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+      }
+      .pipeline-step.running .step-icon-circle {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: #6366f1;
+        color: #818cf8;
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        animation: pulse-border 1.5s infinite;
+      }
+      .step-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+      .pipeline-step.success .step-label {
+        color: #fff;
+      }
+      .pipeline-step.running .step-label {
+        color: #818cf8;
+      }
+      .step-status {
+        font-size: 0.65rem;
+        color: var(--text-muted);
+      }
+      .pipeline-connector {
+        flex: 1;
+        height: 2px;
+        background: var(--glass-border);
+        margin: 0 -10px;
+        margin-top: -22px;
+        position: relative;
+        z-index: 1;
+      }
+      .pipeline-connector.filled {
+        background: linear-gradient(90deg, #22c55e, #6366f1);
+      }
+      @keyframes pulse-border {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+        }
+        70% {
+          transform: scale(1.05);
+          box-shadow: 0 0 0 8px rgba(99, 102, 241, 0);
+        }
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-developer"
+              id="sidebarUserRole"
+              >Developer</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div
+            class="dash-page-header flex-wrap d-flex justify-content-between align-items-center gap-3"
+          >
+            <div>
+              <h2>Build Monitor</h2>
+              <p>
+                CI/CD build deployment telemetry pipelines and artifact
+                management.
+              </p>
+            </div>
+            <button
+              class="btn btn-indigo px-4 py-2"
+              id="triggerBuildBtn"
+              style="border-radius: 12px; font-weight: 500"
+            >
+              <i class="fas fa-circle-play me-2"></i>Trigger New Build
+            </button>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-percent"></i>
+                </div>
+                <div class="stat-value">98.2%</div>
+                <div class="stat-label">Build Success Rate</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 0.4%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value">4m 12s</div>
+                <div class="stat-label">Avg Pipeline Duration</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-down"></i> 14s
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-box-archive"></i>
+                </div>
+                <div class="stat-value" id="totBuildsCount">824</div>
+                <div class="stat-label">Total Container Builds</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-toggle-on"></i>
+                </div>
+                <div class="stat-value" id="lastBuildState">Passed</div>
+                <div class="stat-label">Last Build Result</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pipeline Visualizer -->
+          <div class="dash-card mb-4">
+            <div class="dash-card-header mb-3">
+              <h5>
+                Deployment Pipeline Stages:
+                <span id="pipelineBuildId" class="text-indigo">#B-824</span>
+              </h5>
+              <span class="status-pill status-active" id="pipelineStatusBadge"
+                >Passed</span
+              >
+            </div>
+            <div class="pipeline-viz">
+              <div class="pipeline-step success" id="stepTrigger">
+                <div class="step-icon-circle">
+                  <i class="fas fa-code-pull-request"></i>
+                </div>
+                <span class="step-label">Trigger</span>
+                <span class="step-status" id="stepTriggerStatus">Done</span>
+              </div>
+              <div class="pipeline-connector filled" id="conn1"></div>
+              <div class="pipeline-step success" id="stepLint">
+                <div class="step-icon-circle">
+                  <i class="fas fa-wand-magic-sparkles"></i>
+                </div>
+                <span class="step-label">Linting</span>
+                <span class="step-status" id="stepLintStatus">Passed</span>
+              </div>
+              <div class="pipeline-connector filled" id="conn2"></div>
+              <div class="pipeline-step success" id="stepTest">
+                <div class="step-icon-circle">
+                  <i class="fas fa-clipboard-list"></i>
+                </div>
+                <span class="step-label">Unit Tests</span>
+                <span class="step-status" id="stepTestStatus">142 Passed</span>
+              </div>
+              <div class="pipeline-connector filled" id="conn3"></div>
+              <div class="pipeline-step success" id="stepBuild">
+                <div class="step-icon-circle"><i class="fas fa-cube"></i></div>
+                <span class="step-label">Compile</span>
+                <span class="step-status" id="stepBuildStatus">Done</span>
+              </div>
+              <div class="pipeline-connector filled" id="conn4"></div>
+              <div class="pipeline-step success" id="stepDeploy">
+                <div class="step-icon-circle">
+                  <i class="fas fa-cloud-arrow-up"></i>
+                </div>
+                <span class="step-label">ECS Deploy</span>
+                <span class="step-status" id="stepDeployStatus">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Layout -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>CI/CD Pipeline History</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Build ID</th>
+                        <th>Branch</th>
+                        <th>Commit Message</th>
+                        <th>Initiator</th>
+                        <th>Status</th>
+                        <th>Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody id="buildsHistoryBody">
+                      <tr id="build-824">
+                        <td><span class="td-primary">#B-824</span></td>
+                        <td>
+                          <span
+                            class="badge bg-indigo-subtle text-indigo px-2 py-1"
+                            ><i class="fas fa-code-branch me-1"></i>main</span
+                          >
+                        </td>
+                        <td>Refactor metric components</td>
+                        <td>Alex Rivera</td>
+                        <td>
+                          <span class="status-pill status-active">Passed</span>
+                        </td>
+                        <td>4m 08s</td>
+                      </tr>
+                      <tr id="build-823">
+                        <td><span class="td-primary">#B-823</span></td>
+                        <td>
+                          <span
+                            class="badge bg-indigo-subtle text-indigo px-2 py-1"
+                            ><i class="fas fa-code-branch me-1"></i>main</span
+                          >
+                        </td>
+                        <td>Fix Stripe webhook retry log</td>
+                        <td>Alex Rivera</td>
+                        <td>
+                          <span class="status-pill status-active">Passed</span>
+                        </td>
+                        <td>3m 52s</td>
+                      </tr>
+                      <tr id="build-822">
+                        <td><span class="td-primary">#B-822</span></td>
+                        <td>
+                          <span
+                            class="badge bg-secondary-subtle text-light px-2 py-1"
+                            ><i class="fas fa-code-branch me-1"></i
+                            >feat/auth</span
+                          >
+                        </td>
+                        <td>Implement OTP authentication limits</td>
+                        <td>Github Webhook</td>
+                        <td>
+                          <span class="status-pill status-critical"
+                            >Failed</span
+                          >
+                        </td>
+                        <td>1m 15s</td>
+                      </tr>
+                      <tr id="build-821">
+                        <td><span class="td-primary">#B-821</span></td>
+                        <td>
+                          <span
+                            class="badge bg-indigo-subtle text-indigo px-2 py-1"
+                            ><i class="fas fa-code-branch me-1"></i>main</span
+                          >
+                        </td>
+                        <td>Upgrade Webpack config and loader dependencies</td>
+                        <td>Alex Rivera</td>
+                        <td>
+                          <span class="status-pill status-active">Passed</span>
+                        </td>
+                        <td>4m 45s</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Deployment Metadata</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-server"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title">Target Stack</div>
+                      <div class="act-time text-light">
+                        AWS ECS / Fargate Container Service
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-cyan">
+                      <i class="fas fa-gear"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title">Compiler Engine</div>
+                      <div class="act-time text-light">
+                        NodeJS v20.10.0 / Vite 5.2
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-pink">
+                      <i class="fas fa-shield"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title">Docker Engine</div>
+                      <div class="act-time text-light">
+                        v24.0.7-ce build 3113b0a
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Artifact catalog</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="td-primary">main-dist.tar.gz</span>
+                        </td>
+                        <td>24.8 MB</td>
+                        <td align="right">
+                          <i
+                            class="fas fa-download text-indigo cursor-pointer"
+                          ></i>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="td-primary">worker-image.img</span>
+                        </td>
+                        <td>112.5 MB</td>
+                        <td align="right">
+                          <i
+                            class="fas fa-download text-indigo cursor-pointer"
+                          ></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const triggerBuildBtn = document.getElementById("triggerBuildBtn");
+        const totBuildsCount = document.getElementById("totBuildsCount");
+        const lastBuildState = document.getElementById("lastBuildState");
+        const buildsHistoryBody = document.getElementById("buildsHistoryBody");
+        const pipelineBuildId = document.getElementById("pipelineBuildId");
+        const pipelineStatusBadge = document.getElementById(
+          "pipelineStatusBadge",
+        );
+
+        const stepTrigger = document.getElementById("stepTrigger");
+        const stepLint = document.getElementById("stepLint");
+        const stepTest = document.getElementById("stepTest");
+        const stepBuild = document.getElementById("stepBuild");
+        const stepDeploy = document.getElementById("stepDeploy");
+
+        const conn1 = document.getElementById("conn1");
+        const conn2 = document.getElementById("conn2");
+        const conn3 = document.getElementById("conn3");
+        const conn4 = document.getElementById("conn4");
+
+        const stepTriggerStatus = document.getElementById("stepTriggerStatus");
+        const stepLintStatus = document.getElementById("stepLintStatus");
+        const stepTestStatus = document.getElementById("stepTestStatus");
+        const stepBuildStatus = document.getElementById("stepBuildStatus");
+        const stepDeployStatus = document.getElementById("stepDeployStatus");
+
+        let buildCount = 824;
+        let isBuildRunning = false;
+
+        triggerBuildBtn.addEventListener("click", () => {
+          if (isBuildRunning) {
+            alert("A build pipeline is currently active. Wait for completion.");
+            return;
+          }
+
+          isBuildRunning = true;
+          buildCount++;
+          totBuildsCount.textContent = buildCount;
+
+          // Set visualizer to Running State
+          pipelineBuildId.textContent = `#B-${buildCount}`;
+          pipelineStatusBadge.textContent = "Running";
+          pipelineStatusBadge.className = "status-pill status-review"; // blue-ish pill
+
+          // Reset all steps to default
+          const steps = [
+            stepTrigger,
+            stepLint,
+            stepTest,
+            stepBuild,
+            stepDeploy,
+          ];
+          const conns = [conn1, conn2, conn3, conn4];
+          steps.forEach((s) => {
+            s.className = "pipeline-step";
+          });
+          conns.forEach((c) => {
+            c.className = "pipeline-connector";
+          });
+
+          stepTriggerStatus.textContent = "Pending";
+          stepLintStatus.textContent = "Pending";
+          stepTestStatus.textContent = "Pending";
+          stepBuildStatus.textContent = "Pending";
+          stepDeployStatus.textContent = "Pending";
+
+          // Add running row to history table
+          const newRow = document.createElement("tr");
+          newRow.id = `build-${buildCount}`;
+          newRow.innerHTML = `
+            <td><span class="td-primary">#B-${buildCount}</span></td>
+            <td><span class="badge bg-indigo-subtle text-indigo px-2 py-1"><i class="fas fa-code-branch me-1"></i>main</span></td>
+            <td>Interactive simulated commit push trigger</td>
+            <td>Alex Rivera</td>
+            <td><span class="status-pill status-review text-pulse">Building</span></td>
+            <td id="buildTime-${buildCount}">0s</td>
+          `;
+          buildsHistoryBody.insertBefore(newRow, buildsHistoryBody.firstChild);
+
+          // Start visual steps pipeline timeline
+          setTimeout(() => {
+            stepTrigger.className = "pipeline-step success";
+            stepTriggerStatus.textContent = "Triggered";
+          }, 500);
+
+          setTimeout(() => {
+            conn1.className = "pipeline-connector filled";
+            stepLint.className = "pipeline-step running";
+            stepLintStatus.textContent = "Running...";
+          }, 1500);
+
+          setTimeout(() => {
+            stepLint.className = "pipeline-step success";
+            stepLintStatus.textContent = "Passed";
+          }, 3000);
+
+          setTimeout(() => {
+            conn2.className = "pipeline-connector filled";
+            stepTest.className = "pipeline-step running";
+            stepTestStatus.textContent = "Testing...";
+          }, 4000);
+
+          setTimeout(() => {
+            stepTest.className = "pipeline-step success";
+            stepTestStatus.textContent = "156 Passed";
+          }, 6000);
+
+          setTimeout(() => {
+            conn3.className = "pipeline-connector filled";
+            stepBuild.className = "pipeline-step running";
+            stepBuildStatus.textContent = "Compiling...";
+          }, 7000);
+
+          setTimeout(() => {
+            stepBuild.className = "pipeline-step success";
+            stepBuildStatus.textContent = "Done";
+          }, 9000);
+
+          setTimeout(() => {
+            conn4.className = "pipeline-connector filled";
+            stepDeploy.className = "pipeline-step running";
+            stepDeployStatus.textContent = "Deploying...";
+          }, 10000);
+
+          setTimeout(() => {
+            stepDeploy.className = "pipeline-step success";
+            stepDeployStatus.textContent = "Active";
+
+            pipelineStatusBadge.textContent = "Passed";
+            pipelineStatusBadge.className = "status-pill status-active"; // green
+            lastBuildState.textContent = "Passed";
+
+            // Update row in table
+            const rowPill = newRow.querySelector(".status-pill");
+            rowPill.textContent = "Passed";
+            rowPill.className = "status-pill status-active";
+            document.getElementById(`buildTime-${buildCount}`).textContent =
+              "12s";
+
+            isBuildRunning = false;
+          }, 12000);
+
+          // Simulated timing counter
+          let elapsed = 0;
+          const timeInterval = setInterval(() => {
+            if (!isBuildRunning) {
+              clearInterval(timeInterval);
+              return;
+            }
+            elapsed++;
+            document.getElementById(`buildTime-${buildCount}`).textContent =
+              elapsed + "s";
+          }, 1000);
+        });
+      });
+    </script>
+  </body>
+</html>

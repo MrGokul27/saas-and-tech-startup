@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capital Management - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-executive"
+              id="sidebarUserRole"
+              >Founder / CEO</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Capital Management</h2>
+            <p>
+              Review organization valuation parameters, funding history
+              checkpoints, and evaluate cap table dilution shares.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-circle-dollar-to-slot"></i>
+                </div>
+                <div class="stat-value">$1.2M</div>
+                <div class="stat-label">Total Capital Raised</div>
+                <div class="stat-change up">Pre-seed</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-sack-dollar"></i>
+                </div>
+                <div class="stat-value">$330,000</div>
+                <div class="stat-label">Bank Cash reserves</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-chart-line-up"></i>
+                </div>
+                <div class="stat-value" id="valText">$4.5M</div>
+                <div class="stat-label">Pre-money Valuation</div>
+                <div class="stat-change up">Initial Target</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-value">17.8 months</div>
+                <div class="stat-label">Projected Burn Runway</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cap Table dilution -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Dilution Simulator (Seed Round Target)</h5>
+                </div>
+
+                <div
+                  class="my-3 p-3 border border-secondary"
+                  style="
+                    border-radius: 8px;
+                    background: rgba(255, 255, 255, 0.02);
+                  "
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="small text-muted"
+                      >New Seed Capital Target ($)</span
+                    >
+                    <span class="td-primary fw-700" id="raiseValText"
+                      >$500,000</span
+                    >
+                  </div>
+                  <input
+                    type="range"
+                    class="form-range"
+                    id="raiseSlider"
+                    min="100000"
+                    max="2000000"
+                    step="50000"
+                    value="500000"
+                  />
+                  <div class="small text-muted mt-2">
+                    Post-money Valuation:
+                    <span class="text-indigo fw-700" id="postMoneyText"
+                      >$5,000,000</span
+                    >
+                    &bull; Investor Dilution:
+                    <span class="text-success fw-700" id="dilutionText"
+                      >10.0%</span
+                    >
+                  </div>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Shareholder Name</th>
+                        <th>Class of Shares</th>
+                        <th>Pre-Seed Shares</th>
+                        <th>Pre-Seed %</th>
+                        <th>Post-Seed Shares</th>
+                        <th>Post-Seed %</th>
+                      </tr>
+                    </thead>
+                    <tbody id="capTableBody">
+                      <tr>
+                        <td><span class="td-primary">Founders Group</span></td>
+                        <td>Common A</td>
+                        <td>600,000</td>
+                        <td>60.0%</td>
+                        <td>600,000</td>
+                        <td>
+                          <span class="text-light" id="postFounders"
+                            >54.0%</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="td-primary">Angel Seed Fund</span></td>
+                        <td>Preferred Seed</td>
+                        <td>250,000</td>
+                        <td>25.0%</td>
+                        <td>250,000</td>
+                        <td>
+                          <span class="text-light" id="postAngels">22.5%</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="td-primary">Employee ESOP Pool</span>
+                        </td>
+                        <td>Common B</td>
+                        <td>150,000</td>
+                        <td>15.0%</td>
+                        <td>150,000</td>
+                        <td>
+                          <span class="text-light" id="postEsop">13.5%</span>
+                        </td>
+                      </tr>
+                      <tr id="investorRow" class="d-none">
+                        <td>
+                          <span class="td-primary text-success"
+                            >New Seed Investors</span
+                          >
+                        </td>
+                        <td>Preferred Seed</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span id="postInvShares">111,111</span></td>
+                        <td>
+                          <span class="text-success fw-700" id="postInvPct"
+                            >10.0%</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sidebars -->
+            <div class="col-lg-4">
+              <!-- Chronology -->
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Funding Chronology</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">Pre-seed Round Closed</div>
+                      <div class="act-time">
+                        Raised: $1.2M &bull; Pre-money Val: $4.0M &bull; Jan
+                        2026
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">Angel Investment</div>
+                      <div class="act-time">
+                        Raised: $250K &bull; Convertible Note &bull; Nov 2025
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Options -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>ESOP Operations</h5>
+                </div>
+                <button
+                  class="btn btn-outline-indigo w-100 py-2"
+                  onclick="alert('ESOP configuration opened.')"
+                  style="border-radius: 8px; font-size: 0.85rem"
+                >
+                  Manage Employee Options
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const raiseSlider = document.getElementById("raiseSlider");
+        const raiseValText = document.getElementById("raiseValText");
+        const postMoneyText = document.getElementById("postMoneyText");
+        const dilutionText = document.getElementById("dilutionText");
+        const postFounders = document.getElementById("postFounders");
+        const postAngels = document.getElementById("postAngels");
+        const postEsop = document.getElementById("postEsop");
+        const investorRow = document.getElementById("investorRow");
+        const postInvShares = document.getElementById("postInvShares");
+        const postInvPct = document.getElementById("postInvPct");
+
+        const preMoneyVal = 4500000;
+        const totalPreSeedShares = 1000000;
+
+        raiseSlider.addEventListener("input", () => {
+          const newRaise = parseInt(raiseSlider.value);
+          const postMoneyVal = preMoneyVal + newRaise;
+
+          // Investor dilution %
+          const invPct = (newRaise / postMoneyVal) * 100;
+
+          raiseValText.textContent = "$" + newRaise.toLocaleString();
+          postMoneyText.textContent = "$" + postMoneyVal.toLocaleString();
+          dilutionText.textContent = invPct.toFixed(1) + "%";
+
+          // Calculate post seed percentages for old shareholders
+          const remPct = 100 - invPct;
+          const foundersPct = 0.6 * remPct;
+          const angelsPct = 0.25 * remPct;
+          const esopPct = 0.15 * remPct;
+
+          postFounders.textContent = foundersPct.toFixed(1) + "%";
+          postAngels.textContent = angelsPct.toFixed(1) + "%";
+          postEsop.textContent = esopPct.toFixed(1) + "%";
+
+          // Show new row
+          investorRow.classList.remove("d-none");
+
+          // Calculate new shares issued
+          const newShares = Math.round(totalPreSeedShares * (invPct / remPct));
+          postInvShares.textContent = newShares.toLocaleString();
+          postInvPct.textContent = invPct.toFixed(1) + "%";
+        });
+      });
+    </script>
+  </body>
+</html>

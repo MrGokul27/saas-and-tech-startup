@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Networks Topology - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .weight-control-box {
+        background: rgba(15, 20, 34, 0.4);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-admin" id="sidebarUserRole"
+              >Systems Admin</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>VPC Networks Topology</h2>
+            <p>
+              Inspect load balancer health configurations, edge CDN caching
+              nodes, and configure VPC traffic weights.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="stat-value">nginx-lb</div>
+                <div class="stat-label">Primary Load Balancer</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <div class="stat-value">94.5%</div>
+                <div class="stat-label">Edge CDN Cache Hit</div>
+                <div class="stat-change up">Optimized</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-server"></i>
+                </div>
+                <div class="stat-value">3 Active</div>
+                <div class="stat-label">Subnets Configured</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-heading"></i>
+                </div>
+                <div class="stat-value">2 zones</div>
+                <div class="stat-label">DNS Zones (Route53)</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Layout -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card">
+                <div class="dash-card-header mb-4">
+                  <h5>Load Balancer Routing Targets</h5>
+                  <button class="btn btn-sm btn-indigo" id="saveWeightsBtn">
+                    Save Weights Configuration
+                  </button>
+                </div>
+
+                <!-- NYC Node 1 -->
+                <div class="weight-control-box">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="td-primary fw-600"
+                      >nyc-node-01 (192.168.1.10)</span
+                    >
+                    <span class="badge bg-success-subtle text-success"
+                      >Active &bull; <span id="weightText1">33</span>%
+                      Weight</span
+                    >
+                  </div>
+                  <input
+                    type="range"
+                    class="form-range weight-slider"
+                    id="slider1"
+                    min="0"
+                    max="100"
+                    value="33"
+                  />
+                  <div class="small text-muted mt-2">
+                    Latency: <strong>12ms</strong> &bull; Estimated requests:
+                    <span id="reqText1">138</span> rps
+                  </div>
+                </div>
+
+                <!-- NYC Node 2 -->
+                <div class="weight-control-box">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="td-primary fw-600"
+                      >nyc-node-02 (192.168.1.11)</span
+                    >
+                    <span class="badge bg-success-subtle text-success"
+                      >Active &bull; <span id="weightText2">33</span>%
+                      Weight</span
+                    >
+                  </div>
+                  <input
+                    type="range"
+                    class="form-range weight-slider"
+                    id="slider2"
+                    min="0"
+                    max="100"
+                    value="33"
+                  />
+                  <div class="small text-muted mt-2">
+                    Latency: <strong>15ms</strong> &bull; Estimated requests:
+                    <span id="reqText2">138</span> rps
+                  </div>
+                </div>
+
+                <!-- LON Node 1 -->
+                <div class="weight-control-box">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="td-primary fw-600"
+                      >lon-node-01 (10.0.4.15)</span
+                    >
+                    <span class="badge bg-warning-subtle text-warning"
+                      >High Load &bull; <span id="weightText3">34</span>%
+                      Weight</span
+                    >
+                  </div>
+                  <input
+                    type="range"
+                    class="form-range weight-slider"
+                    id="slider3"
+                    min="0"
+                    max="100"
+                    value="34"
+                  />
+                  <div class="small text-muted mt-2">
+                    Latency: <strong>84ms</strong> &bull; Estimated requests:
+                    <span id="reqText3">144</span> rps
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- VPC Map details -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>VPC IP CIDR Allocations</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <tbody>
+                      <tr>
+                        <td>VPC CIDR</td>
+                        <td><span class="td-primary">10.0.0.0/16</span></td>
+                      </tr>
+                      <tr>
+                        <td>Subnet A (US)</td>
+                        <td><span class="td-primary">10.0.1.0/24</span></td>
+                      </tr>
+                      <tr>
+                        <td>Subnet B (EU)</td>
+                        <td><span class="td-primary">10.0.2.0/24</span></td>
+                      </tr>
+                      <tr>
+                        <td>Database Subnet</td>
+                        <td><span class="td-primary">10.0.9.0/24</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Edge Cache nodes -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>CDN Edge POP Nodes</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">US-EAST (Virginia, US)</div>
+                      <div class="act-time">Cache Hit: 95.8% &bull; Online</div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">
+                        EU-CENTRAL (Frankfurt, DE)
+                      </div>
+                      <div class="act-time">Cache Hit: 93.1% &bull; Online</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const slider1 = document.getElementById("slider1");
+        const slider2 = document.getElementById("slider2");
+        const slider3 = document.getElementById("slider3");
+
+        const weightText1 = document.getElementById("weightText1");
+        const weightText2 = document.getElementById("weightText2");
+        const weightText3 = document.getElementById("weightText3");
+
+        const reqText1 = document.getElementById("reqText1");
+        const reqText2 = document.getElementById("reqText2");
+        const reqText3 = document.getElementById("reqText3");
+
+        const saveWeightsBtn = document.getElementById("saveWeightsBtn");
+
+        const totalRequests = 420;
+
+        const updateRequestsText = (w1, w2, w3) => {
+          reqText1.textContent = Math.round(totalRequests * (w1 / 100));
+          reqText2.textContent = Math.round(totalRequests * (w2 / 100));
+          reqText3.textContent = Math.round(totalRequests * (w3 / 100));
+        };
+
+        const setupSliders = (
+          activeSlider,
+          other1,
+          other2,
+          txtAct,
+          txtOth1,
+          txtOth2,
+        ) => {
+          activeSlider.addEventListener("input", () => {
+            let actVal = parseInt(activeSlider.value);
+            let remaining = 100 - actVal;
+
+            // Allocate remaining weight equally to others
+            let oth1Val = Math.round(remaining / 2);
+            let oth2Val = remaining - oth1Val;
+
+            other1.value = oth1Val;
+            other2.value = oth2Val;
+
+            txtAct.textContent = actVal;
+            txtOth1.textContent = oth1Val;
+            txtOth2.textContent = oth2Val;
+
+            // Update estimates
+            const weights = {};
+            weights[activeSlider.id] = actVal;
+            weights[other1.id] = oth1Val;
+            weights[other2.id] = oth2Val;
+
+            updateRequestsText(
+              weights.slider1,
+              weights.slider2,
+              weights.slider3,
+            );
+          });
+        };
+
+        setupSliders(
+          slider1,
+          slider2,
+          slider3,
+          weightText1,
+          weightText2,
+          weightText3,
+        );
+        setupSliders(
+          slider2,
+          slider1,
+          slider3,
+          weightText2,
+          weightText1,
+          weightText3,
+        );
+        setupSliders(
+          slider3,
+          slider1,
+          slider2,
+          weightText3,
+          weightText1,
+          weightText2,
+        );
+
+        saveWeightsBtn.addEventListener("click", () => {
+          saveWeightsBtn.disabled = true;
+          saveWeightsBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin me-1"></i>Saving to LB...';
+
+          setTimeout(() => {
+            alert(
+              "Nginx upstream weights configuration file successfully updated and reloaded on balancer core!",
+            );
+            saveWeightsBtn.disabled = false;
+            saveWeightsBtn.innerHTML = "Save Weights Configuration";
+          }, 1500);
+        });
+      });
+    </script>
+  </body>
+</html>

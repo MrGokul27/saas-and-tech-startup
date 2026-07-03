@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Accounts - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-executive"
+              id="sidebarUserRole"
+              >Founder / CEO</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Enterprise Client Accounts</h2>
+            <p>
+              Manage corporate organization workspaces, monitor active seat
+              allocations, and track MRR billing contributions.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="stat-value" id="totAccounts">482</div>
+                <div class="stat-label">Active Customer Accounts</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 12%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-users-viewfinder"></i>
+                </div>
+                <div class="stat-value" id="totSeats">450</div>
+                <div class="stat-label">Enterprise Seats Active</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-gem"></i>
+                </div>
+                <div class="stat-value">3 / 3</div>
+                <div class="stat-label">Key Contracts SLA</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-clock-rotate-left"></i>
+                </div>
+                <div class="stat-value" id="totTrials">12</div>
+                <div class="stat-label">Active Sales Trials</div>
+                <div class="stat-change down">
+                  <i class="fas fa-arrow-down"></i> 25%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clients directory -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card" style="min-height: 460px">
+                <div class="dash-card-header flex-wrap gap-3">
+                  <h5>Enterprise Client Directory</h5>
+                  <div class="d-flex align-items-center gap-2">
+                    <input
+                      type="text"
+                      id="clientSearch"
+                      class="form-control form-control-sm bg-dark border-secondary text-light"
+                      placeholder="Search Company..."
+                      style="
+                        width: 170px;
+                        font-size: 0.8rem;
+                        border-radius: 8px;
+                      "
+                    />
+                    <select
+                      id="clientPlan"
+                      class="form-select form-select-sm bg-dark border-secondary text-light"
+                      style="
+                        width: 120px;
+                        font-size: 0.8rem;
+                        border-radius: 8px;
+                      "
+                    >
+                      <option value="ALL">All Plans</option>
+                      <option value="Enterprise">Enterprise Plan</option>
+                      <option value="Scale">Scale Plan</option>
+                      <option value="Trial">Trial Tier</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Company Name</th>
+                        <th>Plan Tier</th>
+                        <th>Seats Allocated</th>
+                        <th>Monthly Revenue</th>
+                        <th>Status</th>
+                        <th align="right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="clientsBody">
+                      <tr id="row-acme">
+                        <td><span class="td-primary">Acme Corp</span></td>
+                        <td>
+                          <span class="badge bg-indigo-subtle text-indigo"
+                            >Enterprise</span
+                          >
+                        </td>
+                        <td>250 seats</td>
+                        <td>$2,450</td>
+                        <td>
+                          <span class="status-pill status-active">Active</span>
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-indigo"
+                            onclick="alert('Upgrade seats triggers dashboard.')"
+                          >
+                            Upgrade
+                          </button>
+                        </td>
+                      </tr>
+                      <tr id="row-hooli">
+                        <td><span class="td-primary">Hooli Systems</span></td>
+                        <td>
+                          <span class="badge bg-indigo-subtle text-indigo"
+                            >Enterprise</span
+                          >
+                        </td>
+                        <td>120 seats</td>
+                        <td>$1,200</td>
+                        <td>
+                          <span class="status-pill status-active">Active</span>
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-indigo"
+                            onclick="alert('Upgrade seats triggers dashboard.')"
+                          >
+                            Upgrade
+                          </button>
+                        </td>
+                      </tr>
+                      <tr id="row-initech">
+                        <td>
+                          <span class="td-primary">Initech Software</span>
+                        </td>
+                        <td>
+                          <span class="badge bg-warning-subtle text-warning"
+                            >Trial</span
+                          >
+                        </td>
+                        <td>80 seats</td>
+                        <td>$800</td>
+                        <td>
+                          <span class="status-pill status-review">Trial</span>
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-indigo"
+                            onclick="
+                              alert('Extend trial subscription triggered.')
+                            "
+                          >
+                            Extend
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Register client -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Onboard Enterprise Client</h5>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small text-muted"
+                    >Company Name</label
+                  >
+                  <input
+                    type="text"
+                    id="clientNameInput"
+                    class="form-control bg-dark border-secondary text-light"
+                    style="border-radius: 8px; font-size: 0.85rem"
+                    placeholder="e.g. Stark Industries"
+                  />
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <label class="form-label small text-muted"
+                      >Initial Plan</label
+                    >
+                    <select
+                      id="clientPlanSelect"
+                      class="form-select bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                    >
+                      <option value="Enterprise">Enterprise</option>
+                      <option value="Scale">Scale</option>
+                      <option value="Trial">Trial</option>
+                    </select>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label small text-muted">Seats</label>
+                    <input
+                      type="number"
+                      id="clientSeatsInput"
+                      class="form-control bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                      value="50"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small text-muted"
+                    >Monthly spend ($)</label
+                  >
+                  <input
+                    type="number"
+                    id="clientSpendInput"
+                    class="form-control bg-dark border-secondary text-light"
+                    style="border-radius: 8px; font-size: 0.85rem"
+                    value="500"
+                  />
+                </div>
+                <button
+                  class="btn btn-indigo w-100 py-2"
+                  id="addClientBtn"
+                  style="border-radius: 8px; font-size: 0.85rem"
+                >
+                  <i class="fas fa-plus me-1"></i>Register Client Account
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const clientSearch = document.getElementById("clientSearch");
+        const clientPlan = document.getElementById("clientPlan");
+        const clientsBody = document.getElementById("clientsBody");
+
+        const addClientBtn = document.getElementById("addClientBtn");
+        const clientNameInput = document.getElementById("clientNameInput");
+        const clientPlanSelect = document.getElementById("clientPlanSelect");
+        const clientSeatsInput = document.getElementById("clientSeatsInput");
+        const clientSpendInput = document.getElementById("clientSpendInput");
+
+        const totAccounts = document.getElementById("totAccounts");
+        const totSeats = document.getElementById("totSeats");
+        const totTrials = document.getElementById("totTrials");
+
+        let accountsCount = 482;
+        let seatsCount = 450;
+        let trialsCount = 12;
+
+        addClientBtn.addEventListener("click", () => {
+          const name = clientNameInput.value.trim();
+          if (name === "") {
+            alert("Please input a client company name.");
+            return;
+          }
+
+          const plan = clientPlanSelect.value;
+          const seats = parseInt(clientSeatsInput.value);
+          const spend = parseInt(clientSpendInput.value);
+
+          let badgeClass = "badge bg-indigo-subtle text-indigo";
+          let statusText = "Active";
+          let statusClass = "status-pill status-active";
+          if (plan === "Trial") {
+            badgeClass = "badge bg-warning-subtle text-warning";
+            statusText = "Trial";
+            statusClass = "status-pill status-review";
+            trialsCount++;
+            totTrials.textContent = trialsCount;
+          }
+
+          // Ingress new row
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><span class="td-primary">${name}</span></td>
+            <td><span class="${badgeClass}">${plan}</span></td>
+            <td>${seats} seats</td>
+            <td>$${spend.toLocaleString()}</td>
+            <td><span class="${statusClass}">${statusText}</span></td>
+            <td align="right">
+              <button class="btn btn-sm btn-outline-indigo" onclick="alert('Seat allocation updated.')">Upgrade</button>
+            </td>
+          `;
+
+          clientsBody.insertBefore(tr, clientsBody.firstChild);
+
+          // Update stats
+          accountsCount++;
+          seatsCount += seats;
+
+          totAccounts.textContent = accountsCount;
+          totSeats.textContent = seatsCount;
+
+          // Clear inputs
+          clientNameInput.value = "";
+
+          alert(
+            `Client organization "${name}" successfully registered and workspace instantiated!`,
+          );
+        });
+
+        const applyFilters = () => {
+          const searchVal = clientSearch.value.trim().toLowerCase();
+          const planVal = clientPlan.value;
+
+          Array.from(clientsBody.children).forEach((row) => {
+            const company = row.cells[0].textContent.toLowerCase();
+            const plan = row.cells[1].textContent;
+
+            const matchesSearch = company.includes(searchVal);
+            const matchesPlan = planVal === "ALL" || plan === planVal;
+
+            if (matchesSearch && matchesPlan) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        };
+
+        clientSearch.addEventListener("input", applyFilters);
+        clientPlan.addEventListener("change", applyFilters);
+      });
+    </script>
+  </body>
+</html>

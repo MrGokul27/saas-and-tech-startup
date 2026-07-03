@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Logs - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-developer"
+              id="sidebarUserRole"
+              >Developer</span
+            >
+          </div>
+        </div>
+
+        <!-- Sidebar Navigation (Populated by JS) -->
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="dash-main">
+        <!-- Topbar -->
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>API Logs</h2>
+            <p>
+              Real-time telemetry feed of all ingress and egress HTTP
+              operations.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="stat-value" id="totRequests">1,248,392</div>
+                <div class="stat-label">Requests Today</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 18.5%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value">24.5 ms</div>
+                <div class="stat-label">Avg SLA Latency</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-down"></i> 4.2%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-circle-check"></i>
+                </div>
+                <div class="stat-value">99.96%</div>
+                <div class="stat-label">Success SLA</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-red">
+                  <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="stat-value" id="blockCount">142</div>
+                <div class="stat-label">Rate Limiter Blocks</div>
+                <div class="stat-change down">
+                  <i class="fas fa-arrow-up"></i> 12.8%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Layout Grid -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card mb-4" style="min-height: 480px">
+                <div class="dash-card-header flex-wrap gap-3">
+                  <h5>Live HTTP Telemetry Stream</h5>
+                  <div class="d-flex align-items-center gap-2">
+                    <input
+                      type="text"
+                      id="logSearch"
+                      class="form-control form-control-sm bg-dark border-secondary text-light"
+                      placeholder="Search Endpoint..."
+                      style="
+                        width: 180px;
+                        font-size: 0.8rem;
+                        border-radius: 8px;
+                      "
+                    />
+                    <select
+                      id="logMethod"
+                      class="form-select form-select-sm bg-dark border-secondary text-light"
+                      style="
+                        width: 100px;
+                        font-size: 0.8rem;
+                        border-radius: 8px;
+                      "
+                    >
+                      <option value="ALL">All Methods</option>
+                      <option value="GET">GET</option>
+                      <option value="POST">POST</option>
+                      <option value="PUT">PUT</option>
+                      <option value="DELETE">DELETE</option>
+                    </select>
+                    <button
+                      class="btn btn-sm btn-outline-indigo"
+                      id="liveToggle"
+                    >
+                      <i class="fas fa-pause me-1"></i>Pause
+                    </button>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Timestamp</th>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Status</th>
+                        <th>Latency</th>
+                        <th>Source IP</th>
+                      </tr>
+                    </thead>
+                    <tbody id="logsTableBody">
+                      <tr>
+                        <td>15:53:40</td>
+                        <td>
+                          <span
+                            class="badge bg-success-subtle text-success px-2 py-1"
+                            >GET</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary">/api/v1/auth/session</span>
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">200 OK</span>
+                        </td>
+                        <td>12ms</td>
+                        <td>182.93.10.42</td>
+                      </tr>
+                      <tr>
+                        <td>15:53:35</td>
+                        <td>
+                          <span
+                            class="badge bg-primary-subtle text-primary px-2 py-1"
+                            >POST</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary"
+                            >/api/v1/billing/checkout</span
+                          >
+                        </td>
+                        <td>
+                          <span class="status-pill status-done"
+                            >201 Created</span
+                          >
+                        </td>
+                        <td>145ms</td>
+                        <td>94.201.8.115</td>
+                      </tr>
+                      <tr>
+                        <td>15:53:32</td>
+                        <td>
+                          <span
+                            class="badge bg-success-subtle text-success px-2 py-1"
+                            >GET</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary"
+                            >/api/v1/metrics/telemetry</span
+                          >
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">200 OK</span>
+                        </td>
+                        <td>28ms</td>
+                        <td>108.12.54.196</td>
+                      </tr>
+                      <tr>
+                        <td>15:53:22</td>
+                        <td>
+                          <span
+                            class="badge bg-danger-subtle text-danger px-2 py-1"
+                            >POST</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary">/api/v1/auth/login</span>
+                        </td>
+                        <td>
+                          <span class="status-pill status-critical"
+                            >401 AuthError</span
+                          >
+                        </td>
+                        <td>18ms</td>
+                        <td>201.44.82.7</td>
+                      </tr>
+                      <tr>
+                        <td>15:53:15</td>
+                        <td>
+                          <span
+                            class="badge bg-warning-subtle text-warning px-2 py-1"
+                            >PUT</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary">/api/v1/users/profile</span>
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">200 OK</span>
+                        </td>
+                        <td>54ms</td>
+                        <td>72.19.103.88</td>
+                      </tr>
+                      <tr>
+                        <td>15:53:08</td>
+                        <td>
+                          <span
+                            class="badge bg-success-subtle text-success px-2 py-1"
+                            >GET</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary">/api/v1/products/list</span>
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">200 OK</span>
+                        </td>
+                        <td>31ms</td>
+                        <td>182.93.10.42</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Latency SLA Target</h5>
+                </div>
+                <div class="donut-wrap justify-content-center py-3">
+                  <div
+                    class="donut-chart"
+                    style="
+                      background: conic-gradient(
+                        var(--accent-indigo) 95.8%,
+                        var(--glass-border) 95.8%
+                      );
+                    "
+                  >
+                    <div
+                      class="donut-center"
+                      style="
+                        width: 86px;
+                        height: 86px;
+                        border-radius: 50%;
+                        background: var(--bg-secondary);
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                      "
+                    >
+                      <span class="donut-pct">95.8%</span>
+                      <span class="donut-sub">Target met</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="progress-item mt-2">
+                  <div class="progress-meta">
+                    <span class="prog-label">&lt; 50ms SLA Target</span>
+                    <span class="prog-val">95.8%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill" style="width: 95.8%"></div>
+                  </div>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">&lt; 200ms API Limit</span>
+                    <span class="prog-val">99.8%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill cyan" style="width: 99.8%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Log Actions</h5>
+                </div>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <button class="quick-action-btn w-100" id="clearBtn">
+                      <i class="fas fa-trash-can text-danger"></i>
+                      <span>Clear Log</span>
+                    </button>
+                  </div>
+                  <div class="col-6">
+                    <button class="quick-action-btn w-100" id="dlBtn">
+                      <i class="fas fa-file-csv text-indigo"></i>
+                      <span>Export CSV</span>
+                    </button>
+                  </div>
+                  <div class="col-12 mt-3">
+                    <button
+                      class="btn btn-outline-indigo w-100 py-2"
+                      id="triggerBlockSim"
+                      style="border-radius: 12px; font-size: 0.85rem"
+                    >
+                      <i class="fas fa-shield-halved me-2"></i>Simulate Rate
+                      Limit Event
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <!-- Simulated websocket live feed script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tableBody = document.getElementById("logsTableBody");
+        const totRequests = document.getElementById("totRequests");
+        const blockCount = document.getElementById("blockCount");
+        const liveToggle = document.getElementById("liveToggle");
+        const clearBtn = document.getElementById("clearBtn");
+        const dlBtn = document.getElementById("dlBtn");
+        const triggerBlockSim = document.getElementById("triggerBlockSim");
+        const logSearch = document.getElementById("logSearch");
+        const logMethod = document.getElementById("logMethod");
+
+        let requestCounter = 1248392;
+        let rateLimitBlocks = 142;
+        let liveStreamActive = true;
+
+        const endpoints = [
+          "/api/v1/auth/session",
+          "/api/v1/billing/checkout",
+          "/api/v1/metrics/telemetry",
+          "/api/v1/users/profile",
+          "/api/v1/products/list",
+          "/api/v1/webhooks/trigger",
+          "/api/v1/database/query",
+          "/api/v1/analytics/funnel",
+        ];
+        const methods = ["GET", "POST", "PUT", "DELETE"];
+        const ips = [
+          "182.93.10.42",
+          "94.201.8.115",
+          "108.12.54.196",
+          "201.44.82.7",
+          "72.19.103.88",
+          "195.42.39.22",
+          "64.120.12.8",
+        ];
+
+        const addRow = (
+          method,
+          endpoint,
+          statusText,
+          statusClass,
+          latency,
+          ip,
+        ) => {
+          const now = new Date();
+          const timeStr = now.toTimeString().split(" ")[0];
+
+          let methodBadgeClass = "bg-success-subtle text-success";
+          if (method === "POST")
+            methodBadgeClass = "bg-primary-subtle text-primary";
+          if (method === "PUT")
+            methodBadgeClass = "bg-warning-subtle text-warning";
+          if (method === "DELETE")
+            methodBadgeClass = "bg-danger-subtle text-danger";
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${timeStr}</td>
+            <td><span class="badge ${methodBadgeClass} px-2 py-1">${method}</span></td>
+            <td><span class="td-primary">${endpoint}</span></td>
+            <td><span class="status-pill ${statusClass}">${statusText}</span></td>
+            <td>${latency}ms</td>
+            <td>${ip}</td>
+          `;
+
+          tableBody.insertBefore(tr, tableBody.firstChild);
+
+          // Keep table rows capped to 15
+          if (tableBody.children.length > 15) {
+            tableBody.removeChild(tableBody.lastChild);
+          }
+
+          // Trigger counters
+          requestCounter++;
+          totRequests.textContent = requestCounter.toLocaleString();
+          applyFilters();
+        };
+
+        const generateRandomLog = () => {
+          if (!liveStreamActive) return;
+          const method = methods[Math.floor(Math.random() * methods.length)];
+          const endpoint =
+            endpoints[Math.floor(Math.random() * endpoints.length)];
+          const ip = ips[Math.floor(Math.random() * ips.length)];
+
+          let latency = Math.floor(Math.random() * 80) + 10;
+          if (method === "POST" || method === "PUT") {
+            latency += Math.floor(Math.random() * 120);
+          }
+
+          let statusText = "200 OK";
+          let statusClass = "status-active";
+          const rand = Math.random();
+          if (rand > 0.95) {
+            statusText = "500 InternalError";
+            statusClass = "status-critical";
+          } else if (rand > 0.9) {
+            statusText = "400 BadRequest";
+            statusClass = "status-pending";
+          } else if (rand > 0.88) {
+            statusText = "403 Forbidden";
+            statusClass = "status-pending";
+          }
+
+          addRow(method, endpoint, statusText, statusClass, latency, ip);
+        };
+
+        // Live stream interval
+        let streamInterval = setInterval(generateRandomLog, 2500);
+
+        liveToggle.addEventListener("click", () => {
+          liveStreamActive = !liveStreamActive;
+          if (liveStreamActive) {
+            liveToggle.innerHTML = '<i class="fas fa-pause me-1"></i>Pause';
+            liveToggle.classList.remove("btn-outline-warning");
+            liveToggle.classList.add("btn-outline-indigo");
+          } else {
+            liveToggle.innerHTML = '<i class="fas fa-play me-1"></i>Resume';
+            liveToggle.classList.remove("btn-outline-indigo");
+            liveToggle.classList.add("btn-outline-warning");
+          }
+        });
+
+        clearBtn.addEventListener("click", () => {
+          tableBody.innerHTML = "";
+        });
+
+        dlBtn.addEventListener("click", () => {
+          alert("CSV Export Completed successfully. (Mock Download Started)");
+        });
+
+        triggerBlockSim.addEventListener("click", () => {
+          rateLimitBlocks++;
+          blockCount.textContent = rateLimitBlocks;
+          const ip = ips[Math.floor(Math.random() * ips.length)];
+          addRow(
+            "POST",
+            "/api/v1/auth/login",
+            "429 TooManyRequests",
+            "status-critical",
+            2,
+            ip,
+          );
+          alert(`Simulated DDoS limit block triggered for IP: ${ip}`);
+        });
+
+        const applyFilters = () => {
+          const searchVal = logSearch.value.trim().toLowerCase();
+          const methodVal = logMethod.value;
+
+          Array.from(tableBody.children).forEach((row) => {
+            const endpoint = row.cells[2].textContent.toLowerCase();
+            const method = row.cells[1].textContent;
+
+            const matchesSearch = endpoint.includes(searchVal);
+            const matchesMethod = methodVal === "ALL" || method === methodVal;
+
+            if (matchesSearch && matchesMethod) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        };
+
+        logSearch.addEventListener("input", applyFilters);
+        logMethod.addEventListener("change", applyFilters);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Systems Health - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-admin" id="sidebarUserRole"
+              >Systems Admin</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Systems Health Overview</h2>
+            <p>
+              Monitor cluster CPU allocations, host virtualizations,
+              microservice daemon connections, and response SLAs.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-microchip"></i>
+                </div>
+                <div class="stat-value" id="cpuLoad">32.4%</div>
+                <div class="stat-label">Cluster CPU Load</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-down"></i> 4.5%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-memory"></i>
+                </div>
+                <div class="stat-value" id="memUsage">64.8%</div>
+                <div class="stat-label">Memory Allocated</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-server"></i>
+                </div>
+                <div class="stat-value" id="bandwidth">450 GB/s</div>
+                <div class="stat-label">Network Bandwidth</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 12%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="stat-value">3 / 3</div>
+                <div class="stat-label">Cluster Nodes Active</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nodes health details -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card">
+                <div class="dash-card-header mb-3">
+                  <h5>Virtual Machine Node Telemetry</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Node Name</th>
+                        <th>IP Address</th>
+                        <th>CPU Usage</th>
+                        <th>Memory Usage</th>
+                        <th>Status</th>
+                        <th align="right">Controls</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><span class="td-primary">nyc-node-01</span></td>
+                        <td>192.168.1.10</td>
+                        <td><span id="node1Cpu">32%</span></td>
+                        <td><span id="node1Mem">64%</span></td>
+                        <td>
+                          <span
+                            class="status-pill status-active"
+                            id="node1Status"
+                            >Healthy</span
+                          >
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-danger"
+                            onclick="
+                              confirm('Reboot nyc-node-01?') &&
+                                alert('Rebooting node...')
+                            "
+                          >
+                            Reboot
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="td-primary">nyc-node-02</span></td>
+                        <td>192.168.1.11</td>
+                        <td><span id="node2Cpu">45%</span></td>
+                        <td><span id="node2Mem">78%</span></td>
+                        <td>
+                          <span
+                            class="status-pill status-active"
+                            id="node2Status"
+                            >Healthy</span
+                          >
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-danger"
+                            onclick="
+                              confirm('Reboot nyc-node-02?') &&
+                                alert('Rebooting node...')
+                            "
+                          >
+                            Reboot
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="td-primary">lon-node-01</span></td>
+                        <td>10.0.4.15</td>
+                        <td><span id="node3Cpu">89%</span></td>
+                        <td><span id="node3Mem">92%</span></td>
+                        <td>
+                          <span
+                            class="status-pill status-critical"
+                            id="node3Status"
+                            >High Load</span
+                          >
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-danger"
+                            onclick="
+                              confirm('Reboot lon-node-01?') &&
+                                alert('Rebooting node...')
+                            "
+                          >
+                            Reboot
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Microservices status -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Microservices Daemons</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <tbody>
+                      <tr>
+                        <td>Auth Authentication Service</td>
+                        <td align="right">
+                          <span class="badge bg-success-subtle text-success"
+                            >online</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Stripe Billing Engine</td>
+                        <td align="right">
+                          <span class="badge bg-success-subtle text-success"
+                            >online</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Git Repository Sync Sync</td>
+                        <td align="right">
+                          <span class="badge bg-success-subtle text-success"
+                            >online</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Webhook Delivery Worker</td>
+                        <td align="right">
+                          <span class="badge bg-success-subtle text-success"
+                            >online</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Systems Actions -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Infrastructure Tools</h5>
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="alert('Autoscaler limits adjusted.')"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-arrows-up-down me-2"></i>Configure Scale
+                    Triggers
+                  </button>
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="alert('Telemetry reports downloaded.')"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-file-waveform me-2"></i>Download Diagnostic
+                    Report
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const cpuLoad = document.getElementById("cpuLoad");
+        const memUsage = document.getElementById("memUsage");
+        const bandwidth = document.getElementById("bandwidth");
+
+        const node1Cpu = document.getElementById("node1Cpu");
+        const node1Mem = document.getElementById("node1Mem");
+        const node2Cpu = document.getElementById("node2Cpu");
+        const node2Mem = document.getElementById("node2Mem");
+        const node3Cpu = document.getElementById("node3Cpu");
+        const node3Mem = document.getElementById("node3Mem");
+
+        const node3Status = document.getElementById("node3Status");
+
+        // Live systems stats changes
+        setInterval(() => {
+          const n1c = Math.floor(Math.random() * 20 + 20);
+          const n1m = Math.floor(Math.random() * 10 + 60);
+          const n2c = Math.floor(Math.random() * 20 + 35);
+          const n2m = Math.floor(Math.random() * 10 + 70);
+          const n3c = Math.floor(Math.random() * 15 + 80);
+          const n3m = Math.floor(Math.random() * 8 + 88);
+
+          node1Cpu.textContent = n1c + "%";
+          node1Mem.textContent = n1m + "%";
+          node2Cpu.textContent = n2c + "%";
+          node2Mem.textContent = n2m + "%";
+          node3Cpu.textContent = n3c + "%";
+          node3Mem.textContent = n3m + "%";
+
+          const totalCpu = ((n1c + n2c + n3c) / 3).toFixed(1);
+          const totalMem = ((n1m + n2m + n3m) / 3).toFixed(1);
+          const band = (440 + Math.random() * 30).toFixed(0);
+
+          cpuLoad.textContent = totalCpu + "%";
+          memUsage.textContent = totalMem + "%";
+          bandwidth.textContent = band + " GB/s";
+
+          if (n3c > 90) {
+            node3Status.textContent = "High Load";
+            node3Status.className = "status-pill status-critical";
+          } else {
+            node3Status.textContent = "Healthy";
+            node3Status.className = "status-pill status-active";
+          }
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>

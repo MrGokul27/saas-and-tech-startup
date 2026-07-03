@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Metrics - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .team-dept-box {
+        background: rgba(15, 20, 34, 0.4);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-executive"
+              id="sidebarUserRole"
+              >Founder / CEO</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Team Metrics Overview</h2>
+            <p>
+              Review organizational headcount, monitor employee satisfaction
+              surveys (eNPS), and distribute department budgets.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-people-group"></i>
+                </div>
+                <div class="stat-value">24 Staff</div>
+                <div class="stat-label">Full-time Headcount</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="stat-value">4 Open</div>
+                <div class="stat-label">Active Job Requisitions</div>
+                <div class="stat-change up">Hiring</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-face-smile"></i>
+                </div>
+                <div class="stat-value">+72</div>
+                <div class="stat-label">Employee NPS (eNPS)</div>
+                <div class="stat-change up">Excellent</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-wallet"></i>
+                </div>
+                <div class="stat-value" id="budgetPctText">84%</div>
+                <div class="stat-label">Budget Utilization</div>
+                <div class="stat-change up">Within Limits</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team layout -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card">
+                <div class="dash-card-header mb-4">
+                  <h5>Departmental Operating Budgets</h5>
+                  <button class="btn btn-sm btn-indigo" id="saveBudgetsBtn">
+                    Save Allocation splits
+                  </button>
+                </div>
+
+                <!-- Engineering -->
+                <div class="team-dept-box">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="td-primary fw-600"
+                      >Engineering &amp; Operations (12 Staff)</span
+                    >
+                    <span class="badge bg-primary-subtle text-primary"
+                      ><span id="deptText1">50</span>% Budget</span
+                    >
+                  </div>
+                  <input
+                    type="range"
+                    class="form-range dept-slider"
+                    id="dSlider1"
+                    min="10"
+                    max="80"
+                    value="50"
+                  />
+                  <div class="small text-muted mt-2">
+                    Spend MTD: <strong>$24,500</strong> &bull; Monthly limit:
+                    <span id="limitText1">$35,000</span>
+                  </div>
+                </div>
+
+                <!-- Marketing -->
+                <div class="team-dept-box">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="td-primary fw-600"
+                      >Growth &amp; Marketing (6 Staff)</span
+                    >
+                    <span class="badge bg-warning-subtle text-warning"
+                      ><span id="deptText2">30</span>% Budget</span
+                    >
+                  </div>
+                  <input
+                    type="range"
+                    class="form-range dept-slider"
+                    id="dSlider2"
+                    min="10"
+                    max="80"
+                    value="30"
+                  />
+                  <div class="small text-muted mt-2">
+                    Spend MTD: <strong>$12,000</strong> &bull; Monthly limit:
+                    <span id="limitText2">$21,000</span>
+                  </div>
+                </div>
+
+                <!-- Product -->
+                <div class="team-dept-box">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="td-primary fw-600"
+                      >Product &amp; Success (6 Staff)</span
+                    >
+                    <span class="badge bg-success-subtle text-success"
+                      ><span id="deptText3">20</span>% Budget</span
+                    >
+                  </div>
+                  <input
+                    type="range"
+                    class="form-range dept-slider"
+                    id="dSlider3"
+                    min="5"
+                    max="50"
+                    value="20"
+                  />
+                  <div class="small text-muted mt-2">
+                    Spend MTD: <strong>$8,000</strong> &bull; Monthly limit:
+                    <span id="limitText3">$14,000</span>
+                  </div>
+                </div>
+
+                <div
+                  class="alert alert-danger bg-danger-subtle text-danger border-danger mt-3 small d-none"
+                  id="budgetOverBox"
+                  style="border-radius: 8px"
+                >
+                  <i class="fas fa-triangle-exclamation me-1"></i> Warning:
+                  Total budget allocations exceed 100%!
+                </div>
+              </div>
+            </div>
+
+            <!-- Job openings -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Active Recruiting Pipeline</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Job Title</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="td-primary"
+                            >Senior Frontend Developer</span
+                          >
+                        </td>
+                        <td>
+                          <span class="badge bg-warning-subtle text-warning"
+                            >Interviewing</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="td-primary"
+                            >Growth Product Marketer</span
+                          >
+                        </td>
+                        <td>
+                          <span class="badge bg-primary-subtle text-primary"
+                            >Sourcing</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="td-primary">QA Telemetry Engineer</span>
+                        </td>
+                        <td>
+                          <span class="badge bg-success-subtle text-success"
+                            >Offer sent</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Tools -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Hiring Operations</h5>
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="alert('Budgets report downloaded.')"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-file-invoice me-2"></i>Download Operational
+                    Budgets
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const dSlider1 = document.getElementById("dSlider1");
+        const dSlider2 = document.getElementById("dSlider2");
+        const dSlider3 = document.getElementById("dSlider3");
+
+        const deptText1 = document.getElementById("deptText1");
+        const deptText2 = document.getElementById("deptText2");
+        const deptText3 = document.getElementById("deptText3");
+
+        const limitText1 = document.getElementById("limitText1");
+        const limitText2 = document.getElementById("limitText2");
+        const limitText3 = document.getElementById("limitText3");
+
+        const budgetPctText = document.getElementById("budgetPctText");
+        const budgetOverBox = document.getElementById("budgetOverBox");
+        const saveBudgetsBtn = document.getElementById("saveBudgetsBtn");
+
+        const totalBudgetPool = 70000;
+
+        const updateBudgetLimits = (w1, w2, w3) => {
+          limitText1.textContent =
+            "$" + Math.round(totalBudgetPool * (w1 / 100)).toLocaleString();
+          limitText2.textContent =
+            "$" + Math.round(totalBudgetPool * (w2 / 100)).toLocaleString();
+          limitText3.textContent =
+            "$" + Math.round(totalBudgetPool * (w3 / 100)).toLocaleString();
+
+          const totalAllocated = w1 + w2 + w3;
+          budgetPctText.textContent = totalAllocated + "%";
+
+          if (totalAllocated > 100) {
+            budgetOverBox.classList.remove("d-none");
+            saveBudgetsBtn.disabled = true;
+          } else {
+            budgetOverBox.classList.add("d-none");
+            saveBudgetsBtn.disabled = false;
+          }
+        };
+
+        const setupSliders = (
+          activeSlider,
+          other1,
+          other2,
+          txtAct,
+          txtOth1,
+          txtOth2,
+        ) => {
+          activeSlider.addEventListener("input", () => {
+            let actVal = parseInt(activeSlider.value);
+            let remaining = 100 - actVal;
+
+            // Allocate remaining weight equally to others
+            let oth1Val = Math.round(remaining / 2);
+            let oth2Val = remaining - oth1Val;
+
+            other1.value = oth1Val;
+            other2.value = oth2Val;
+
+            txtAct.textContent = actVal;
+            txtOth1.textContent = oth1Val;
+            txtOth2.textContent = oth2Val;
+
+            const weights = {};
+            weights[activeSlider.id] = actVal;
+            weights[other1.id] = oth1Val;
+            weights[other2.id] = oth2Val;
+
+            updateBudgetLimits(
+              weights.dSlider1,
+              weights.dSlider2,
+              weights.dSlider3,
+            );
+          });
+        };
+
+        setupSliders(
+          dSlider1,
+          dSlider2,
+          dSlider3,
+          deptText1,
+          deptText2,
+          deptText3,
+        );
+        setupSliders(
+          dSlider2,
+          dSlider1,
+          dSlider3,
+          deptText2,
+          deptText1,
+          deptText3,
+        );
+        setupSliders(
+          dSlider3,
+          dSlider1,
+          dSlider2,
+          deptText3,
+          deptText1,
+          deptText2,
+        );
+
+        saveBudgetsBtn.addEventListener("click", () => {
+          saveBudgetsBtn.disabled = true;
+          saveBudgetsBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin me-1"></i>Saving...';
+
+          setTimeout(() => {
+            alert(
+              "Departmental operating budgets successfully updated on the organization ledger!",
+            );
+            saveBudgetsBtn.disabled = false;
+            saveBudgetsBtn.innerHTML = "Save Allocation splits";
+          }, 1500);
+        });
+      });
+    </script>
+  </body>
+</html>

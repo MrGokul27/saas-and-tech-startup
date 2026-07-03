@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Retention - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .cohort-cell {
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-manager" id="sidebarUserRole"
+              >Product Manager</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div
+            class="dash-page-header flex-wrap d-flex justify-content-between align-items-center gap-3"
+          >
+            <div>
+              <h2>User Retention Analysis</h2>
+              <p>
+                Investigate cohort registration curves, churn frequencies, and
+                subscription customer lifespans.
+              </p>
+            </div>
+            <!-- Segment Filter Toggle -->
+            <div
+              class="btn-group border border-secondary"
+              style="
+                border-radius: 12px;
+                overflow: hidden;
+                background: var(--bg-secondary);
+              "
+            >
+              <button class="btn btn-sm btn-indigo px-3 active" id="tierAllBtn">
+                All Users
+              </button>
+              <button
+                class="btn btn-sm btn-dark px-3 text-secondary"
+                id="tierEntBtn"
+              >
+                Enterprise Tier
+              </button>
+              <button
+                class="btn btn-sm btn-dark px-3 text-secondary"
+                id="tierGroBtn"
+              >
+                Growth Tier
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-arrows-spin"></i>
+                </div>
+                <div class="stat-value" id="retVal">48.2%</div>
+                <div class="stat-label">30-Day Retention</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 3.1%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-user-minus"></i>
+                </div>
+                <div class="stat-value" id="churnVal">2.4%</div>
+                <div class="stat-label">Monthly Churn Rate</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-down"></i> 0.2%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-sack-dollar"></i>
+                </div>
+                <div class="stat-value" id="nrrVal">112%</div>
+                <div class="stat-label">Net Revenue Retention</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value" id="lifeVal">18.5m</div>
+                <div class="stat-label">Customer Life Expectancy</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 1.5m
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cohort Grid Matrix -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card">
+                <div class="dash-card-header mb-3">
+                  <h5>
+                    User Cohort Retention Grid Matrix:
+                    <span id="cohortSegName" class="text-indigo"
+                      >All Users</span
+                    >
+                  </h5>
+                </div>
+                <div class="table-responsive">
+                  <table
+                    class="table table-dark table-bordered border-secondary mb-0"
+                    style="
+                      background: transparent;
+                      border-collapse: separate;
+                      border-radius: 8px;
+                      overflow: hidden;
+                    "
+                  >
+                    <thead>
+                      <tr
+                        class="text-center"
+                        style="border-bottom: 2px solid var(--glass-border)"
+                      >
+                        <th>Cohort</th>
+                        <th>Size</th>
+                        <th>Wk 1</th>
+                        <th>Wk 2</th>
+                        <th>Wk 3</th>
+                        <th>Wk 4</th>
+                        <th>Wk 8</th>
+                      </tr>
+                    </thead>
+                    <tbody id="cohortTableBody">
+                      <!-- Trs injected by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Retention Audit -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Cohort Health Indicators</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-circle-check"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">Enterprise Expansion</div>
+                      <div class="act-time">
+                        Enterprise cohort retention remains above 80% through
+                        Week 8, indicating excellent customer success
+                        operations.
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-amber">
+                      <i class="fas fa-circle-exclamation"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">Growth Tier Fatigue</div>
+                      <div class="act-time">
+                        Growth tier cohorts decline to 38% retention in Week 4,
+                        suggesting gaps in product-market fit or user onboarding
+                        education.
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Customer Recovery</h5>
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="alert('Churn calculator opened.')"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-calculator me-2"></i>Calculate Customer LTV
+                  </button>
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    onclick="alert('Re-engagement email campaign launched.')"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-paper-plane me-2"></i>Trigger Churn
+                    Recovery Flow
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tierAllBtn = document.getElementById("tierAllBtn");
+        const tierEntBtn = document.getElementById("tierEntBtn");
+        const tierGroBtn = document.getElementById("tierGroBtn");
+
+        const retVal = document.getElementById("retVal");
+        const churnVal = document.getElementById("churnVal");
+        const nrrVal = document.getElementById("nrrVal");
+        const lifeVal = document.getElementById("lifeVal");
+        const cohortSegName = document.getElementById("cohortSegName");
+        const cohortTableBody = document.getElementById("cohortTableBody");
+
+        const cohortsData = {
+          all: {
+            title: "All Users",
+            ret: "48.2%",
+            churn: "2.4%",
+            nrr: "112%",
+            life: "18.5m",
+            cohorts: [
+              {
+                month: "Jan 2026",
+                size: 1240,
+                rates: [100, 72, 60, 52, 48, 41],
+              },
+              {
+                month: "Feb 2026",
+                size: 1480,
+                rates: [100, 75, 62, 55, 50, 44],
+              },
+              {
+                month: "Mar 2026",
+                size: 1950,
+                rates: [100, 78, 65, 58, 51, 46],
+              },
+              {
+                month: "Apr 2026",
+                size: 2100,
+                rates: [100, 80, 68, 60, 54, 48],
+              },
+              {
+                month: "May 2026",
+                size: 2450,
+                rates: [100, 82, 70, 62, 56, 50],
+              },
+            ],
+          },
+          enterprise: {
+            title: "Enterprise Tier",
+            ret: "84.5%",
+            churn: "0.8%",
+            nrr: "135%",
+            life: "48.0m",
+            cohorts: [
+              {
+                month: "Jan 2026",
+                size: 120,
+                rates: [100, 95, 92, 90, 88, 82],
+              },
+              {
+                month: "Feb 2026",
+                size: 145,
+                rates: [100, 96, 94, 91, 89, 84],
+              },
+              {
+                month: "Mar 2026",
+                size: 180,
+                rates: [100, 96, 95, 93, 90, 86],
+              },
+              {
+                month: "Apr 2026",
+                size: 205,
+                rates: [100, 97, 95, 94, 91, 88],
+              },
+              {
+                month: "May 2026",
+                size: 240,
+                rates: [100, 98, 96, 95, 93, 90],
+              },
+            ],
+          },
+          growth: {
+            title: "Growth Tier",
+            ret: "38.4%",
+            churn: "3.2%",
+            nrr: "98%",
+            life: "12.2m",
+            cohorts: [
+              {
+                month: "Jan 2026",
+                size: 1120,
+                rates: [100, 60, 48, 42, 38, 30],
+              },
+              {
+                month: "Feb 2026",
+                size: 1335,
+                rates: [100, 62, 50, 44, 40, 32],
+              },
+              {
+                month: "Mar 2026",
+                size: 1770,
+                rates: [100, 64, 52, 46, 42, 34],
+              },
+              {
+                month: "Apr 2026",
+                size: 1895,
+                rates: [100, 66, 54, 48, 44, 36],
+              },
+              {
+                month: "May 2026",
+                size: 2210,
+                rates: [100, 68, 56, 50, 46, 38],
+              },
+            ],
+          },
+        };
+
+        const getBgColor = (rate) => {
+          // Heatmap coloration: darker indigo for 80-100%, lighter for low retention
+          if (rate >= 90) return "rgba(99, 102, 241, 0.9)";
+          if (rate >= 80) return "rgba(99, 102, 241, 0.75)";
+          if (rate >= 70) return "rgba(99, 102, 241, 0.6)";
+          if (rate >= 60) return "rgba(99, 102, 241, 0.45)";
+          if (rate >= 50) return "rgba(99, 102, 241, 0.35)";
+          if (rate >= 40) return "rgba(99, 102, 241, 0.25)";
+          return "rgba(255, 255, 255, 0.05)";
+        };
+
+        const renderCohortMatrix = (key) => {
+          const seg = cohortsData[key];
+          cohortSegName.textContent = seg.title;
+
+          // Update stats
+          retVal.textContent = seg.ret;
+          churnVal.textContent = seg.churn;
+          nrrVal.textContent = seg.nrr;
+          lifeVal.textContent = seg.life;
+
+          // Render rows
+          cohortTableBody.innerHTML = seg.cohorts
+            .map((c) => {
+              return `
+              <tr class="align-middle">
+                <td><span class="td-primary fw-600">${c.month}</span></td>
+                <td align="center">${c.size.toLocaleString()} users</td>
+                ${c.rates
+                  .map((r) => {
+                    const bg = getBgColor(r);
+                    return `<td class="cohort-cell" style="background: ${bg}; color: #fff;">${r}%</td>`;
+                  })
+                  .join("")}
+              </tr>
+            `;
+            })
+            .join("");
+        };
+
+        const setupBtn = (btn, key) => {
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".btn-group button").forEach((b) => {
+              b.classList.remove("btn-indigo", "active");
+              b.classList.add("btn-dark", "text-secondary");
+            });
+            btn.classList.remove("btn-dark", "text-secondary");
+            btn.classList.add("btn-indigo", "active");
+            renderCohortMatrix(key);
+          });
+        };
+
+        setupBtn(tierAllBtn, "all");
+        setupBtn(tierEntBtn, "enterprise");
+        setupBtn(tierGroBtn, "growth");
+
+        // Initial render
+        renderCohortMatrix("all");
+      });
+    </script>
+  </body>
+</html>

@@ -601,10 +601,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 14. Dashboard Role-based Content Renderer
-    const isDashboardPage = window.location.pathname.endsWith("dashboard.html");
-    if (isDashboardPage) {
+    const dashSidebar = document.getElementById("dashSidebar");
+    if (dashSidebar) {
       const sidebarToggle = document.getElementById("sidebarToggle");
-      const dashSidebar = document.getElementById("dashSidebar");
       const sidebarOverlay = document.getElementById("sidebarOverlay");
       const logoutBtn = document.getElementById("logoutBtn");
 
@@ -618,10 +617,22 @@ document.addEventListener("DOMContentLoaded", () => {
         sidebarOverlay.addEventListener("click", toggleSidebar);
       }
 
+      // Check depth and set path prefixes dynamically
+      const isSubpage = window.location.pathname.includes("/dashboard/");
+      const pathPrefix = isSubpage ? "../../" : "";
+      const rootPrefix = isSubpage ? "../../../" : "../";
+      const subdirPrefix = isSubpage ? "" : "dashboard/";
+
       if (logoutBtn) {
+        logoutBtn.setAttribute("href", pathPrefix + "login.html");
         logoutBtn.addEventListener("click", (e) => {
           sessionStorage.removeItem("user_session");
         });
+      }
+
+      const logoLink = document.querySelector(".sidebar-brand a");
+      if (logoLink) {
+        logoLink.setAttribute("href", rootPrefix + "index.html");
       }
 
       const sessionStr = sessionStorage.getItem("user_session");
@@ -636,6 +647,21 @@ document.addEventListener("DOMContentLoaded", () => {
           user = JSON.parse(sessionStr);
         } catch (err) {
           console.error("Session parse error", err);
+        }
+      }
+
+      // Session role verification to prevent visiting other roles' subfolders
+      if (isSubpage) {
+        const currentPath = window.location.pathname.toLowerCase();
+        const roleFolderMap = {
+          developer: "/dashboard/developer/",
+          manager: "/dashboard/product-manager/",
+          admin: "/dashboard/system-administrator/",
+          executive: "/dashboard/founder-or-executive/",
+        };
+        const expectedFolder = roleFolderMap[user.role];
+        if (expectedFolder && !currentPath.includes(expectedFolder)) {
+          window.location.href = pathPrefix + "dashboard.html";
         }
       }
 
@@ -677,60 +703,77 @@ document.addEventListener("DOMContentLoaded", () => {
         sidebarUserRole.textContent = roleMapping[user.role] || user.role;
       }
 
+      const currentPath = window.location.pathname;
+      const getActive = (pageName) => {
+        return currentPath.endsWith(pageName) ? "active" : "";
+      };
+      const overviewActive =
+        !currentPath.endsWith(".html") || currentPath.endsWith("dashboard.html")
+          ? "active"
+          : "";
+
+      const getLink = (subfolder, filename) => {
+        if (isSubpage) {
+          return filename;
+        } else {
+          return `dashboard/${subfolder}/${filename}`;
+        }
+      };
+
       const sidebarNav = document.getElementById("sidebarNav");
       if (sidebarNav) {
         let navHtml = "";
         if (user.role === "developer") {
           navHtml = `
             <div class="nav-section-label">Developer Dashboard</div>
-            <a class="nav-item active"><i class="fas fa-desktop"></i> <span>Overview</span></a>
-            <a class="nav-item"><i class="fas fa-terminal"></i> <span>API Logs</span> <span class="nav-badge">Live</span></a>
-            <a class="nav-item"><i class="fas fa-file-code"></i> <span>Console Telemetry</span></a>
-            <a class="nav-item"><i class="fas fa-circle-check"></i> <span>Build Monitor</span></a>
+            <a href="${pathPrefix}dashboard.html" class="nav-item ${overviewActive}"><i class="fas fa-desktop"></i> <span>Overview</span></a>
+            <a href="${getLink("developer", "api-logs.html")}" class="nav-item ${getActive("api-logs.html")}"><i class="fas fa-terminal"></i> <span>API Logs</span> <span class="nav-badge">Live</span></a>
+            <a href="${getLink("developer", "console-telemetry.html")}" class="nav-item ${getActive("console-telemetry.html")}"><i class="fas fa-file-code"></i> <span>Console Telemetry</span></a>
+            <a href="${getLink("developer", "build-monitor.html")}" class="nav-item ${getActive("build-monitor.html")}"><i class="fas fa-circle-check"></i> <span>Build Monitor</span></a>
             
             <div class="nav-section-label mt-4">Developer Tools</div>
-            <a class="nav-item"><i class="fas fa-database"></i> <span>Database CLI</span></a>
-            <a class="nav-item"><i class="fas fa-code-commit"></i> <span>Git Sync</span></a>
-            <a class="nav-item"><i class="fas fa-plug"></i> <span>Webhook Tester</span></a>
+            <a href="${getLink("developer", "database-cli.html")}" class="nav-item ${getActive("database-cli.html")}"><i class="fas fa-database"></i> <span>Database CLI</span></a>
+            <a href="${getLink("developer", "git-sync.html")}" class="nav-item ${getActive("git-sync.html")}"><i class="fas fa-code-commit"></i> <span>Git Sync</span></a>
+            <a href="${getLink("developer", "webhook-tester.html")}" class="nav-item ${getActive("webhook-tester.html")}"><i class="fas fa-plug"></i> <span>Webhook Tester</span></a>
           `;
         } else if (user.role === "manager") {
           navHtml = `
             <div class="nav-section-label">Product Dashboard</div>
-            <a class="nav-item active"><i class="fas fa-desktop"></i> <span>Overview</span></a>
-            <a class="nav-item"><i class="fas fa-chart-line"></i> <span>Product Insights</span></a>
-            <a class="nav-item"><i class="fas fa-filter"></i> <span>Analytics Funnels</span></a>
-            <a class="nav-item"><i class="fas fa-users-gear"></i> <span>User Retention</span></a>
+            <a href="${pathPrefix}dashboard.html" class="nav-item ${overviewActive}"><i class="fas fa-desktop"></i> <span>Overview</span></a>
+            <a href="${getLink("product-manager", "product-insights.html")}" class="nav-item ${getActive("product-insights.html")}"><i class="fas fa-chart-line"></i> <span>Product Insights</span></a>
+            <a href="${getLink("product-manager", "analytics-funnels.html")}" class="nav-item ${getActive("analytics-funnels.html")}"><i class="fas fa-filter"></i> <span>Analytics Funnels</span></a>
+            <a href="${getLink("product-manager", "user-retention.html")}" class="nav-item ${getActive("user-retention.html")}"><i class="fas fa-users-gear"></i> <span>User Retention</span></a>
             
             <div class="nav-section-label mt-4">Product Management</div>
-            <a class="nav-item"><i class="fas fa-map"></i> <span>Roadmap</span></a>
-            <a class="nav-item"><i class="fas fa-bullhorn"></i> <span>Release Notes</span></a>
-            <a class="nav-item"><i class="fas fa-flask"></i> <span>A/B Tests</span></a>
+            <a href="${getLink("product-manager", "roadmap.html")}" class="nav-item ${getActive("roadmap.html")}"><i class="fas fa-map"></i> <span>Roadmap</span></a>
+            <a href="${getLink("product-manager", "release-notes.html")}" class="nav-item ${getActive("release-notes.html")}"><i class="fas fa-bullhorn"></i> <span>Release Notes</span></a>
+            <a href="${getLink("product-manager", "ab-tests.html")}" class="nav-item ${getActive("ab-tests.html")}"><i class="fas fa-flask"></i> <span>A/B Tests</span></a>
           `;
         } else if (user.role === "admin") {
           navHtml = `
             <div class="nav-section-label">Systems Dashboard</div>
-            <a class="nav-item active"><i class="fas fa-desktop"></i> <span>Overview</span></a>
-            <a class="nav-item"><i class="fas fa-server"></i> <span>Systems Health</span></a>
-            <a class="nav-item"><i class="fas fa-microchip"></i> <span>Operational Logs</span></a>
-            <a class="nav-item"><i class="fas fa-shield-halved"></i> <span>Security Logs</span></a>
+            <a href="${pathPrefix}dashboard.html" class="nav-item ${overviewActive}"><i class="fas fa-desktop"></i> <span>Overview</span></a>
+            <a href="${getLink("system-administrator", "systems-health.html")}" class="nav-item ${getActive("systems-health.html")}"><i class="fas fa-server"></i> <span>Systems Health</span></a>
+            <a href="${getLink("system-administrator", "operational-logs.html")}" class="nav-item ${getActive("operational-logs.html")}"><i class="fas fa-microchip"></i> <span>Operational Logs</span></a>
+            <a href="${getLink("system-administrator", "security-logs.html")}" class="nav-item ${getActive("security-logs.html")}"><i class="fas fa-shield-halved"></i> <span>Security Logs</span></a>
             
             <div class="nav-section-label mt-4">Admin Tools</div>
-            <a class="nav-item"><i class="fas fa-key"></i> <span>IAM Access Rings</span></a>
-            <a class="nav-item"><i class="fas fa-network-wired"></i> <span>Networks</span></a>
-            <a class="nav-item"><i class="fas fa-file-invoice-dollar"></i> <span>Billing Audit</span></a>
+            <a href="${getLink("system-administrator", "iam-access-rings.html")}" class="nav-item ${getActive("iam-access-rings.html")}"><i class="fas fa-key"></i> <span>IAM Access Rings</span></a>
+            <a href="${getLink("system-administrator", "networks.html")}" class="nav-item ${getActive("networks.html")}"><i class="fas fa-network-wired"></i> <span>Networks</span></a>
+            <a href="${getLink("system-administrator", "billing-audit.html")}" class="nav-item ${getActive("billing-audit.html")}"><i class="fas fa-file-invoice-dollar"></i> <span>Billing Audit</span></a>
           `;
         } else if (user.role === "executive") {
           navHtml = `
             <div class="nav-section-label">Executive Dashboard</div>
-            <a class="nav-item active"><i class="fas fa-desktop"></i> <span>Overview</span></a>
-            <a class="nav-item"><i class="fas fa-sack-dollar"></i> <span>Financial Insights</span></a>
-            <a class="nav-item"><i class="fas fa-briefcase"></i> <span>Client Accounts</span></a>
-            <a class="nav-item"><i class="fas fa-people-group"></i> <span>Team Metrics</span></a>
+            <a href="${pathPrefix}dashboard.html" class="nav-item ${overviewActive}"><i class="fas fa-desktop"></i> <span>Overview</span></a>
+            <a href="${getLink("founder-or-executive", "financial-insights.html")}" class="nav-item ${getActive("financial-insights.html")}"><i class="fas fa-sack-dollar"></i> <span>Financial Insights</span></a>
+            <a href="${getLink("founder-or-executive", "client-accounts.html")}" class="nav-item ${getActive("client-accounts.html")}"><i class="fas fa-briefcase"></i> <span>Client Accounts</span></a>
+            <a href="${getLink("founder-or-executive", "team-metrics.html")}" class="nav-item ${getActive("team-metrics.html")}"><i class="fas fa-people-group"></i> <span>Team Metrics</span></a>
             
             <div class="nav-section-label mt-4">Leadership Tools</div>
-            <a class="nav-item"><i class="fas fa-wallet"></i> <span>Capital Management</span></a>
-            <a class="nav-item"><i class="fas fa-file-signature"></i> <span>Billing Audits</span></a>
-            <a class="nav-item"><i class="fas fa-gears"></i> <span>Settings</span></a>
+            <a href="${getLink("founder-or-executive", "capital-management.html")}" class="nav-item ${getActive("capital-management.html")}"><i class="fas fa-wallet"></i> <span>Capital Management</span></a>
+            <a href="${getLink("founder-or-executive", "billing-audits.html")}" class="nav-item ${getActive("billing-audits.html")}"><i class="fas fa-file-signature"></i> <span>Billing Audits</span></a>
+            <a href="${getLink("founder-or-executive", "settings.html")}" class="nav-item ${getActive("settings.html")}"><i class="fas fa-gears"></i> <span>Settings</span></a>
           `;
         }
         sidebarNav.innerHTML = navHtml;

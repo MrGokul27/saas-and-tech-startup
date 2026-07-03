@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A/B Tests - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .experiment-box {
+        background: rgba(15, 20, 34, 0.4);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .ab-split-bar {
+        height: 24px;
+        border-radius: 50px;
+        overflow: hidden;
+        display: flex;
+        margin: 16px 0;
+      }
+      .split-a {
+        background: var(--gradient-secondary);
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: width 0.3s ease;
+      }
+      .split-b {
+        background: var(--gradient-primary);
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: width 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-manager" id="sidebarUserRole"
+              >Product Manager</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>A/B Testing Experiments</h2>
+            <p>
+              Setup variant conversion models, configure multi-variate traffic
+              divisions, and evaluate statistical confidence levels.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-flask"></i>
+                </div>
+                <div class="stat-value">4 active</div>
+                <div class="stat-label">Running Experiments</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value">97.4%</div>
+                <div class="stat-label">Avg Confidence Level</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 1.2%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-users-viewfinder"></i>
+                </div>
+                <div class="stat-value">2.8M</div>
+                <div class="stat-label">Conversions Tracked</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-inbox"></i>
+                </div>
+                <div class="stat-value">1 queued</div>
+                <div class="stat-label">Pending Experiment</div>
+                <div class="stat-change up">Ready</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experiment layout -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header mb-2">
+                  <h5>
+                    Active Experiment:
+                    <span class="text-indigo">Checkout Button Style</span>
+                  </h5>
+                  <span class="status-pill status-active">Live</span>
+                </div>
+
+                <div class="experiment-box">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="small text-muted">Traffic Split Ratio</span>
+                    <span class="td-primary fw-600" id="splitRatioText"
+                      >50% A / 50% B</span
+                    >
+                  </div>
+
+                  <div class="ab-split-bar">
+                    <div class="split-a" id="barSplitA" style="width: 50%">
+                      Variant A (50%)
+                    </div>
+                    <div class="split-b" id="barSplitB" style="width: 50%">
+                      Variant B (50%)
+                    </div>
+                  </div>
+
+                  <!-- Slider -->
+                  <div class="my-3">
+                    <label class="form-label small text-muted"
+                      >Adjust Traffic Allocation split</label
+                    >
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="trafficRange"
+                      min="10"
+                      max="90"
+                      value="50"
+                    />
+                  </div>
+                </div>
+
+                <!-- Comparisons cards -->
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div
+                      class="p-3 border border-secondary"
+                      style="
+                        border-radius: 8px;
+                        background: rgba(6, 182, 212, 0.04);
+                      "
+                    >
+                      <h6 class="td-primary mb-2">
+                        <i class="fas fa-square text-cyan me-2"></i>Variant A
+                        (Control)
+                      </h6>
+                      <div class="d-flex align-items-baseline gap-2 mb-2">
+                        <span class="fs-4 fw-700 text-light" id="convRateA"
+                          >3.12%</span
+                        >
+                        <span class="small text-muted">Conv. Rate</span>
+                      </div>
+                      <div class="small text-muted">
+                        Visits:
+                        <span class="text-light" id="visitsA">1,402</span>
+                        &bull; Conversions:
+                        <span class="text-light" id="convsA">44</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div
+                      class="p-3 border border-secondary"
+                      style="
+                        border-radius: 8px;
+                        background: rgba(99, 102, 241, 0.04);
+                      "
+                    >
+                      <h6 class="td-primary mb-2">
+                        <i class="fas fa-square text-indigo me-2"></i>Variant B
+                        (Test Variant)
+                      </h6>
+                      <div class="d-flex align-items-baseline gap-2 mb-2">
+                        <span class="fs-4 fw-700 text-light" id="convRateB"
+                          >3.84%</span
+                        >
+                        <span class="small text-muted">Conv. Rate</span>
+                      </div>
+                      <div class="small text-muted">
+                        Visits:
+                        <span class="text-light" id="visitsB">1,398</span>
+                        &bull; Conversions:
+                        <span class="text-light" id="convsB">54</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Analytics outputs -->
+                <div
+                  class="mt-4 border-top border-secondary pt-3 d-flex justify-content-between align-items-center flex-wrap gap-2"
+                >
+                  <div>
+                    <span class="small text-muted d-block"
+                      >Measured Lift Delta</span
+                    >
+                    <h5 class="td-primary mb-0 text-success" id="liftVal">
+                      <i class="fas fa-circle-chevron-up me-1"></i>+23.08%
+                      improvement
+                    </h5>
+                  </div>
+                  <div>
+                    <span class="small text-muted d-block text-end"
+                      >Statistical Confidence</span
+                    >
+                    <h5 class="td-primary mb-0 text-success" id="confVal">
+                      98.4% (Significant)
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experiment settings -->
+            <div class="col-lg-4">
+              <!-- New experiment -->
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Configure New Experiment</h5>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small text-muted"
+                    >Experiment Title</label
+                  >
+                  <input
+                    type="text"
+                    id="expTitleInput"
+                    class="form-control bg-dark border-secondary text-light"
+                    style="border-radius: 8px; font-size: 0.85rem"
+                    placeholder="e.g. Dashboard layout trial"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small text-muted"
+                    >Goal Metric Target</label
+                  >
+                  <select
+                    id="expGoalSelect"
+                    class="form-select bg-dark border-secondary text-light"
+                    style="border-radius: 8px; font-size: 0.85rem"
+                  >
+                    <option value="Checkout Conversion">
+                      Checkout Conversion
+                    </option>
+                    <option value="Registration Completion">
+                      Registration Completion
+                    </option>
+                    <option value="Roadmap click rate">
+                      Roadmap click rate
+                    </option>
+                  </select>
+                </div>
+                <button
+                  class="btn btn-indigo w-100 py-2"
+                  id="startExpBtn"
+                  style="border-radius: 8px; font-size: 0.85rem"
+                >
+                  <i class="fas fa-play me-2"></i>Deploy Experiment Live
+                </button>
+              </div>
+
+              <!-- Finished experiments archive -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Experiment History Archive</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-green">
+                      <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">
+                        Onboarding Flow Variant B
+                      </div>
+                      <div class="act-time">
+                        Winner: <strong>Variant B</strong> (+14.8% lift) &bull;
+                        Confidence: 99.1%
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-circle-check"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title fw-600">Landing Page CTA Text</div>
+                      <div class="act-time">
+                        Winner: <strong>Control</strong> (-0.2% lift, flat)
+                        &bull; Confidence: 84%
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const trafficRange = document.getElementById("trafficRange");
+        const barSplitA = document.getElementById("barSplitA");
+        const barSplitB = document.getElementById("barSplitB");
+        const splitRatioText = document.getElementById("splitRatioText");
+
+        const convRateA = document.getElementById("convRateA");
+        const convRateB = document.getElementById("convRateB");
+        const visitsA = document.getElementById("visitsA");
+        const visitsB = document.getElementById("visitsB");
+        const convsA = document.getElementById("convsA");
+        const convsB = document.getElementById("convsB");
+
+        const liftVal = document.getElementById("liftVal");
+        const confVal = document.getElementById("confVal");
+
+        const startExpBtn = document.getElementById("startExpBtn");
+        const expTitleInput = document.getElementById("expTitleInput");
+
+        trafficRange.addEventListener("input", () => {
+          const valB = parseInt(trafficRange.value);
+          const valA = 100 - valB;
+
+          // Update widths
+          barSplitA.style.width = valA + "%";
+          barSplitB.style.width = valB + "%";
+
+          barSplitA.textContent = `Variant A (${valA}%)`;
+          barSplitB.textContent = `Variant B (${valB}%)`;
+          splitRatioText.textContent = `${valA}% A / ${valB}% B`;
+
+          // Re-calculate mock conversions
+          const totalBaseVisits = 2800;
+          const vA = Math.round(totalBaseVisits * (valA / 100));
+          const vB = Math.round(totalBaseVisits * (valB / 100));
+
+          visitsA.textContent = vA.toLocaleString();
+          visitsB.textContent = vB.toLocaleString();
+
+          // Mock conversion rates
+          const cA = Math.round(vA * 0.0312);
+          const cB = Math.round(vB * 0.0384);
+
+          convsA.textContent = cA.toLocaleString();
+          convsB.textContent = cB.toLocaleString();
+
+          const rateA = ((cA / vA) * 100).toFixed(2);
+          const rateB = ((cB / vB) * 100).toFixed(2);
+
+          convRateA.textContent = rateA + "%";
+          convRateB.textContent = rateB + "%";
+
+          // Calculate lift
+          const lift = (((rateB - rateA) / rateA) * 100).toFixed(2);
+          const sign = lift >= 0 ? "+" : "";
+          liftVal.textContent = `${sign}${lift}% improvement`;
+          if (lift >= 0) {
+            liftVal.className = "td-primary mb-0 text-success";
+          } else {
+            liftVal.className = "td-primary mb-0 text-danger";
+          }
+
+          // Calculate confidence: scales slightly with sample sizes
+          const baseConf = 98.4;
+          const deltaSize = Math.abs(valA - 50);
+          const currentConf = (baseConf - deltaSize * 0.15).toFixed(1);
+          const isSig = currentConf >= 95 ? "Significant" : "Inconclusive";
+
+          confVal.textContent = `${currentConf}% (${isSig})`;
+          if (currentConf >= 95) {
+            confVal.className = "td-primary mb-0 text-success";
+          } else {
+            confVal.className = "td-primary mb-0 text-warning";
+          }
+        });
+
+        startExpBtn.addEventListener("click", () => {
+          const title = expTitleInput.value.trim();
+          if (title === "") {
+            alert("Please input an experiment title.");
+            return;
+          }
+
+          alert(
+            `Experiment "${title}" successfully configured and pushed live to router CDN! Traffic segments are dividing live users.`,
+          );
+          expTitleInput.value = "";
+        });
+      });
+    </script>
+  </body>
+</html>

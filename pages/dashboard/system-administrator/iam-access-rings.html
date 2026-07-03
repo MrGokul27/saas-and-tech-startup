@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IAM Access Rings - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-admin" id="sidebarUserRole"
+              >Systems Admin</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Identity Access Manager (IAM)</h2>
+            <p>
+              Configure Role-Based Access Control (RBAC) levels, manage
+              directory users, and grant SSH security key approvals.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-id-card-clip"></i>
+                </div>
+                <div class="stat-value">4 Roles</div>
+                <div class="stat-label">System RBAC Levels</div>
+                <div class="stat-change up">Configured</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-users-gear"></i>
+                </div>
+                <div class="stat-value" id="totUsers">15</div>
+                <div class="stat-label">Registered Directory Users</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-key"></i>
+                </div>
+                <div class="stat-value">8 active</div>
+                <div class="stat-label">SSH Public Keys catalog</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-clock-rotate-left"></i>
+                </div>
+                <div class="stat-value" id="totReqs">1 request</div>
+                <div class="stat-label">Pending Ring Approvals</div>
+                <div class="stat-change up" id="reqChange">Pending</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- IAM layout -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>User Authorization Directory</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>User Email</th>
+                        <th>Base Role</th>
+                        <th>Access Ring</th>
+                        <th>Status</th>
+                        <th align="right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="iamUsersBody">
+                      <tr id="userRow-alex">
+                        <td>
+                          <span class="td-primary"
+                            >alex.rivera@stackly.com</span
+                          >
+                        </td>
+                        <td>
+                          <select
+                            class="form-select form-select-sm bg-dark border-secondary text-light w-auto role-selector"
+                            data-user="alex"
+                          >
+                            <option value="developer" selected>
+                              Developer
+                            </option>
+                            <option value="manager">Product Manager</option>
+                            <option value="admin">Systems Admin</option>
+                            <option value="executive">Founder / CEO</option>
+                          </select>
+                        </td>
+                        <td>
+                          <span
+                            class="badge bg-primary-subtle text-primary"
+                            id="ring-alex"
+                            >Ring 1 (R/W)</span
+                          >
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">Active</span>
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-indigo save-role-btn"
+                            data-user="alex"
+                          >
+                            <i class="fas fa-floppy-disk"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr id="userRow-sarah">
+                        <td>
+                          <span class="td-primary"
+                            >sarah.connor@stackly.com</span
+                          >
+                        </td>
+                        <td>
+                          <select
+                            class="form-select form-select-sm bg-dark border-secondary text-light w-auto role-selector"
+                            data-user="sarah"
+                          >
+                            <option value="developer">Developer</option>
+                            <option value="manager" selected>
+                              Product Manager
+                            </option>
+                            <option value="admin">Systems Admin</option>
+                            <option value="executive">Founder / CEO</option>
+                          </select>
+                        </td>
+                        <td>
+                          <span
+                            class="badge bg-warning-subtle text-warning"
+                            id="ring-sarah"
+                            >Ring 1 (R/W)</span
+                          >
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">Active</span>
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-indigo save-role-btn"
+                            data-user="sarah"
+                          >
+                            <i class="fas fa-floppy-disk"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr id="userRow-john">
+                        <td>
+                          <span class="td-primary">admin.john@stackly.com</span>
+                        </td>
+                        <td>
+                          <select
+                            class="form-select form-select-sm bg-dark border-secondary text-light w-auto role-selector"
+                            data-user="john"
+                          >
+                            <option value="developer">Developer</option>
+                            <option value="manager">Product Manager</option>
+                            <option value="admin" selected>
+                              Systems Admin
+                            </option>
+                            <option value="executive">Founder / CEO</option>
+                          </select>
+                        </td>
+                        <td>
+                          <span
+                            class="badge bg-danger-subtle text-danger"
+                            id="ring-john"
+                            >Ring 0 (Root)</span
+                          >
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">Active</span>
+                        </td>
+                        <td align="right">
+                          <button
+                            class="btn btn-sm btn-outline-indigo save-role-btn"
+                            data-user="john"
+                          >
+                            <i class="fas fa-floppy-disk"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sidebars -->
+            <div class="col-lg-4">
+              <!-- Pending requests -->
+              <div class="dash-card mb-4" id="reqCard">
+                <div class="dash-card-header">
+                  <h5>Access Approvals Queue</h5>
+                </div>
+                <div
+                  class="p-3 border border-secondary mb-2"
+                  style="
+                    border-radius: 8px;
+                    background: rgba(245, 158, 11, 0.04);
+                  "
+                >
+                  <div class="td-primary fw-600 mb-1">
+                    guest.user@external.com
+                  </div>
+                  <div class="small text-muted mb-2">
+                    Requests: <strong>Ring 1 (Developer)</strong> SSH access
+                    keys access to staging logs.
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button
+                      class="btn btn-sm btn-indigo px-3 py-1 flex-grow-1"
+                      id="approveReqBtn"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-danger px-3 py-1"
+                      id="denyReqBtn"
+                    >
+                      Deny
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SSH keys directory -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Active SSH Keys Catalog</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-key"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title font-monospace small">
+                        sha256-eG02x8J1nK...
+                      </div>
+                      <div class="act-time">
+                        Owner: admin.john &bull; Added 2d ago
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-key"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title font-monospace small">
+                        sha256-x3b1P9kQ2L...
+                      </div>
+                      <div class="act-time">
+                        Owner: alex.rivera &bull; Added 15d ago
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const approveReqBtn = document.getElementById("approveReqBtn");
+        const denyReqBtn = document.getElementById("denyReqBtn");
+        const reqCard = document.getElementById("reqCard");
+        const totUsers = document.getElementById("totUsers");
+        const totReqs = document.getElementById("totReqs");
+        const reqChange = document.getElementById("reqChange");
+        const iamUsersBody = document.getElementById("iamUsersBody");
+
+        // Role save buttons
+        document.querySelectorAll(".save-role-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const userKey = btn.getAttribute("data-user");
+            const selectEl = document.querySelector(
+              `.role-selector[data-user="${userKey}"]`,
+            );
+            const ringEl = document.getElementById(`ring-${userKey}`);
+
+            const selectedVal = selectEl.value;
+
+            // Map role to ring
+            let ringText = "Ring 2 (Read-Only)";
+            let ringClass = "bg-secondary-subtle text-light";
+
+            if (selectedVal === "developer") {
+              ringText = "Ring 1 (R/W)";
+              ringClass = "bg-primary-subtle text-primary";
+            } else if (selectedVal === "manager") {
+              ringText = "Ring 1 (R/W)";
+              ringClass = "bg-warning-subtle text-warning";
+            } else if (selectedVal === "admin") {
+              ringText = "Ring 0 (Root)";
+              ringClass = "bg-danger-subtle text-danger";
+            } else if (selectedVal === "executive") {
+              ringText = "Ring 0 (Root)";
+              ringClass = "bg-danger-subtle text-danger";
+            }
+
+            ringEl.textContent = ringText;
+            ringEl.className = `badge ${ringClass}`;
+
+            alert(
+              `Successfully updated RBAC access properties for user identity.`,
+            );
+          });
+        });
+
+        // Approve pending requests
+        approveReqBtn.addEventListener("click", () => {
+          // Add row to table
+          const tr = document.createElement("tr");
+          tr.id = "userRow-guest";
+          tr.innerHTML = `
+            <td><span class="td-primary">guest.user@external.com</span></td>
+            <td>
+              <select class="form-select form-select-sm bg-dark border-secondary text-light w-auto role-selector" data-user="guest">
+                <option value="developer" selected>Developer</option>
+                <option value="manager">Product Manager</option>
+                <option value="admin">Systems Admin</option>
+                <option value="executive">Founder / CEO</option>
+              </select>
+            </td>
+            <td><span class="badge bg-primary-subtle text-primary" id="ring-guest">Ring 1 (R/W)</span></td>
+            <td><span class="status-pill status-active">Active</span></td>
+            <td align="right">
+              <button class="btn btn-sm btn-outline-indigo save-role-btn" data-user="guest"><i class="fas fa-floppy-disk"></i></button>
+            </td>
+          `;
+
+          iamUsersBody.appendChild(tr);
+
+          // Update stats
+          totUsers.textContent = "16";
+          totReqs.textContent = "0 requests";
+          reqChange.textContent = "In Sync";
+
+          // Wire button
+          tr.querySelector(".save-role-btn").addEventListener("click", () => {
+            alert(
+              `Successfully updated RBAC access properties for guest user.`,
+            );
+          });
+
+          // Resolve card
+          reqCard.innerHTML = `
+            <div class="dash-card-header">
+              <h5>Access Approvals Queue</h5>
+            </div>
+            <div class="text-center text-muted py-3 small">
+              <i class="fas fa-circle-check text-success d-block fs-4 mb-1"></i>
+              No pending access approvals requests in queue.
+            </div>
+          `;
+
+          alert(
+            "Access approval request successfully approved. User registered in IAM directory.",
+          );
+        });
+
+        denyReqBtn.addEventListener("click", () => {
+          // Resolve card
+          reqCard.innerHTML = `
+            <div class="dash-card-header">
+              <h5>Access Approvals Queue</h5>
+            </div>
+            <div class="text-center text-muted py-3 small">
+              <i class="fas fa-circle-check text-success d-block fs-4 mb-1"></i>
+              No pending access approvals requests in queue.
+            </div>
+          `;
+          totReqs.textContent = "0 requests";
+          reqChange.textContent = "In Sync";
+          alert("Access approval request denied and removed from queue.");
+        });
+      });
+    </script>
+  </body>
+</html>

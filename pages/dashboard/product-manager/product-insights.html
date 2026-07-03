@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Insights - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-manager" id="sidebarUserRole"
+              >Product Manager</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Product Insights</h2>
+            <p>
+              Review user engagement metrics, active users logs, and feature
+              adoption indices.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-value" id="dauCount">8,429</div>
+                <div class="stat-label">Daily Active Users</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 4.8%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-user-check"></i>
+                </div>
+                <div class="stat-value">12,482</div>
+                <div class="stat-label">Monthly Active Users</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 8.0%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-stopwatch"></i>
+                </div>
+                <div class="stat-value">12.8 mins</div>
+                <div class="stat-label">Avg Session Length</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 1.2m
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-value">+68</div>
+                <div class="stat-label">Net Promoter Score (NPS)</div>
+                <div class="stat-change up">Excellent</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Layout -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header flex-wrap gap-2">
+                  <h5>User Registration Growth</h5>
+                  <span class="card-action">Export Data</span>
+                </div>
+                <div class="bar-chart mt-3">
+                  <div class="bar-group">
+                    <div class="bar" style="height: 35%"></div>
+                    <span class="bar-label">Jan</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 48%"></div>
+                    <span class="bar-label">Feb</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 60%"></div>
+                    <span class="bar-label">Mar</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 52%"></div>
+                    <span class="bar-label">Apr</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 75%"></div>
+                    <span class="bar-label">May</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 85%"></div>
+                    <span class="bar-label">Jun</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="height: 98%"></div>
+                    <span class="bar-label">Jul</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live activity feed -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Live Product Engagement Stream</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Time</th>
+                        <th>User Email</th>
+                        <th>Action</th>
+                        <th>Client Shell</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="insightsActivityBody">
+                      <tr>
+                        <td>15:54:12</td>
+                        <td>
+                          <span class="td-primary">luke.sky@rebel.org</span>
+                        </td>
+                        <td>Upgrade plan: Enterprise</td>
+                        <td>Chrome / macOS</td>
+                        <td>
+                          <span class="status-pill status-done">Success</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>15:53:50</td>
+                        <td>
+                          <span class="td-primary">bruce.wayne@gotham.net</span>
+                        </td>
+                        <td>Trigger database CLI query</td>
+                        <td>Firefox / Linux</td>
+                        <td>
+                          <span class="status-pill status-active"
+                            >Completed</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>15:53:15</td>
+                        <td>
+                          <span class="td-primary"
+                            >clark.kent@dailyplanet.com</span
+                          >
+                        </td>
+                        <td>Register new organization</td>
+                        <td>Safari / iOS</td>
+                        <td>
+                          <span class="status-pill status-done">Success</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>15:52:48</td>
+                        <td>
+                          <span class="td-primary"
+                            >tony.stark@industries.com</span
+                          >
+                        </td>
+                        <td>Webhook dispatcher setup</td>
+                        <td>Chrome / Windows</td>
+                        <td>
+                          <span class="status-pill status-active"
+                            >Completed</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sidebar Feature Adoption -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Feature Adoption Indices</h5>
+                </div>
+
+                <div class="progress-item mt-3">
+                  <div class="progress-meta">
+                    <span class="prog-label">Stripe Checkout Integration</span>
+                    <span class="prog-val">95%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill green" style="width: 95%"></div>
+                  </div>
+                </div>
+
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">SSO Authentication Login</span>
+                    <span class="prog-val">84%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill" style="width: 84%"></div>
+                  </div>
+                </div>
+
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">Slack Webhook Dispatches</span>
+                    <span class="prog-val">62%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill cyan" style="width: 62%"></div>
+                  </div>
+                </div>
+
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">Database CLI Console usage</span>
+                    <span class="prog-val">31%</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill amber" style="width: 31%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Quick Insight Tasks</h5>
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    id="downloadPdfBtn"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-file-pdf me-2"></i>Download Monthly
+                    Analytics PDF
+                  </button>
+                  <button
+                    class="btn btn-outline-indigo py-2"
+                    id="npsTriggerBtn"
+                    style="border-radius: 12px; font-size: 0.85rem"
+                  >
+                    <i class="fas fa-envelope-open-text me-2"></i>Broadcast NPS
+                    Survey
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const dauCount = document.getElementById("dauCount");
+        const activityBody = document.getElementById("insightsActivityBody");
+        const downloadPdfBtn = document.getElementById("downloadPdfBtn");
+        const npsTriggerBtn = document.getElementById("npsTriggerBtn");
+
+        let currentDau = 8429;
+
+        const users = [
+          "peter.parker@dailybugle.com",
+          "natasha.romanoff@shield.gov",
+          "wanda.maximoff@avengers.org",
+          "steve.rogers@allies.net",
+          "diana.prince@themysis.org",
+          "barry.allen@centralcity.gov",
+        ];
+        const actions = [
+          "Export analytics reports",
+          "Deploy custom webhook keys",
+          "Modify roadmap priority status",
+          "Run A/B experiment test suite",
+          "Toggle systems health check",
+          "Login to IAM ring workspace",
+        ];
+        const clients = [
+          "Chrome / macOS",
+          "Firefox / Windows",
+          "Safari / macOS",
+          "Safari / iOS",
+          "Chrome / Android",
+          "Edge / Windows",
+        ];
+
+        // Simulate DAU fluctuation and live user engagement logs
+        setInterval(() => {
+          // DAU update
+          currentDau += Math.floor(Math.random() * 7) - 3;
+          dauCount.textContent = currentDau.toLocaleString();
+
+          // Activity append
+          const now = new Date();
+          const timeStr = now.toTimeString().split(" ")[0];
+          const user = users[Math.floor(Math.random() * users.length)];
+          const action = actions[Math.floor(Math.random() * actions.length)];
+          const client = clients[Math.floor(Math.random() * clients.length)];
+
+          const isSuccess = Math.random() > 0.1;
+          const statusText = isSuccess ? "Success" : "Completed";
+          const statusClass = isSuccess ? "status-done" : "status-active";
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${timeStr}</td>
+            <td><span class="td-primary">${user}</span></td>
+            <td>${action}</td>
+            <td>${client}</td>
+            <td><span class="status-pill ${statusClass}">${statusText}</span></td>
+          `;
+
+          activityBody.insertBefore(tr, activityBody.firstChild);
+
+          if (activityBody.children.length > 8) {
+            activityBody.removeChild(activityBody.lastChild);
+          }
+        }, 4000);
+
+        downloadPdfBtn.addEventListener("click", () => {
+          alert(
+            "Monthly Product Insights Report PDF generated successfully. (Mock Download)",
+          );
+        });
+
+        npsTriggerBtn.addEventListener("click", () => {
+          alert(
+            "NPS survey successfully broadcast to 12.4K active users via email and in-app banner templates.",
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workspace Settings - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-executive"
+              id="sidebarUserRole"
+              >Founder / CEO</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Workspace Settings</h2>
+            <p>
+              Modify organization workspace meta credentials, configure billing
+              profiles, and manage connected application pipelines.
+            </p>
+          </div>
+
+          <!-- Settings Layout -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header mb-4">
+                  <h5>Organization Credentials</h5>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted"
+                      >Company Name</label
+                    >
+                    <input
+                      type="text"
+                      id="companyNameInput"
+                      class="form-control bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                      value="Stackly Inc"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted"
+                      >Workspace Domain</label
+                    >
+                    <input
+                      type="text"
+                      id="domainInput"
+                      class="form-control bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                      value="stackly.com"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small text-muted"
+                      >Primary Administrator Email</label
+                    >
+                    <input
+                      type="email"
+                      id="adminEmailInput"
+                      class="form-control bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                      value="ceo.elon@stackly.com"
+                    />
+                  </div>
+
+                  <!-- Permissions checks -->
+                  <div class="col-12 mt-4 border-top border-secondary pt-3">
+                    <h6 class="td-primary mb-3">
+                      Workspace Security Safeguards
+                    </h6>
+                    <div class="form-check form-switch mb-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="mfaSwitch"
+                        checked
+                      />
+                      <label
+                        class="form-check-label small text-secondary"
+                        for="mfaSwitch"
+                        >Enforce Multi-Factor Authentication (MFA) for all login
+                        rings</label
+                      >
+                    </div>
+                    <div class="form-check form-switch mb-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="limitSwitch"
+                      />
+                      <label
+                        class="form-check-label small text-secondary"
+                        for="limitSwitch"
+                        >Restrict external guest API keys to read-only access
+                        rings</label
+                      >
+                    </div>
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="ipSwitch"
+                        checked
+                      />
+                      <label
+                        class="form-check-label small text-secondary"
+                        for="ipSwitch"
+                        >Log all daemon rate limit events and firewall
+                        blocks</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 text-end mt-4">
+                    <button
+                      class="btn btn-indigo px-4 py-2"
+                      id="saveSettingsBtn"
+                      style="
+                        border-radius: 8px;
+                        font-size: 0.85rem;
+                        font-weight: 500;
+                      "
+                    >
+                      Save Workspace Settings
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sidebars Integrations -->
+            <div class="col-lg-4">
+              <div class="dash-card">
+                <div class="dash-card-header mb-3">
+                  <h5>Third-party Integrations</h5>
+                </div>
+
+                <!-- Slack -->
+                <div class="pb-3 border-bottom border-secondary mb-3">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-1"
+                  >
+                    <span class="td-primary fw-600"
+                      ><i class="fab fa-slack text-purple me-2"></i>Slack</span
+                    >
+                    <span
+                      class="badge bg-success-subtle text-success"
+                      id="slackBadge"
+                      >Connected</span
+                    >
+                  </div>
+                  <div class="small text-muted mb-2">
+                    Dispatches notifications to #announcements.
+                  </div>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    id="slackToggleBtn"
+                  >
+                    Disconnect
+                  </button>
+                </div>
+
+                <!-- GitHub -->
+                <div class="pb-3 border-bottom border-secondary mb-3">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-1"
+                  >
+                    <span class="td-primary fw-600"
+                      ><i class="fab fa-github text-light me-2"></i>GitHub</span
+                    >
+                    <span
+                      class="badge bg-success-subtle text-success"
+                      id="githubBadge"
+                      >Connected</span
+                    >
+                  </div>
+                  <div class="small text-muted mb-2">
+                    Syncs CI/CD builds repositories.
+                  </div>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    id="githubToggleBtn"
+                  >
+                    Disconnect
+                  </button>
+                </div>
+
+                <!-- Stripe -->
+                <div>
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-1"
+                  >
+                    <span class="td-primary fw-600"
+                      ><i class="fab fa-stripe text-indigo me-2"></i
+                      >Stripe</span
+                    >
+                    <span
+                      class="badge bg-success-subtle text-success"
+                      id="stripeBadge"
+                      >Connected</span
+                    >
+                  </div>
+                  <div class="small text-muted mb-2">
+                    Processes subscription billing invoices.
+                  </div>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    id="stripeToggleBtn"
+                  >
+                    Disconnect
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+        const companyNameInput = document.getElementById("companyNameInput");
+
+        const slackBadge = document.getElementById("slackBadge");
+        const slackToggleBtn = document.getElementById("slackToggleBtn");
+        const githubBadge = document.getElementById("githubBadge");
+        const githubToggleBtn = document.getElementById("githubToggleBtn");
+        const stripeBadge = document.getElementById("stripeBadge");
+        const stripeToggleBtn = document.getElementById("stripeToggleBtn");
+
+        saveSettingsBtn.addEventListener("click", () => {
+          const compName = companyNameInput.value.trim();
+          if (compName === "") {
+            alert("Company Name cannot be empty.");
+            return;
+          }
+
+          saveSettingsBtn.disabled = true;
+          saveSettingsBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin me-1"></i>Saving settings...';
+
+          setTimeout(() => {
+            alert(
+              `Workspace credentials for "${compName}" successfully saved and updated on organization ledger!`,
+            );
+            saveSettingsBtn.disabled = false;
+            saveSettingsBtn.innerHTML = "Save Workspace Settings";
+          }, 1500);
+        });
+
+        const setupToggle = (btn, badge, name) => {
+          let connected = true;
+          btn.addEventListener("click", () => {
+            connected = !connected;
+            if (connected) {
+              badge.textContent = "Connected";
+              badge.className = "badge bg-success-subtle text-success";
+              btn.textContent = "Disconnect";
+              btn.className = "btn btn-sm btn-outline-danger";
+              alert(`${name} integration successfully connected.`);
+            } else {
+              badge.textContent = "Disconnected";
+              badge.className = "badge bg-secondary-subtle text-light";
+              btn.textContent = "Connect";
+              btn.className = "btn btn-sm btn-indigo";
+              alert(`${name} integration successfully disconnected.`);
+            }
+          });
+        };
+
+        setupToggle(slackToggleBtn, slackBadge, "Slack");
+        setupToggle(githubToggleBtn, githubBadge, "GitHub");
+        setupToggle(stripeToggleBtn, stripeBadge, "Stripe");
+      });
+    </script>
+  </body>
+</html>

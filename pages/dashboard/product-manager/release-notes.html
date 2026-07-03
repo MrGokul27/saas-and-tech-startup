@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Release Notes - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-manager" id="sidebarUserRole"
+              >Product Manager</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Release Notes Publisher</h2>
+            <p>
+              Author public product release changelogs, manage release versions,
+              and schedule announcements.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-code-merge"></i>
+                </div>
+                <div class="stat-value" id="lastVerVal">v2.4.1</div>
+                <div class="stat-label">Last Published Version</div>
+                <div class="stat-change up" id="lastVerTime">10m ago</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-folder-open"></i>
+                </div>
+                <div class="stat-value" id="totReleasesVal">58 releases</div>
+                <div class="stat-label">Total Version History</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-paper-plane"></i>
+                </div>
+                <div class="stat-value">12.4K</div>
+                <div class="stat-label">Subscribers Emailed</div>
+                <div class="stat-change up">100% Sent</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-red"><i class="fas fa-bug"></i></div>
+                <div class="stat-value">2 Open</div>
+                <div class="stat-label">Known Patch Issues</div>
+                <div class="stat-change down">
+                  <i class="fas fa-arrow-down"></i> 50%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes Creator and Feed -->
+          <div class="row g-4">
+            <div class="col-lg-7">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Changelog Author Panel</h5>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted"
+                      >Version Tag</label
+                    >
+                    <input
+                      type="text"
+                      id="verTagInput"
+                      class="form-control bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                      placeholder="e.g. v2.4.2"
+                      value="v2.4.2"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted">Type</label>
+                    <select
+                      id="verTypeSelect"
+                      class="form-select bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                    >
+                      <option value="Minor Update">Minor Update</option>
+                      <option value="Major Release">Major Release</option>
+                      <option value="Patch Fixes">Patch Fixes</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small text-muted"
+                      >Changelog Bullet Items</label
+                    >
+                    <div class="input-group mb-2">
+                      <input
+                        type="text"
+                        id="bulletInput"
+                        class="form-control bg-dark border-secondary text-light"
+                        style="border-radius: 8px 0 0 8px; font-size: 0.85rem"
+                        placeholder="Add feature notes (e.g. Fix Okta SSO login connection crash)..."
+                      />
+                      <button
+                        class="btn btn-indigo"
+                        type="button"
+                        id="addBulletBtn"
+                        style="border-radius: 0 8px 8px 0"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                    <!-- Preview list -->
+                    <ul
+                      class="list-group list-group-flush bg-transparent border-0 mt-3"
+                      id="bulletPreviewList"
+                    >
+                      <!-- Bullets go here -->
+                    </ul>
+                  </div>
+                  <div class="col-12 text-end mt-4">
+                    <button
+                      class="btn btn-indigo w-100 py-2"
+                      id="publishBtn"
+                      style="
+                        border-radius: 8px;
+                        font-size: 0.85rem;
+                        font-weight: 500;
+                      "
+                    >
+                      <i class="fas fa-globe me-1"></i>Publish Changelog &amp;
+                      Email Subscribers
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Changelog logs -->
+              <div class="dash-card">
+                <div class="dash-card-header mb-3">
+                  <h5>Release Changelog Feed</h5>
+                </div>
+                <div class="changelog-feed" id="changelogFeed">
+                  <!-- v2.4.1 -->
+                  <div
+                    class="pb-4 border-bottom border-secondary mb-4"
+                    id="item-2.4.1"
+                  >
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2">
+                        <h6 class="mb-0 td-primary fs-5">Version v2.4.1</h6>
+                        <span class="badge bg-success-subtle text-success"
+                          >Minor Update</span
+                        >
+                      </div>
+                      <span class="small text-muted">Published Today</span>
+                    </div>
+                    <ul class="text-secondary small mb-0 ps-3">
+                      <li>
+                        Add dynamic multi-folder dashboard access and routing
+                        overrides.
+                      </li>
+                      <li>Fix API latency metric scaling anomalies.</li>
+                    </ul>
+                  </div>
+
+                  <!-- v2.4.0 -->
+                  <div class="pb-4 border-bottom border-secondary mb-4">
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2">
+                        <h6 class="mb-0 td-primary fs-5">Version v2.4.0</h6>
+                        <span class="badge bg-indigo-subtle text-indigo"
+                          >Major Release</span
+                        >
+                      </div>
+                      <span class="small text-muted">2 days ago</span>
+                    </div>
+                    <ul class="text-secondary small mb-0 ps-3">
+                      <li>
+                        Introduce role-based landing overview panels with custom
+                        graphs.
+                      </li>
+                      <li>
+                        Refactor Stripe webhook handlers for async retries.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Audience details -->
+            <div class="col-lg-5">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Notification Distribution</h5>
+                </div>
+                <div class="progress-item mt-3">
+                  <div class="progress-meta">
+                    <span class="prog-label">Enterprise Cohorts</span>
+                    <span class="prog-val">120 users</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill green" style="width: 100%"></div>
+                  </div>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">Scale &amp; Growth Cohorts</span>
+                    <span class="prog-val">3,892 users</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill" style="width: 100%"></div>
+                  </div>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-meta">
+                    <span class="prog-label">Free Trial Cohorts</span>
+                    <span class="prog-val">8,410 users</span>
+                  </div>
+                  <div class="prog-track">
+                    <div class="prog-fill cyan" style="width: 100%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integration channel targets -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Audience Integrations</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fab fa-slack"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title">
+                        #announcements (Slack Workspace)
+                      </div>
+                      <div class="act-time text-light">
+                        Connected &bull; Broadcast Trigger on Publish
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-cyan">
+                      <i class="fas fa-square-rss"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title">Developer Blog RSS Sync</div>
+                      <div class="act-time text-light">
+                        Active &bull; XML Sitemap Feed Sync
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const addBulletBtn = document.getElementById("addBulletBtn");
+        const bulletInput = document.getElementById("bulletInput");
+        const bulletPreviewList = document.getElementById("bulletPreviewList");
+        const publishBtn = document.getElementById("publishBtn");
+        const verTagInput = document.getElementById("verTagInput");
+        const verTypeSelect = document.getElementById("verTypeSelect");
+        const changelogFeed = document.getElementById("changelogFeed");
+        const lastVerVal = document.getElementById("lastVerVal");
+        const lastVerTime = document.getElementById("lastVerTime");
+        const totReleasesVal = document.getElementById("totReleasesVal");
+
+        let bulletsArray = [];
+        let totalReleasesCount = 58;
+
+        addBulletBtn.addEventListener("click", () => {
+          const val = bulletInput.value.trim();
+          if (val === "") return;
+
+          bulletsArray.push(val);
+
+          const li = document.createElement("li");
+          li.className =
+            "list-group-item bg-transparent text-secondary border-secondary d-flex justify-content-between align-items-center px-0 py-2";
+          li.innerHTML = `
+            <span>&bull; ${val}</span>
+            <i class="fas fa-trash-can text-danger cursor-pointer remove-bullet-btn"></i>
+          `;
+          bulletPreviewList.appendChild(li);
+
+          // Add click event to remove it
+          li.querySelector(".remove-bullet-btn").addEventListener(
+            "click",
+            () => {
+              const index = bulletsArray.indexOf(val);
+              if (index > -1) {
+                bulletsArray.splice(index, 1);
+              }
+              li.remove();
+            },
+          );
+
+          bulletInput.value = "";
+        });
+
+        bulletInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            addBulletBtn.click();
+          }
+        });
+
+        publishBtn.addEventListener("click", () => {
+          const version = verTagInput.value.trim();
+          if (version === "") {
+            alert("Please input a version tag.");
+            return;
+          }
+
+          if (bulletsArray.length === 0) {
+            alert(
+              "Please add at least one changelog bullet item before publishing.",
+            );
+            return;
+          }
+
+          publishBtn.disabled = true;
+          publishBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin me-1"></i>Publishing...';
+
+          setTimeout(() => {
+            totalReleasesCount++;
+            totReleasesVal.textContent = `${totalReleasesCount} releases`;
+            lastVerVal.textContent = version;
+            lastVerTime.textContent = "Just now";
+
+            const verType = verTypeSelect.value;
+            let typeBadgeClass = "bg-success-subtle text-success";
+            if (verType === "Major Release")
+              typeBadgeClass = "bg-indigo-subtle text-indigo";
+            if (verType === "Patch Fixes")
+              typeBadgeClass = "bg-danger-subtle text-danger";
+
+            // Inject into feed at top
+            const changeNode = document.createElement("div");
+            changeNode.className = "pb-4 border-bottom border-secondary mb-4";
+            changeNode.innerHTML = `
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <h6 class="mb-0 td-primary fs-5">Version ${version}</h6>
+                  <span class="badge ${typeBadgeClass}">${verType}</span>
+                </div>
+                <span class="small text-muted">Published Just now</span>
+              </div>
+              <ul class="text-secondary small mb-0 ps-3">
+                ${bulletsArray.map((b) => `<li>${b}</li>`).join("")}
+              </ul>
+            `;
+
+            changelogFeed.insertBefore(changeNode, changelogFeed.firstChild);
+
+            alert(
+              `Version ${version} successfully published! 12.4K subscribers notified via email. Announcements dispatched to Slack channels.`,
+            );
+
+            // Reset UI
+            bulletsArray = [];
+            bulletPreviewList.innerHTML = "";
+            verTagInput.value = `v2.4.${totalReleasesCount - 56}`; // incremental default
+            publishBtn.disabled = false;
+            publishBtn.innerHTML =
+              '<i class="fas fa-globe me-1"></i>Publish Changelog &amp; Email Subscribers';
+          }, 2000);
+        });
+      });
+    </script>
+  </body>
+</html>

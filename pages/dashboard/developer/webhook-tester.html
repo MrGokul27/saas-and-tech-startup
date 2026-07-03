@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webhook Tester - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .json-editor {
+        background: #050811;
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 12px;
+        font-family: "Fira Code", monospace;
+        font-size: 0.82rem;
+        color: #34d399;
+        height: 180px;
+        width: 100%;
+        resize: none;
+        outline: none;
+      }
+      .preset-item {
+        padding: 8px 12px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.02);
+        margin-bottom: 6px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+      .preset-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-developer"
+              id="sidebarUserRole"
+              >Developer</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Webhook Tester</h2>
+            <p>
+              Distribute mock JSON event payloads to verify external handler
+              integrations and webhook receiver logic.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-plug"></i>
+                </div>
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Delivery SLA</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-cloud-arrow-down"></i>
+                </div>
+                <div class="stat-value" id="totDeliveredVal">12,482</div>
+                <div class="stat-label">Delivered Events</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 8.4%
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value">85 ms</div>
+                <div class="stat-label">Avg Delivery Delay</div>
+                <div class="stat-change down">
+                  <i class="fas fa-arrow-down"></i> 12ms
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <div class="stat-value">3 active</div>
+                <div class="stat-label">Registered Receivers</div>
+                <div class="stat-change up">Healthy</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Webhook Dispatch Panel -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Payload Dispatcher</h5>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <label class="form-label small text-muted"
+                      >Destination endpoint</label
+                    >
+                    <input
+                      type="url"
+                      id="targetUrlInput"
+                      class="form-control bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                      value="https://api.stackly-integration.internal/webhook-receiver"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted"
+                      >Event Type</label
+                    >
+                    <select
+                      id="eventTypeSelect"
+                      class="form-select bg-dark border-secondary text-light"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                    >
+                      <option value="user.created">user.created</option>
+                      <option value="subscription.updated">
+                        subscription.updated
+                      </option>
+                      <option value="payment.failed">payment.failed</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small text-muted"
+                      >Event Payload (JSON)</label
+                    >
+                    <textarea class="json-editor" id="jsonTextArea"></textarea>
+                  </div>
+                  <div class="col-12 text-end">
+                    <button
+                      class="btn btn-indigo px-4 py-2"
+                      id="deliverBtn"
+                      style="
+                        border-radius: 8px;
+                        font-size: 0.85rem;
+                        font-weight: 500;
+                      "
+                    >
+                      <i class="fas fa-paper-plane me-1"></i>Deliver Webhook
+                      Payload
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- History table -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Delivery Telemetry Logs</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Dispatched</th>
+                        <th>Event Type</th>
+                        <th>Endpoint</th>
+                        <th>Status</th>
+                        <th>Latency</th>
+                      </tr>
+                    </thead>
+                    <tbody id="webhooksLogsBody">
+                      <tr>
+                        <td>15:52:10</td>
+                        <td>
+                          <span class="badge bg-indigo-subtle text-indigo"
+                            >user.created</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary">/webhook-receiver</span>
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">200 OK</span>
+                        </td>
+                        <td>78ms</td>
+                      </tr>
+                      <tr>
+                        <td>15:48:02</td>
+                        <td>
+                          <span class="badge bg-indigo-subtle text-indigo"
+                            >subscription.updated</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary">/webhook-receiver</span>
+                        </td>
+                        <td>
+                          <span class="status-pill status-active">200 OK</span>
+                        </td>
+                        <td>94ms</td>
+                      </tr>
+                      <tr>
+                        <td>15:30:15</td>
+                        <td>
+                          <span class="badge bg-indigo-subtle text-indigo"
+                            >payment.failed</span
+                          >
+                        </td>
+                        <td>
+                          <span class="td-primary">/webhook-receiver</span>
+                        </td>
+                        <td>
+                          <span class="status-pill status-critical"
+                            >502 BadGateway</span
+                          >
+                        </td>
+                        <td>310ms</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Presets -->
+            <div class="col-lg-4">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Quick Presets Templates</h5>
+                </div>
+                <div class="preset-item" data-preset="user.created">
+                  <span class="td-primary fw-600">user.created</span>
+                  <div class="small text-muted">
+                    Dispatches user creation parameters
+                  </div>
+                </div>
+                <div class="preset-item" data-preset="subscription.updated">
+                  <span class="td-primary fw-600">subscription.updated</span>
+                  <div class="small text-muted">
+                    Triggers billing plan modification
+                  </div>
+                </div>
+                <div class="preset-item" data-preset="payment.failed">
+                  <span class="td-primary fw-600">payment.failed</span>
+                  <div class="small text-muted">
+                    Fires subscription cancellation warn
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Security Webhook Keys</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <tbody>
+                      <tr>
+                        <td>Signing Secret</td>
+                        <td>
+                          <span class="td-primary font-monospace"
+                            >whsec_x8Y3K...</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Signature Header</td>
+                        <td>
+                          <span class="td-primary font-monospace"
+                            >X-Stackly-Signature</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Timeout Retries</td>
+                        <td>3 retries (back-off)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const jsonTextArea = document.getElementById("jsonTextArea");
+        const targetUrlInput = document.getElementById("targetUrlInput");
+        const eventTypeSelect = document.getElementById("eventTypeSelect");
+        const deliverBtn = document.getElementById("deliverBtn");
+        const webhooksLogsBody = document.getElementById("webhooksLogsBody");
+        const totDeliveredVal = document.getElementById("totDeliveredVal");
+        const presetItems = document.querySelectorAll(".preset-item");
+
+        let totalDelivered = 12482;
+
+        const presets = {
+          "user.created": {
+            event: "user.created",
+            data: {
+              id: "usr_9281a",
+              email: "new.user@gmail.com",
+              username: "NewUser99",
+              created_at: Math.floor(Date.now() / 1000),
+            },
+          },
+          "subscription.updated": {
+            event: "subscription.updated",
+            data: {
+              id: "sub_302a9",
+              tenant_id: "ten_01a2d",
+              previous_plan: "Growth",
+              current_plan: "Enterprise",
+              billing_period: "yearly",
+            },
+          },
+          "payment.failed": {
+            event: "payment.failed",
+            data: {
+              id: "inv_827f3",
+              tenant_id: "ten_931b2",
+              amount_due_usd: 800.0,
+              failure_reason: "card_declined",
+              next_retry_at: Math.floor(Date.now() / 1000) + 86400,
+            },
+          },
+        };
+
+        const loadPreset = (type) => {
+          eventTypeSelect.value = type;
+          jsonTextArea.value = JSON.stringify(presets[type], null, 2);
+        };
+
+        // Initialize with user.created
+        loadPreset("user.created");
+
+        eventTypeSelect.addEventListener("change", () => {
+          loadPreset(eventTypeSelect.value);
+        });
+
+        presetItems.forEach((item) => {
+          item.addEventListener("click", () => {
+            const type = item.getAttribute("data-preset");
+            loadPreset(type);
+          });
+        });
+
+        deliverBtn.addEventListener("click", () => {
+          const url = targetUrlInput.value.trim();
+          if (url === "") {
+            alert("Destination endpoint cannot be empty.");
+            return;
+          }
+
+          deliverBtn.disabled = true;
+          deliverBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin me-1"></i>Delivering...';
+
+          setTimeout(() => {
+            totalDelivered++;
+            totDeliveredVal.textContent = totalDelivered.toLocaleString();
+
+            const now = new Date();
+            const timeStr = now.toTimeString().split(" ")[0];
+            const eventType = eventTypeSelect.value;
+
+            // Random success status
+            const isSuccess = Math.random() > 0.15;
+            const statusText = isSuccess ? "200 OK" : "500 ServerError";
+            const statusClass = isSuccess ? "status-active" : "status-critical";
+            const latency = Math.floor(Math.random() * 60) + 20;
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${timeStr}</td>
+              <td><span class="badge bg-indigo-subtle text-indigo">${eventType}</span></td>
+              <td><span class="td-primary">${url.replace("https://", "").split("/")[0]}</span></td>
+              <td><span class="status-pill ${statusClass}">${statusText}</span></td>
+              <td>${latency}ms</td>
+            `;
+
+            webhooksLogsBody.insertBefore(tr, webhooksLogsBody.firstChild);
+
+            alert(
+              `Webhook payload dispatched! Response status: ${statusText} (${latency}ms)`,
+            );
+            deliverBtn.disabled = false;
+            deliverBtn.innerHTML =
+              '<i class="fas fa-paper-plane me-1"></i>Deliver Webhook Payload';
+          }, 1500);
+        });
+      });
+    </script>
+  </body>
+</html>

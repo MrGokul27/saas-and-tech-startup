@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roadmap - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .kanban-board {
+        display: flex;
+        gap: 16px;
+        margin-top: 20px;
+        overflow-x: auto;
+        padding-bottom: 12px;
+      }
+      .kanban-col {
+        flex: 1;
+        min-width: 250px;
+        background: rgba(15, 20, 34, 0.4);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-height: 520px;
+        overflow-y: auto;
+      }
+      .kanban-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 8px;
+        margin-bottom: 4px;
+      }
+      .kanban-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #fff;
+      }
+      .kanban-card-item {
+        background: var(--bg-secondary);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 0.8rem;
+        cursor: grab;
+        transition: all 0.2s ease;
+      }
+      .kanban-card-item:hover {
+        border-color: var(--glass-border-hover);
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span class="sidebar-role-badge badge-manager" id="sidebarUserRole"
+              >Product Manager</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div
+            class="dash-page-header flex-wrap d-flex justify-content-between align-items-center gap-3"
+          >
+            <div>
+              <h2>Product Roadmap</h2>
+              <p>
+                Map out upcoming milestones, design prioritization, and sprint
+                epic progress.
+              </p>
+            </div>
+            <button
+              class="btn btn-indigo px-4 py-2"
+              data-bs-toggle="modal"
+              data-bs-target="#addTicketModal"
+              style="border-radius: 12px; font-weight: 500"
+            >
+              <i class="fas fa-plus me-2"></i>Add Roadmap Ticket
+            </button>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-calendar-days"></i>
+                </div>
+                <div class="stat-value">Q3-2026</div>
+                <div class="stat-label">Current Sprint Cycle</div>
+                <div class="stat-change up">Sprint C</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-cubes"></i>
+                </div>
+                <div class="stat-value">4 Active</div>
+                <div class="stat-label">Strategic Epics</div>
+                <div class="stat-change up">In Progress</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="stat-value" id="statBacklog">12 items</div>
+                <div class="stat-label">Priority Backlog</div>
+                <div class="stat-change down">
+                  <i class="fas fa-triangle-exclamation"></i> Groomed
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-circle-check"></i>
+                </div>
+                <div class="stat-value">8 Shipped</div>
+                <div class="stat-label">Closed Q3 Releases</div>
+                <div class="stat-change up">
+                  <i class="fas fa-arrow-up"></i> 25%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kanban Board -->
+          <div class="kanban-board">
+            <!-- Backlog -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span class="kanban-title"
+                  ><i class="fas fa-inbox text-indigo me-2"></i>Backlog</span
+                >
+                <span class="badge bg-secondary-subtle" id="colBacklogCount"
+                  >3</span
+                >
+              </div>
+              <div class="kanban-cards-container" id="colBacklog">
+                <div class="kanban-card-item">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="badge bg-danger-subtle text-danger">High</span>
+                    <span class="text-muted" style="font-size: 0.7rem"
+                      >Q3-C</span
+                    >
+                  </div>
+                  <div class="td-primary fw-600 mb-1">
+                    SSO Authentication Login
+                  </div>
+                  <p class="mb-0 small text-secondary">
+                    Setup SAML integration triggers for Okta and Active
+                    Directory pools.
+                  </p>
+                </div>
+                <div class="kanban-card-item">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="badge bg-secondary-subtle text-light"
+                      >Low</span
+                    >
+                    <span class="text-muted" style="font-size: 0.7rem"
+                      >Q4-A</span
+                    >
+                  </div>
+                  <div class="td-primary fw-600 mb-1">
+                    Webhook Payload Editor
+                  </div>
+                  <p class="mb-0 small text-secondary">
+                    Provide drag-and-drop JSON configuration parameters blocks.
+                  </p>
+                </div>
+                <div class="kanban-card-item">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="badge bg-warning-subtle text-warning"
+                      >Medium</span
+                    >
+                    <span class="text-muted" style="font-size: 0.7rem"
+                      >Q4-A</span
+                    >
+                  </div>
+                  <div class="td-primary fw-600 mb-1">
+                    Dark Mode Toggle Update
+                  </div>
+                  <p class="mb-0 small text-secondary">
+                    Refresh assets layout gradient palette variables.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- In Progress -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span class="kanban-title"
+                  ><i class="fas fa-gears text-cyan me-2"></i>In Progress</span
+                >
+                <span class="badge bg-secondary-subtle">2</span>
+              </div>
+              <div class="kanban-cards-container">
+                <div class="kanban-card-item">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="badge bg-danger-subtle text-danger">High</span>
+                    <span class="text-muted" style="font-size: 0.7rem"
+                      >Q3-C</span
+                    >
+                  </div>
+                  <div class="td-primary fw-600 mb-1">
+                    A/B Testing Experiments
+                  </div>
+                  <p class="mb-0 small text-secondary">
+                    Enable variant segmentation charts inside analytics.
+                  </p>
+                </div>
+                <div class="kanban-card-item">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="badge bg-warning-subtle text-warning"
+                      >Medium</span
+                    >
+                    <span class="text-muted" style="font-size: 0.7rem"
+                      >Q3-C</span
+                    >
+                  </div>
+                  <div class="td-primary fw-600 mb-1">
+                    Audit Logs CSV Export
+                  </div>
+                  <p class="mb-0 small text-secondary">
+                    Implement system logging audit download trigger buttons.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- In Review -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span class="kanban-title"
+                  ><i class="fas fa-clipboard-question text-pink me-2"></i>In
+                  Review</span
+                >
+                <span class="badge bg-secondary-subtle">2</span>
+              </div>
+              <div class="kanban-cards-container">
+                <div class="kanban-card-item">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="badge bg-warning-subtle text-warning"
+                      >Medium</span
+                    >
+                    <span class="text-muted" style="font-size: 0.7rem"
+                      >Q3-B</span
+                    >
+                  </div>
+                  <div class="td-primary fw-600 mb-1">
+                    Slack Integrations Webhook
+                  </div>
+                  <p class="mb-0 small text-secondary">
+                    Allow automated telemetry warnings broadcast directly to
+                    Slack.
+                  </p>
+                </div>
+                <div class="kanban-card-item">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="badge bg-secondary-subtle text-light"
+                      >Low</span
+                    >
+                    <span class="text-muted" style="font-size: 0.7rem"
+                      >Q3-B</span
+                    >
+                  </div>
+                  <div class="td-primary fw-600 mb-1">NPS Survey Scheduler</div>
+                  <p class="mb-0 small text-secondary">
+                    Schedule email blasts based on customer lifecycle intervals.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Shipped -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <span class="kanban-title"
+                  ><i class="fas fa-circle-check text-green me-2"></i
+                  >Shipped</span
+                >
+                <span class="badge bg-secondary-subtle">1</span>
+              </div>
+              <div class="kanban-cards-container">
+                <div class="kanban-card-item" style="opacity: 0.8">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <span class="badge bg-success-subtle text-success"
+                      >Shipped</span
+                    >
+                    <span class="text-muted" style="font-size: 0.7rem"
+                      >Q3-A</span
+                    >
+                  </div>
+                  <div
+                    class="td-primary fw-600 mb-1 text-decoration-line-through"
+                  >
+                    Conversion Funnel charts
+                  </div>
+                  <p class="mb-0 small text-secondary">
+                    Render visual drop-off grids and segment multipliers.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add Ticket Modal -->
+    <div
+      class="modal fade"
+      id="addTicketModal"
+      tabindex="-1"
+      aria-hidden="true"
+      style="backdrop-filter: blur(8px)"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content border border-secondary text-light"
+          style="background: var(--bg-secondary); border-radius: 16px"
+        >
+          <div class="modal-header border-bottom border-secondary">
+            <h5 class="modal-title">Add Roadmap Feature Ticket</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label small text-muted">Feature Name</label>
+              <input
+                type="text"
+                id="featNameInput"
+                class="form-control bg-dark border-secondary text-light"
+                placeholder="e.g. Stripe checkout updates"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-muted">Description</label>
+              <textarea
+                id="featDescInput"
+                class="form-control bg-dark border-secondary text-light"
+                rows="3"
+                placeholder="Provide quick sprint target scope..."
+              ></textarea>
+            </div>
+            <div class="row g-2">
+              <div class="col-6">
+                <label class="form-label small text-muted">Priority</label>
+                <select
+                  id="featPrioritySelect"
+                  class="form-select bg-dark border-secondary text-light"
+                >
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label small text-muted"
+                  >Target Quarter</label
+                >
+                <select
+                  id="featQtrSelect"
+                  class="form-select bg-dark border-secondary text-light"
+                >
+                  <option value="Q3-C">Q3-C (Current)</option>
+                  <option value="Q4-A">Q4-A</option>
+                  <option value="Q4-B">Q4-B</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-top border-secondary">
+            <button
+              type="button"
+              class="btn btn-secondary px-3 py-2"
+              data-bs-dismiss="modal"
+              style="border-radius: 8px"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-indigo px-4 py-2"
+              id="saveTicketBtn"
+              style="border-radius: 8px"
+            >
+              Save Feature
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const saveTicketBtn = document.getElementById("saveTicketBtn");
+        const colBacklog = document.getElementById("colBacklog");
+        const colBacklogCount = document.getElementById("colBacklogCount");
+        const statBacklog = document.getElementById("statBacklog");
+
+        const featNameInput = document.getElementById("featNameInput");
+        const featDescInput = document.getElementById("featDescInput");
+        const featPrioritySelect =
+          document.getElementById("featPrioritySelect");
+        const featQtrSelect = document.getElementById("featQtrSelect");
+
+        let backlogCount = 3;
+        let totalBacklog = 12;
+
+        saveTicketBtn.addEventListener("click", () => {
+          const name = featNameInput.value.trim();
+          const desc = featDescInput.value.trim();
+          if (name === "" || desc === "") {
+            alert("Please input a feature name and description.");
+            return;
+          }
+
+          const priority = featPrioritySelect.value;
+          const qtr = featQtrSelect.value;
+
+          let badgeClass = "bg-secondary-subtle text-light";
+          if (priority === "High") badgeClass = "bg-danger-subtle text-danger";
+          if (priority === "Medium")
+            badgeClass = "bg-warning-subtle text-warning";
+
+          // Add card
+          const card = document.createElement("div");
+          card.className = "kanban-card-item";
+          card.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge ${badgeClass}">${priority}</span>
+              <span class="text-muted" style="font-size: 0.7rem;">${qtr}</span>
+            </div>
+            <div class="td-primary fw-600 mb-1">${name}</div>
+            <p class="mb-0 small text-secondary">${desc}</p>
+          `;
+
+          colBacklog.appendChild(card);
+
+          // Update numbers
+          backlogCount++;
+          totalBacklog++;
+          colBacklogCount.textContent = backlogCount;
+          statBacklog.textContent = `${totalBacklog} items`;
+
+          // Clear form and hide modal
+          featNameInput.value = "";
+          featDescInput.value = "";
+
+          const modalEl = document.getElementById("addTicketModal");
+          const modalInstance = bootstrap.Modal.getInstance(modalEl);
+          modalInstance.hide();
+
+          alert(`Roadmap ticket "${name}" successfully added to Backlog!`);
+        });
+      });
+    </script>
+  </body>
+</html>

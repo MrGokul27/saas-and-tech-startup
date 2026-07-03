@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git Sync - Stackly SaaS & Tech Startup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .git-diff-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--glass-border);
+        margin-bottom: 8px;
+        font-size: 0.82rem;
+      }
+      .git-diff-item.modified {
+        border-left: 3px solid #fbbf24;
+      }
+      .git-diff-item.untracked {
+        border-left: 3px solid #22c55e;
+      }
+      .git-commit-tree {
+        position: relative;
+        padding-left: 20px;
+        margin-top: 15px;
+      }
+      .git-commit-tree::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 5px;
+        bottom: 8px;
+        width: 2px;
+        background: var(--glass-border);
+      }
+      .git-commit-node {
+        position: relative;
+        margin-bottom: 20px;
+        font-size: 0.8rem;
+      }
+      .git-commit-node::before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: -19px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent-indigo);
+        border: 2px solid var(--bg-primary);
+      }
+      .git-commit-hash {
+        font-family: "Fira Code", monospace;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.05);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div class="sidebar-brand">
+          <a href="../../../index.html">
+            <div class="logo-gradient"></div>
+          </a>
+        </div>
+
+        <div class="sidebar-user d-flex align-items-center gap-3">
+          <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">Guest User</div>
+            <span
+              class="sidebar-role-badge badge-developer"
+              id="sidebarUserRole"
+              >Developer</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+          <!-- Dynamically loaded links -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="../../login.html" class="nav-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="dash-main">
+        <header class="dash-topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-greeting">
+              Welcome back, <span id="topbarGreetingName">Guest</span>!
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-icon-btn">
+              <i class="far fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-icon-btn">
+              <i class="far fa-envelope"></i>
+            </button>
+            <div class="topbar-user-pill" onclick="window.location.href = '#'">
+              <div class="mini-avatar" id="topbarMiniAvatar">U</div>
+              <span class="pill-name" id="topbarPillName">Guest</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dash-content">
+          <div class="dash-page-header">
+            <h2>Git Repository Sync</h2>
+            <p>
+              Review workspace differences, branch logs, and publish commits
+              directly to repository origins.
+            </p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-indigo">
+                  <i class="fas fa-code-branch"></i>
+                </div>
+                <div class="stat-value">main</div>
+                <div class="stat-label">Current Branch</div>
+                <div class="stat-change up">origin/main</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-cyan">
+                  <i class="fas fa-arrow-up-from-bracket"></i>
+                </div>
+                <div class="stat-value" id="commitsAheadVal">1 ahead</div>
+                <div class="stat-label">Sync Status</div>
+                <div class="stat-change up">Need Push</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-pink">
+                  <i class="fas fa-file-signature"></i>
+                </div>
+                <div class="stat-value" id="changedFilesVal">2 files</div>
+                <div class="stat-label">Local File Diff</div>
+                <div class="stat-change down">
+                  <i class="fas fa-triangle-exclamation"></i> Uncommitted
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value" id="lastSyncVal">2h ago</div>
+                <div class="stat-label">Last Remote Sync</div>
+                <div class="stat-change up">Stable</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Diff and Logs Layout -->
+          <div class="row g-4">
+            <div class="col-lg-7">
+              <!-- Diff panel -->
+              <div class="dash-card mb-4" id="unstagedCard">
+                <div class="dash-card-header">
+                  <h5>Uncommitted Workspace Changes</h5>
+                  <span class="card-action text-danger" id="stageAllBtn"
+                    >Stage All Files</span
+                  >
+                </div>
+
+                <div
+                  id="noChangesMsg"
+                  class="text-center text-muted py-4 d-none"
+                >
+                  <i
+                    class="fas fa-circle-check text-success d-block fs-3 mb-2"
+                  ></i>
+                  Working tree clean. No local modifications.
+                </div>
+
+                <div id="diffItemsList">
+                  <div class="git-diff-item modified" id="diff1">
+                    <i class="fas fa-file-code text-warning me-2 fs-5"></i>
+                    <div class="flex-grow-1">
+                      <span class="td-primary">assets/js/script.js</span>
+                      <div class="small text-muted">Modified &bull; Staged</div>
+                    </div>
+                    <span class="badge bg-warning-subtle text-warning">M</span>
+                  </div>
+                  <div class="git-diff-item untracked" id="diff2">
+                    <i
+                      class="fas fa-file-circle-plus text-success me-2 fs-5"
+                    ></i>
+                    <div class="flex-grow-1">
+                      <span class="td-primary"
+                        >pages/dashboard/developer/api-logs.html</span
+                      >
+                      <div class="small text-muted">
+                        Untracked &bull; Unstaged
+                      </div>
+                    </div>
+                    <span class="badge bg-success-subtle text-success">U</span>
+                  </div>
+                </div>
+
+                <!-- Commit execution area -->
+                <div
+                  class="mt-4 border-top border-secondary pt-3"
+                  id="commitFormArea"
+                >
+                  <div class="mb-3">
+                    <label class="form-label small text-muted"
+                      >Commit Message</label
+                    >
+                    <input
+                      type="text"
+                      id="commitMsgInput"
+                      class="form-control bg-dark border-secondary text-light"
+                      placeholder="e.g. docs: update API telemetry layout"
+                      style="border-radius: 8px; font-size: 0.85rem"
+                    />
+                  </div>
+                  <button
+                    class="btn btn-indigo w-100 py-2"
+                    id="commitBtn"
+                    style="
+                      border-radius: 8px;
+                      font-size: 0.85rem;
+                      font-weight: 500;
+                    "
+                  >
+                    <i class="fas fa-code-commit me-1"></i>Commit &amp; Push to
+                    Origin
+                  </button>
+                </div>
+              </div>
+
+              <!-- Commits logs tree -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Commit History (main)</h5>
+                </div>
+                <div class="git-commit-tree" id="commitsTree">
+                  <div class="git-commit-node" id="topCommitNode">
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-1"
+                    >
+                      <span class="td-primary fw-600"
+                        >refactor: update routing logic for dashboard
+                        subfolders</span
+                      >
+                      <span class="git-commit-hash">cf78da1</span>
+                    </div>
+                    <div class="small text-muted">
+                      Alex Rivera &bull; 2 hours ago
+                    </div>
+                  </div>
+                  <div class="git-commit-node">
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-1"
+                    >
+                      <span class="td-primary fw-600"
+                        >feat: add theme dashboard CSS stylesheets</span
+                      >
+                      <span class="git-commit-hash">0d94ff1</span>
+                    </div>
+                    <div class="small text-muted">
+                      Alex Rivera &bull; 1 day ago
+                    </div>
+                  </div>
+                  <div class="git-commit-node">
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-1"
+                    >
+                      <span class="td-primary fw-600"
+                        >chore: initialize bootstrap template setup</span
+                      >
+                      <span class="git-commit-hash">23fb8a2</span>
+                    </div>
+                    <div class="small text-muted">
+                      Alex Rivera &bull; 2 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Repository metadata -->
+            <div class="col-lg-5">
+              <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                  <h5>Repository Specifications</h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="dash-table">
+                    <tbody>
+                      <tr>
+                        <td>Remote URL</td>
+                        <td>
+                          <span class="td-primary text-break"
+                            >github.com/stackly/main-repo.git</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Active Branches</td>
+                        <td>4 branches (main, dev, feat/auth, hotfix)</td>
+                      </tr>
+                      <tr>
+                        <td>Open PRs</td>
+                        <td>
+                          <span class="badge bg-warning-subtle text-warning"
+                            >2 Open</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Pull requests -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <h5>Recent Pull Requests</h5>
+                </div>
+                <ul class="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-dot icon-indigo">
+                      <i class="fas fa-code-pull-request"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title">
+                        #PR-42: Implement Billing Sync Webhooks
+                      </div>
+                      <div class="act-time">
+                        Reviewer: Sarah Connor &bull; 1d ago
+                      </div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-dot icon-cyan">
+                      <i class="fas fa-code-pull-request"></i>
+                    </div>
+                    <div class="activity-body">
+                      <div class="act-title">
+                        #PR-41: Upgrade Tailwind to v4 (Draft)
+                      </div>
+                      <div class="act-time">
+                        Reviewer: Alex Rivera &bull; 3d ago
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main Custom Script -->
+    <script src="../../../assets/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const stageAllBtn = document.getElementById("stageAllBtn");
+        const diffItemsList = document.getElementById("diffItemsList");
+        const noChangesMsg = document.getElementById("noChangesMsg");
+        const commitFormArea = document.getElementById("commitFormArea");
+        const commitMsgInput = document.getElementById("commitMsgInput");
+        const commitBtn = document.getElementById("commitBtn");
+        const commitsTree = document.getElementById("commitsTree");
+        const commitsAheadVal = document.getElementById("commitsAheadVal");
+        const changedFilesVal = document.getElementById("changedFilesVal");
+        const lastSyncVal = document.getElementById("lastSyncVal");
+
+        let commitsAhead = 1;
+        let filesChanged = 2;
+
+        stageAllBtn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".git-diff-item .text-muted")
+            .forEach((el) => {
+              el.textContent = "Modified / Untracked \u2022 Staged";
+            });
+          stageAllBtn.classList.add("d-none");
+          alert("All local modifications successfully staged to index.");
+        });
+
+        commitBtn.addEventListener("click", () => {
+          const msg = commitMsgInput.value.trim();
+          if (msg === "") {
+            alert("Please input a commit message.");
+            return;
+          }
+
+          commitBtn.disabled = true;
+          commitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin me-1"></i>Syncing to Remote Origin...';
+
+          setTimeout(() => {
+            // Success push
+            filesChanged = 0;
+            commitsAhead = 0;
+
+            commitsAheadVal.textContent = "Synced";
+            changedFilesVal.textContent = "0 files";
+            lastSyncVal.textContent = "Just now";
+
+            // Hide changed list, show success alert
+            diffItemsList.classList.add("d-none");
+            noChangesMsg.classList.remove("d-none");
+            commitFormArea.classList.add("d-none");
+            stageAllBtn.classList.add("d-none");
+
+            // Generate SHA
+            const randSha = Math.floor(Math.random() * 16777215).toString(16);
+
+            // Add node to commit tree
+            const node = document.createElement("div");
+            node.className = "git-commit-node";
+            node.innerHTML = `
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="td-primary fw-600">${msg}</span>
+                <span class="git-commit-hash">${randSha}</span>
+              </div>
+              <div class="small text-muted">Alex Rivera &bull; Just now</div>
+            `;
+            commitsTree.insertBefore(node, commitsTree.firstChild);
+
+            alert(
+              "Workspace committed and remote Git sync successfully pushed to Github origin/main!",
+            );
+            commitBtn.disabled = false;
+            commitBtn.innerHTML =
+              '<i class="fas fa-code-commit me-1"></i>Commit &amp; Push to Origin';
+          }, 3000);
+        });
+      });
+    </script>
+  </body>
+</html>
