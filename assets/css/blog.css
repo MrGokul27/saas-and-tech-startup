@@ -184,6 +184,15 @@
   flex-direction: column;
   gap: 30px;
 }
+@media (min-width: 992px) {
+  .blog-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+}
 .sidebar-widget {
   background: var(--bg-card);
   border: 1px solid var(--glass-border);

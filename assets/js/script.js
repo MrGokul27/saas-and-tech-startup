@@ -505,7 +505,104 @@ document.addEventListener("DOMContentLoaded", () => {
         "registerConfirmPassword",
       );
 
+      if (password) {
+        const wrapper = registerForm.querySelector(".password-strength-wrapper");
+        const fill = document.getElementById("strengthFill");
+        const text = document.getElementById("strengthText");
+        
+        const reqLength = document.getElementById("reqLength");
+        const reqUpper = document.getElementById("reqUpper");
+        const reqLower = document.getElementById("reqLower");
+        const reqNumber = document.getElementById("reqNumber");
+        const reqSymbol = document.getElementById("reqSymbol");
+
+        password.addEventListener("focus", () => {
+          if (wrapper) wrapper.style.display = "block";
+        });
+
+        password.addEventListener("input", () => {
+          password.classList.remove("is-invalid");
+          const strengthErr = registerForm.querySelector(".password-strength-error");
+          if (strengthErr) strengthErr.remove();
+
+          const val = password.value;
+          
+          const hasLength = val.length >= 8;
+          const hasUpper = /[A-Z]/.test(val);
+          const hasLower = /[a-z]/.test(val);
+          const hasNumber = /[0-9]/.test(val);
+          const hasSymbol = /[^A-Za-z0-9]/.test(val);
+
+          const updateReq = (el, isValid) => {
+            if (!el) return;
+            if (isValid) {
+              el.classList.add("valid");
+              el.classList.remove("invalid");
+              const icon = el.querySelector("i");
+              if (icon) icon.className = "fas fa-check-circle me-1 text-success";
+            } else {
+              el.classList.add("invalid");
+              el.classList.remove("valid");
+              const icon = el.querySelector("i");
+              if (icon) icon.className = "fas fa-times-circle me-1 text-danger";
+            }
+          };
+
+          updateReq(reqLength, hasLength);
+          updateReq(reqUpper, hasUpper);
+          updateReq(reqLower, hasLower);
+          updateReq(reqNumber, hasNumber);
+          updateReq(reqSymbol, hasSymbol);
+
+          let score = 0;
+          if (hasLength) score++;
+          if (hasUpper) score++;
+          if (hasLower) score++;
+          if (hasNumber) score++;
+          if (hasSymbol) score++;
+
+          if (fill && text) {
+            fill.className = "password-strength-fill";
+            if (val.length === 0) {
+              fill.style.width = "0%";
+              text.textContent = "Strength: Too Weak";
+              text.className = "password-strength-text text-muted small";
+            } else if (score <= 2) {
+              fill.classList.add("weak");
+              text.textContent = "Strength: Weak";
+              text.className = "password-strength-text text-danger small";
+            } else if (score <= 4) {
+              fill.classList.add("medium");
+              text.textContent = "Strength: Medium";
+              text.className = "password-strength-text text-warning small";
+            } else {
+              fill.classList.add("strong");
+              text.textContent = "Strength: Strong";
+              text.className = "password-strength-text text-success small";
+            }
+          }
+        });
+      }
+
       registerForm.addEventListener("submit", (e) => {
+        const val = password ? password.value : "";
+        const isStrong = val.length >= 8 && /[A-Z]/.test(val) && /[a-z]/.test(val) && /[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val);
+
+        if (!isStrong) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          let strengthErr = registerForm.querySelector(".password-strength-error");
+          if (!strengthErr) {
+            strengthErr = document.createElement("div");
+            strengthErr.className = "password-strength-error text-danger mt-2 small";
+            strengthErr.innerHTML = '<i class="fas fa-exclamation-circle me-1"></i> Please choose a stronger password matching all requirements!';
+            password.closest(".form-input-group").appendChild(strengthErr);
+          }
+          password.classList.add("is-invalid");
+          return;
+        }
+
         if (
           password &&
           confirmPassword &&
@@ -520,11 +617,10 @@ document.addEventListener("DOMContentLoaded", () => {
             errDiv.className = "password-match-error text-danger mt-2 small";
             errDiv.innerHTML =
               '<i class="fas fa-exclamation-circle me-1"></i> Passwords do not match!';
-            confirmPassword.parentElement.appendChild(errDiv);
+            confirmPassword.closest(".form-input-group").appendChild(errDiv);
           }
           confirmPassword.classList.add("is-invalid");
         } else {
-          // Passwords match! Let's save the data to localStorage and redirect to login
           e.preventDefault();
           const username = document
             .getElementById("registerUsername")
@@ -538,6 +634,7 @@ document.addEventListener("DOMContentLoaded", () => {
               username: username,
               role: role,
               email: email,
+              password: val,
             }),
           );
 
@@ -557,11 +654,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // 12. Login Form Submission Redirect & Data Storage
     const loginForm = document.getElementById("loginForm");
     if (loginForm) {
+      const passwordInput = document.getElementById("loginPassword");
+      if (passwordInput) {
+        passwordInput.addEventListener("input", () => {
+          passwordInput.classList.remove("is-invalid");
+          const loginErr = loginForm.querySelector(".login-password-error");
+          if (loginErr) loginErr.remove();
+        });
+      }
+
       loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const emailInput = document.getElementById("loginEmail");
         const roleSelect = document.getElementById("loginRole");
-        if (emailInput && roleSelect) {
+        if (emailInput && roleSelect && passwordInput) {
           const email = emailInput.value.trim();
           const role = roleSelect.value;
 
@@ -575,6 +681,18 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
               const regUser = JSON.parse(registeredStr);
               username = regUser.username || username;
+              
+              if (regUser.password && regUser.password !== passwordInput.value) {
+                let loginErr = loginForm.querySelector(".login-password-error");
+                if (!loginErr) {
+                  loginErr = document.createElement("div");
+                  loginErr.className = "login-password-error text-danger mt-2 small";
+                  loginErr.innerHTML = '<i class="fas fa-exclamation-circle me-1"></i> Incorrect password for this workspace!';
+                  passwordInput.closest(".form-input-group").appendChild(loginErr);
+                }
+                passwordInput.classList.add("is-invalid");
+                return;
+              }
             } catch (err) {
               console.error("Failed parsing registered user", err);
             }

@@ -35,129 +35,308 @@
     <div class="preloader" style="display: none"></div>
 
     <!-- Floating Logo in Top Left -->
-    <div class="position-absolute top-0 start-0 m-2 z-3">
+    <div class="position-absolute top-0 start-0 m-2 z-3 d-lg-none">
       <a href="../index.html">
         <div class="logo-gradient"></div>
       </a>
     </div>
 
     <div class="auth-page">
-      <div class="auth-card">
-        <!-- Back to Home Button -->
-        <div class="mb-4">
-          <a
-            href="../index.html"
-            class="theme-btn-two py-2 px-3"
-            style="border-radius: 12px; font-size: 0.85rem; height: auto"
-          >
-            <i class="fas fa-arrow-left me-2"></i> Back to Home
-          </a>
+      <!-- Left Side: Visual Panel -->
+      <div class="auth-visual-panel">
+        <div class="auth-visual-glows">
+          <div class="glow-blob glow-1"></div>
+          <div class="glow-blob glow-2"></div>
+          <div class="glow-blob glow-3"></div>
         </div>
-
-        <div class="auth-header">
-          <h2>Welcome Back</h2>
-          <p>Login to manage your startup workspace</p>
-        </div>
-
-        <form action="#" method="POST" class="auth-form" id="loginForm">
-          <!-- Role Field -->
-          <div class="form-input-group position-relative">
-            <label for="loginRole">Workspace Role</label>
-            <i
-              class="fas fa-user-shield position-absolute"
-              style="
-                left: 20px;
-                bottom: 18px;
-                color: var(--text-muted);
-                font-size: 1.1rem;
-                z-index: 5;
-              "
-            ></i>
-            <select id="loginRole" class="form-input-control" required>
-              <option value="" disabled selected>
-                Select your workspace role
-              </option>
-              <option value="developer">Developer</option>
-              <option value="manager">Product Manager</option>
-              <option value="admin">Systems Administrator</option>
-              <option value="executive">Founder / Executive</option>
-            </select>
+        <div class="auth-visual-content">
+          <div class="visual-logo">
+            <a href="../index.html">
+              <div class="logo-gradient"></div>
+            </a>
           </div>
 
-          <!-- Email Field -->
-          <div class="form-input-group position-relative">
-            <label for="loginEmail">Email Address</label>
-            <i
-              class="fas fa-envelope position-absolute"
-              style="
-                left: 20px;
-                bottom: 18px;
-                color: var(--text-muted);
-                font-size: 1.1rem;
-                z-index: 5;
-              "
-            ></i>
-            <input
-              type="email"
-              id="loginEmail"
-              class="form-input-control"
-              placeholder="name@company.com"
-              required
-            />
-          </div>
-
-          <!-- Password Field -->
-          <div class="form-input-group position-relative">
-            <div class="d-flex justify-content-between align-items-center">
-              <label for="loginPassword" class="mb-0">Password</label>
-              <a href="#" class="forgot-password">Forgot?</a>
+          <div class="dashboard-mockup">
+            <div class="mockup-header">
+              <div class="mockup-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="mockup-tab-bar">
+                <span class="mockup-tab active">Overview</span>
+                <span class="mockup-tab">Pipelines</span>
+                <span class="mockup-tab">Telemetry</span>
+              </div>
             </div>
-            <i
-              class="fas fa-lock position-absolute"
-              style="
-                left: 20px;
-                bottom: 18px;
-                color: var(--text-muted);
-                font-size: 1.1rem;
-                z-index: 5;
-              "
-            ></i>
-            <input
-              type="password"
-              id="loginPassword"
-              class="form-input-control mt-2"
-              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-              required
-            />
-            <i
-              class="far fa-eye position-absolute toggle-password"
-              style="
-                right: 20px;
-                bottom: 18px;
-                cursor: pointer;
-                color: var(--text-muted);
-                font-size: 1.1rem;
-                z-index: 5;
-              "
-            ></i>
+            <div class="mockup-body">
+              <div class="mockup-metrics">
+                <div class="metric-mini-card">
+                  <span class="metric-label">Ingestion Rate</span>
+                  <span class="metric-value"
+                    >12.4k<span class="unit">/s</span></span
+                  >
+                  <div class="metric-indicator text-success">
+                    <i class="fas fa-caret-up"></i> +18.4%
+                  </div>
+                </div>
+                <div class="metric-mini-card">
+                  <span class="metric-label">System Load</span>
+                  <span class="metric-value">42%</span>
+                  <div class="metric-progress-bar">
+                    <div class="metric-progress-fill" style="width: 42%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mockup-chart-container">
+                <svg class="mockup-chart" viewBox="0 0 400 150">
+                  <defs>
+                    <linearGradient id="chart-glow" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="0%"
+                        stop-color="#00d4ff"
+                        stop-opacity="0.4"
+                      />
+                      <stop
+                        offset="100%"
+                        stop-color="#00d4ff"
+                        stop-opacity="0"
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="line-gradient"
+                      x1="0"
+                      y1="0"
+                      x2="1"
+                      y2="0"
+                    >
+                      <stop offset="0%" stop-color="#5b6eff" />
+                      <stop offset="100%" stop-color="#00d4ff" />
+                    </linearGradient>
+                  </defs>
+                  <line
+                    x1="0"
+                    y1="30"
+                    x2="400"
+                    y2="30"
+                    stroke="rgba(255,255,255,0.05)"
+                    stroke-width="1"
+                  />
+                  <line
+                    x1="0"
+                    y1="70"
+                    x2="400"
+                    y2="70"
+                    stroke="rgba(255,255,255,0.05)"
+                    stroke-width="1"
+                  />
+                  <line
+                    x1="0"
+                    y1="110"
+                    x2="400"
+                    y2="110"
+                    stroke="rgba(255,255,255,0.05)"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M0,150 L0,90 Q40,60 80,80 T160,50 T240,110 T320,40 T400,60 L400,150 Z"
+                    fill="url(#chart-glow)"
+                  />
+                  <path
+                    d="M0,90 Q40,60 80,80 T160,50 T240,110 T320,40 T400,60"
+                    fill="none"
+                    stroke="url(#line-gradient)"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="160"
+                    cy="50"
+                    r="5"
+                    fill="#00d4ff"
+                    filter="drop-shadow(0 0 8px #00d4ff)"
+                  />
+                  <circle
+                    cx="320"
+                    cy="40"
+                    r="5"
+                    fill="#5b6eff"
+                    filter="drop-shadow(0 0 8px #5b6eff)"
+                  />
+                </svg>
+              </div>
+              <div class="mockup-feed">
+                <div class="feed-item">
+                  <span class="feed-status status-success"></span>
+                  <span class="feed-text"
+                    >Container deployment successful:
+                    <span class="highlight">api-gateway-v2</span></span
+                  >
+                  <span class="feed-time">Just now</span>
+                </div>
+                <div class="feed-item">
+                  <span class="feed-status status-warning"></span>
+                  <span class="feed-text"
+                    >High request volume on:
+                    <span class="highlight">us-east-pipeline</span></span
+                  >
+                  <span class="feed-time">2m ago</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Remember Me Action -->
-          <div class="form-actions">
-            <label class="remember-me-label">
-              <input type="checkbox" class="remember-me-checkbox" required />
-              <span>Remember me</span>
-            </label>
+          <div class="visual-marketing-text">
+            <h3>Accelerate Your SaaS Engine</h3>
+            <p>
+              Unify system telemetry, automate container pipelines, and manage
+              your startup workspace with developer-centric tools built to
+              scale.
+            </p>
+            <div class="feature-bullets">
+              <div class="bullet-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Real-time metrics with zero-lag pipeline ingestion</span>
+              </div>
+              <div class="bullet-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Automated schema migrations & cluster management</span>
+              </div>
+              <div class="bullet-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Role-based access logs and team workspaces</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Form Panel -->
+      <div class="auth-form-panel">
+        <div class="auth-card">
+          <!-- Back to Home Button -->
+          <div class="mb-4">
+            <a
+              href="../index.html"
+              class="theme-btn-two py-2 px-3"
+              style="border-radius: 12px; font-size: 0.85rem; height: auto"
+            >
+              <i class="fas fa-arrow-left me-2"></i> Back to Home
+            </a>
           </div>
 
-          <!-- Submit Button -->
-          <button type="submit" class="theme-btn auth-submit-btn">
-            Sign In <i class="fas fa-sign-in-alt ms-2"></i>
-          </button>
-        </form>
+          <div class="auth-header">
+            <h2>Welcome Back</h2>
+            <p>Login to manage your startup workspace</p>
+          </div>
 
-        <div class="auth-footer">
-          Don't have a workspace yet? <a href="register.html">Sign up</a>
+          <form action="#" method="POST" class="auth-form" id="loginForm">
+            <!-- Role Field -->
+            <div class="form-input-group position-relative">
+              <label for="loginRole">Workspace Role</label>
+              <i
+                class="fas fa-user-shield position-absolute"
+                style="
+                  left: 20px;
+                  bottom: 18px;
+                  color: var(--text-muted);
+                  font-size: 1.1rem;
+                  z-index: 5;
+                "
+              ></i>
+              <select id="loginRole" class="form-input-control" required>
+                <option value="" disabled selected>
+                  Select your workspace role
+                </option>
+                <option value="developer">Developer</option>
+                <option value="manager">Product Manager</option>
+                <option value="admin">Systems Administrator</option>
+                <option value="executive">Founder / Executive</option>
+              </select>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-input-group position-relative">
+              <label for="loginEmail">Email Address</label>
+              <i
+                class="fas fa-envelope position-absolute"
+                style="
+                  left: 20px;
+                  bottom: 18px;
+                  color: var(--text-muted);
+                  font-size: 1.1rem;
+                  z-index: 5;
+                "
+              ></i>
+              <input
+                type="email"
+                id="loginEmail"
+                class="form-input-control"
+                placeholder="name@company.com"
+                required
+              />
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-input-group">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <label for="loginPassword" class="mb-0">Password</label>
+                <a href="#" class="forgot-password">Forgot?</a>
+              </div>
+              <div class="input-wrapper">
+                <i
+                  class="fas fa-lock position-absolute"
+                  style="
+                    left: 20px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    color: var(--text-muted);
+                    font-size: 1.1rem;
+                    z-index: 5;
+                  "
+                ></i>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  class="form-input-control"
+                  style="margin-top: 0 !important"
+                  placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                  required
+                />
+                <i
+                  class="far fa-eye position-absolute toggle-password"
+                  style="
+                    right: 20px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                    color: var(--text-muted);
+                    font-size: 1.1rem;
+                    z-index: 5;
+                  "
+                ></i>
+              </div>
+            </div>
+
+            <!-- Remember Me Action -->
+            <div class="form-actions">
+              <label class="remember-me-label">
+                <input type="checkbox" class="remember-me-checkbox" required />
+                <span>Remember me</span>
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="theme-btn auth-submit-btn">
+              Sign In <i class="fas fa-sign-in-alt ms-2"></i>
+            </button>
+          </form>
+
+          <div class="auth-footer">
+            Don't have a workspace yet? <a href="register.html">Sign up</a>
+          </div>
         </div>
       </div>
     </div>
