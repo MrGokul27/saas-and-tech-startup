@@ -564,3 +564,62 @@ select.form-input-control option {
 .input-wrapper {
   position: relative;
 }
+
+/* Password Strength Indicator */
+.password-strength-wrapper {
+  margin-top: 10px;
+}
+.password-strength-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.password-strength-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.password-strength-fill.weak {
+  width: 33.33%;
+  background: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+.password-strength-fill.medium {
+  width: 66.66%;
+  background: #f59e0b;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+.password-strength-fill.strong {
+  width: 100%;
+  background: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.password-requirements-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin-bottom: 0;
+}
+.password-requirements-list li {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  transition: color 0.3s;
+}
+.password-requirements-list li.valid {
+  color: #10b981 !important;
+}
+.password-requirements-list li.valid i {
+  color: #10b981 !important;
+}
+.password-requirements-list li.invalid {
+  color: var(--text-muted);
+}
+.password-requirements-list li.invalid i {
+  color: #ef4444;
+}
